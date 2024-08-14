@@ -1,0 +1,5 @@
+---
+title: "Prácticas"
+---
+
+{{< include README.qmd >}}

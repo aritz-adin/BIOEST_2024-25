@@ -1,0 +1,21 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "BIOEST 2024-25"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Programa
+
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    link-external-newwindow: true
+
+editor: visual
+

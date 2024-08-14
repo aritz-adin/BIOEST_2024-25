@@ -1,6 +1,9 @@
-# Programa
+---
+title: "Programa"
+format: gfm
+---
 
-## Bioestadística / Curso 2024-25.
+## Bioestadística / Curso 2024-25. {style="color: green"}
 
 | Fecha        | Título                                                       |
 |--------------|--------------------------------------------------------------|
@@ -15,11 +18,10 @@
 | 11-diciembre | [Práctica 7: Análisis de supervivencia](./Practica7.html)    |
 | 18-diciembre | [Práctica repaso: Bloque II](./PracticaRepasoII.html)        |
 
-## Bibliografía
+## Bibliografía {style="color: black"}
 
 Para la realización de esta práctica, puede consultarse el texto:
 
-Ugarte, M.D., Militino, A.F., and Arnholt, A.T. (2016). *Probability and
-Statistics with R (Second Edition)*. Chapman and Hall.
+Ugarte, M.D., Militino, A.F., and Arnholt, A.T. (2016). *Probability and Statistics with R (Second Edition)*. Chapman and Hall.
 
 ![](img/PASWR2.jpg)

@@ -8,7 +8,8 @@ website:
     left:
       - href: index.qmd
         text: Programa
-
+      - href: Practica0.qmd
+        text: Práctica 0
 
 format:
   html:

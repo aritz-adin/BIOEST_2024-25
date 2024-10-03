@@ -1,0 +1,415 @@
+---
+title: "Práctica 2: Estadística Descriptiva"
+author: "Aritz Adin"
+date: "2024-10-16"
+date-format: "DD/MM/YYYY"
+format:
+  html:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)  
+```
+
+# Descripción
+
+En esta práctica vamos a trabajar con el fichero de datos `Diabetes`.
+
+-   El fichero de datos contiene 19 variables medidas sobre 403 pacientes. Estos pacientes forman parte de un estudio con 1046 sujetos diseñado para investigar la prevalencia de la de obesidad, diabetes, y otros factores de riesgo cardiovasculares para Afroamericanos en Virginia, EEUU.
+
+-   Según Dr John Hong, Diabetes Mellitus Tipo II está asociada con la obesidad. El índice cintura-cadera puede ser un predictor en diabetes y enfermedades de corazón.
+
+-   Diabetes Mellitus Tipo II está también asociada con hipertensión y ambos pueden ser parte del "Síndrome X".
+
+-   Los 403 sujetos del estudio son aquellos a los que se les hizo un seguimiento de diabetes. La hemoglobina glicosilada $>7.0$ se toma normalmente como diagnóstico positivo de diabetes.
+
+El fichero puede descargarse de la web <http://biostat.mc.vanderbilt.edu/wiki/Main/DataSets>
+
+Para más información ver el paper
+
+Willems JP, Saunders JT, DE Hunt, JB Schorling. Prevalence of coronary heart disease risk factors among rural blacks: A community-based study. *Southern Medical Journal* 90:814-820; 1997. <https://europepmc.org/abstract/med/9258308>
+
+## Variables
+
+Estas son las variables que contiene el fichero (se han eliminado alguna del fichero original y se han reemplazado algunos valores perdidos):
+
+| Variable   | Descripción                            |
+|------------|----------------------------------------|
+| `id`       | Subject ID                             |
+| `chol`     | Total Cholesterol (mg/dL)              |
+| `stab.glu` | Stabilized Glucose (mg/dL)             |
+| `hdl`      | High Density Lipoprotein (mg/dL)       |
+| `ratio`    | Cholesterol / HDL ratio                |
+| `glyhb`    | Glycolsolated Hemoglobin (%)           |
+| `location` | Buckingham or Louisa                   |
+| `age`      | Age of patient (years)                 |
+| `gender`   | Male or Female                         |
+| `height`   | Height (inches)                        |
+| `weight`   | Weight (pounds)                        |
+| `frame`    | Body frame size (small, medium, large) |
+| `bp.1s`    | First Systolic Blood Pressure (mmHg)   |
+| `pb.1d`    | First Diastolic Blood Pressure (mmHg)  |
+| `waist`    | Waistline (inches)                     |
+| `hip`      | Hip measurement (inches)               |
+
+
+# 1. Estadística descriptiva univariante
+
+## 1.1. Descarga el fichero diabetes
+```{r}
+diabetes <- read.table("diabetes.txt", header=TRUE, sep="", dec=".", stringsAsFactors=TRUE)
+head(diabetes)
+```
+
+## 1.2 ¿Cuántas variables tiene el fichero diabetes?
+```{r include=FALSE}
+dim(diabetes)
+```
+
+## 1.3 ¿De qué tipo es cada variable?
+```{r include=FALSE}
+str(diabetes)
+```
+
+## 1.4 ¿Cuántas categorías tiene la variable `frame`?
+```{r include=FALSE}
+levels(diabetes$frame)
+```
+
+## 1.5 Obtén una tabla de frecuencias absolutas y relativas para la variable `frame`.
+```{r include=FALSE}
+table(diabetes$frame)
+table(diabetes$frame)/nrow(diabetes)
+```
+
+## 1.6 Realiza una representación gráfica adecuada para la variable `frame`. ¿Qué información obtienes?
+```{r include=FALSE}
+X <- table(diabetes$frame)
+
+# Diagrama de barras
+barplot(X, xlab="Frame", ylab="Frequency", col=topo.colors(3))
+legend("topright", legend=levels(diabetes$frame), fill=topo.colors(3))
+
+# Diagrama de sectores
+pie(X, labels=names(X), col=topo.colors(3))
+legend("topleft", legend=levels(diabetes$frame), fill=topo.colors(3))
+```
+
+## 1.7 Calcula la moda de la variable `frame`. ¿Qué significa?
+
+## 1.8 ¿Qué representaciones gráficas te parecen adecuadas para la variable `chol`?
+
+## 1.9 Realiza un histograma y un diagrama de cajas de la variable `chol`. ¿Qué información obtienes de ellos?
+```{r include=FALSE}
+par(mfrow=c(1,2),pty="s")
+hist(diabetes$chol, nclass="scott", col="cyan", main="Histograma", xlab="Colesterol")
+boxplot(diabetes$chol, col="pink", main="Diagrama de caja", xlab="Colesterol")
+```
+
+## 1.10 A la vista del diagrama de cajas y del histograma de la variable `chol`, qué puedes decir acerca de su simetría? ¿Qué crees que será mayor, la media o la mediana?
+
+## 1.11 Calcula el coeficiente de asimetría, la media y la mediana de la variable `chol`.
+```{r include=FALSE}
+summary(diabetes$chol)
+
+library(PASWR2)
+eda(diabetes$chol)
+```
+
+## 1.12 Calcula el mínimo, el máximo, los cuartiles y la desviación típica de la variable `chol`. ¿Entre qué valores se encuentra el 25\% de las personas con el colesterol más alto? ¿Y el 75\% de las personas con el colesterol más bajo? ¿Qué puedes decir acerca de la dispersión de la variable?¿ Dónde hay más dispersión, en el 25\% de las personas con mayor colesterol o en el 25\% de las personas con colesterol más bajo?
+
+## 1.13 Calcula el coeficiente de curtosis de la variable `chol`. ¿Qué indica?
+
+## 1.14 Según el diagrama de cajas, ¿existe alguna observación atípica? ¿Cuál es?
+```{r include=FALSE}
+boxplot(diabetes$chol)
+
+library(lattice)
+bwplot(~chol, data=diabetes, as.table=TRUE)
+trellis.focus(name="panel",1,1)
+panel.identify()
+
+#diabetes[c(4,63,134,148,213,295,360,378,381),]
+```
+
+## 1.15 ¿Cuántos hombres y cuántas mujeres hay en la muestra?
+```{r include=FALSE}
+table(diabetes$gender)
+```
+
+## 1.16 ¿Cuántas personas residen en Buckingham? ¿Cuántas en Louisa?
+```{r include=FALSE}
+table(diabetes$location)
+```
+
+## 1.17 ¿Puedes calcular la media y la mediana de la variable `location`?
+
+## 1.18 Realiza un diagrama de cajas de la variable `chol` según las categorías de la variable `frame`.
+```{r include=FALSE}
+boxplot(chol~frame, col=cm.colors(3), data=diabetes)
+```
+
+## 1.19 Realiza un diagrama de cajas de la variable `chol` según las categorías de la `frame` y la variable `gender`.
+```{r include=FALSE}
+boxplot(chol~frame+gender, col=cm.colors(3), data=diabetes)
+bwplot(frame~chol|gender, data=diabetes)
+```
+
+## 1.20 Calcula la media, mediana, la desviación típica y los cuartiles de la variable `chol` según las categorías de la variable `frame`?
+```{r include=FALSE}
+tapply(diabetes$chol, diabetes$frame, summary)
+tapply(diabetes$chol, diabetes$frame, sd)
+```
+
+## 1.21 Realiza un histograma de la variable `chol` según las categorías de la variable `frame` y la variable `gender`.
+```{r include=FALSE}
+histogram( ~ chol | frame*gender, xlab="Colesterol", type="density", data=diabetes)
+```
+
+## 1.22 Calcula la media, la mediana, los cuartiles y la desviación típica de la variable `glyhb`. Explica cómo está de dispersa utilizando el histograma, el diagrama de cajas, los cuartiles y la desviación típica.
+```{r include=FALSE}
+eda(diabetes$glyhb)
+
+par(mfrow=c(1,2),pty="s")
+hist(diabetes$glyhb, nclass="scott", col="cyan")
+boxplot(diabetes$glyhb, col="pink")
+```
+
+## 1.23 Compara la dispersión de las variables `chol` y `glyhb`. ¿Qué variable tiene la desviación típica más alta? ¿Puedes concluir que aquella variable con la desviación típica más alta es la más dispersa? ¿Por qué? ¿Qué medida crees que es la más adecuada?
+```{r include=FALSE}
+eda(diabetes$chol)
+eda(diabetes$glyhb)
+
+CV.col <- sd(diabetes$chol)/mean(diabetes$chol)
+CV.col
+
+CV.glyhb <- sd(diabetes$glyhb)/mean(diabetes$glyhb)
+CV.glyhb
+```
+
+## 1.24 Considera la variable `chol` por sexo. Selecciona el hombre y la mujer con mayor nivel de colesterol. ¿Cuál de los dos destaca más en comparación a la media de su grupo?
+```{r include=FALSE}
+pos <- which(diabetes$gender=="male")
+chol.male <- diabetes[pos,"chol"]
+
+pos <- which(diabetes$gender=="female")
+chol.female <- diabetes[pos,"chol"]
+
+x <- max(chol.male)
+x
+y <- max(chol.female)
+y
+
+x.tipif <- (x-mean(chol.male))/sd(chol.male)
+x.tipif
+
+y.tipif <- (y-mean(chol.female))/sd(chol.female)
+y.tipif
+```
+
+## 1.25 Crea una nueva variable denominada `ratioWH` definida como el cociente de la variable `waist` y la variable `hip` (waist/hip)
+```{r include=FALSE}
+diabetes$ratioWH <- diabetes$waist/diabetes$hip
+```
+
+## 1.26 Dibuja un histograma y un diagrama de cajas de la variable `ratioWH`.
+```{r include=FALSE}
+par(mfrow=c(1,2),pty="s")
+hist(diabetes$ratioWH,nclass="scott",col="cyan")
+boxplot(diabetes$ratioWH,col="pink")
+```
+
+## 1.27 Calcula el mínimo, el máximo, los cuartiles y la desviación típica de la variable `ratioWH`. ¿Entre qué valores se encuentra el 25\% de los valores más altos? ¿Y el 75\% de los valores más bajos?
+```{r include=FALSE}
+eda(diabetes$ratioWH)
+summary(diabetes$ratioWH)
+```
+
+
+# 2. Tablas de doble entrada
+
+## 2.1 ¿Cuántos hombres y cuántas mujeres hay en la localización Buckingham? ¿Cuántos en Louisa?
+```{r include=FALSE}
+table(diabetes$gender,diabetes$location)
+```
+
+## 2.2 ¿Qué porcentaje de personas en la muestra tienen un body frame *small* y además son de Buckingham?
+```{r include=FALSE}
+X <- table(diabetes$frame,diabetes$location)
+prop.table(X)
+```
+
+## 2.3 Dibuja un diagrama de barras donde representes las frecuencias de la variable `location` para cada una de las categorías de la variable `frame`?
+```{r include=FALSE}
+X <- table(diabetes$location,diabetes$frame)
+X
+
+barplot(X, main="Barplot where location is stacked \n within levels of frame", col=topo.colors(3),legend.text=TRUE)
+barplot(t(X),main="Barplot where frame is stacked \n within levels of location", col=topo.colors(3),legend.text=TRUE)
+
+barplot(X,beside=TRUE,main="Barplot where location is stacked \n within levels of frame", col=topo.colors(3),legend.text=TRUE)
+barplot(t(X),beside=TRUE,main="Barplot where frame is grouped \n within levels of location", col=topo.colors(3),legend.text=TRUE)
+```
+
+## 2.4 Forma una tabla de doble entrada cruzando las variables `gender` y `frame`. ¿Cuántas mujeres tienen un body frame *medium*?
+```{r include=FALSE}
+Y <- table(diabetes$gender,diabetes$frame)
+Y  
+```
+
+## 2.5 Qué porcentaje de hombres tienen un body frame *large*?
+```{r include=FALSE}
+prop.table(Y)
+prop.table(Y,1)
+```
+
+
+# 3. Covarianza y correlación 
+
+## 3.1 Realiza un diagrama de dispersión de las variables `weight` y `waist`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
+```{r include=FALSE}
+plot(diabetes$weight,diabetes$waist)
+abline(lm(waist ~ weight, data=diabetes), col="red")
+
+cov(diabetes$weight,diabetes$waist)
+cor(diabetes$weight,diabetes$waist)
+```
+
+## 3.2 Realiza un diagrama de dispersión de las variables `chol` y `weight`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
+```{r include=FALSE}
+plot(diabetes$weight, diabetes$chol)
+abline(lm(chol ~ weight, data=diabetes), col="red")
+
+cov(diabetes$chol,diabetes$weight)
+cor(diabetes$chol,diabetes$weight)
+```
+
+## 3.3 Selecciona las personas del condado de Buckingham y realiza un diagrama de dispersión de las variables `waist` y `hip`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
+```{r include=FALSE}
+pos <- which(diabetes$location=="Buckingham")
+diabetes.B <- diabetes[pos,]
+
+plot(diabetes.B$waist,diabetes.B$hip)
+abline(lm(hip ~ waist, data=diabetes.B), col="red")
+
+cov(diabetes.B$waist,diabetes.B$hip)
+cor(diabetes.B$waist,diabetes.B$hip)
+```
+
+## 3.4 Selecciona las mujeres con body frame medium y  realiza un diagrama de dispersión de las variables `bp.1s` y `age`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
+```{r include=FALSE}
+pos <- which(diabetes$gender=="female" & diabetes$frame =="medium")
+datos <- diabetes[pos,]
+
+plot(datos$age,datos$bp.1s)
+abline(lm(bp.1s ~ age, data=diabetes.B), col="red")
+
+cov(datos$bp.1s,datos$age)
+cor(datos$bp.1s,datos$age)
+```
+
+## A fancy way of visualizing correlation a matrix 
+```{r include=FALSE}
+library(corrplot)
+
+diabetes.X <- diabetes[,c("chol","stab.glu","hdl","glyhb","age","height","weight","bp.1s","bp.1d","waist","hip")]
+cor.matrix <- cor(diabetes.X)
+
+corrplot(cor.matrix, method="circle", type="upper")
+corrplot(cor.matrix, method="number", type="upper")
+```
+
+# EJERCICIOS: Para resolver en clase
+
+Cruza las variables `gender` y `frame` y responde a las siguientes preguntas
+
+- ¿Cuántas mujeres tienen body frame *large*?
+- ¿Qué porcentaje de mujeres tienen body frame *large*?
+- ¿Cuál es el porcentaje de hombres con body frame *small*?
+- ¿Qué porcentaje de pacientes con body frame *medium* son hombres?
+
+<!-- # EJERCICIOS A ENTREGAR -->
+
+<!-- Una Organización de Salud busca identificar qué factores de los pacientes están más asociados con la remisión del cáncer de pulmón tras el tratamiento, en el marco de un estudio más amplio sobre los resultados del tratamiento y la calidad de vida de los pacientes con esta enfermedad. -->
+
+<!-- El archivo `patients.txt` contiene las siguientes variables medidas sobre un conjunto de datos de 8.525 pacientes. -->
+
+<!-- * `remission`: response variable (0=no, 1=yes) -->
+<!-- * `Age`: age of the patient (in years) -->
+<!-- * `IL6`: Interleukin-6 concentration in blood (pg/ml) -->
+<!-- * `CRP`: C-reactive protein concentration in blood (mg/dl) -->
+<!-- * `LengthofStay`: duration of a patient's hospital stay (in weeks) -->
+<!-- * `CancerStage`: lung cancer stage (I, II, III or IV) -->
+<!-- * `Smoking`: is the patient a smoker? (1=never, 2=former, 3=current) -->
+<!-- * `ID.hospital`: ID of the hospital -->
+
+<!-- ```{r} -->
+<!-- patients <- read.table(file="patients.txt", header=T, stringsAsFactors=T) -->
+<!-- head(patients) -->
+<!-- ``` -->
+
+<!-- En primer lugar, selecciona los pacientes asociados a tu código de hospital (`ID.hospital`) e indica cuántos pacientes pertenecen a dicho hospital. -->
+
+<!-- Por ejemplo: -->
+<!-- ```{r} -->
+<!-- pos <- which(patients$ID.hospital=="1") -->
+<!-- datos <- patients[pos,] -->
+
+<!-- str(datos) -->
+<!-- ``` -->
+<!-- El hospital "1" contiene 252 pacientes. -->
+
+<!-- ## 1) Realiza un histograma y un diagrama de cajas de la variable `IL6`. ¿Qué puedes decir acerca de la simetría y la dispersión de la variable?  -->
+<!-- ```{r include=FALSE} -->
+<!-- par(mfrow=c(1,2)) -->
+<!-- hist(datos$IL6, xlab="Interleukin-6 concentration in blood", main=paste0("ID.hospital=",1)) -->
+<!-- boxplot(datos$IL6, xlab="Interleukin-6 concentration in blood", main=paste0("ID.hospital=",1)) -->
+<!-- ``` -->
+<!-- ## 2) Calcula la media, mediana, cuartiles, desviación típica, coeficientes de asimetría y de curtosis, y los coeficientes de variación. Indica sus unidades e interpreta los estadísticos (en aquellos casos que sea posible). -->
+
+<!-- ```{r include=FALSE} -->
+<!-- PASWR2::eda(datos$IL6) -->
+
+<!-- CV <- sd(datos$IL6)/mean(datos$IL6) -->
+<!-- CV -->
+<!-- ``` -->
+<!-- ## 3) Dibuja un histograma y un diagrama de cajas en función de la variable `CancerStage`. Interpreta los gráficos obtenidos. -->
+<!-- ```{r, include=FALSE} -->
+<!-- library(lattice) -->
+
+<!-- boxplot(datos$IL6 ~ datos$CancerStage, -->
+<!--         ylab="IL6 concentration in blood (pg/ml)", xlab="Remission") -->
+<!-- histogram(~ IL6 | CancerStage, xlab="IL6 concentration in blood (pg/ml)", type="density", data=datos) -->
+<!-- ``` -->
+
+<!-- ## 4) Realiza un diagrama de dispersión de las variables `IL6` y `CRP`. ¿Crees que existe relación lineal entre ellas? Calcula e interpreta la covarianza y el coeficiente de correlación lineal (indica sus unidades). -->
+<!-- ```{r, include=FALSE} -->
+<!-- plot(datos$IL6, datos$CRP, -->
+<!--      xlab="IL6 concentration in blood", -->
+<!--      ylab="C-reactive protein concentration in blood") -->
+<!-- abline(lm(IL6 ~ CRP, data=datos), col="red") -->
+
+<!-- cov(datos$IL6, datos$CRP) -->
+<!-- cor(datos$IL6, datos$CRP) -->
+<!-- ``` -->
+
+<!-- ## 5) Selecciona el paciente fumador (*never*) y ex-fumador (*former*) con valores más bajos en la variable `CRP`. ¿Cuál de los dos pacientes destaca más en comparación a la media de su grupo? Justifica la respuesta. -->
+<!-- ```{r include=FALSE} -->
+<!-- pos <- which(datos$Smoking=="never") -->
+<!-- datos.never <- datos[pos,] -->
+
+<!-- pos <- which(datos$Smoking=="former") -->
+<!-- datos.former <- datos[pos,] -->
+
+<!-- # Calculamos los niveles de CRP mínimos -->
+<!-- x <- min(datos.never$CRP) -->
+<!-- y <- min(datos.former$CRP) -->
+
+<!-- # Tipificamos los valores  -->
+<!-- x.tipif <- (x-mean(datos.never$CRP))/sd(datos.never$CRP) -->
+<!-- x.tipif -->
+
+<!-- y.tipif <- (y-mean(datos.former$CRP))/sd(datos.former$CRP) -->
+<!-- y.tipif -->
+<!-- ``` -->

@@ -24,22 +24,22 @@ data("EPIDURAL")
 ```
 
 * Visualiza los primeros 6 registros del fichero `EPIDURAL` con el comando `head()`.
-```{r include=FALSE}
+```{r include=TRUE}
 head(EPIDURAL)
 ```
 
 * Visualiza los primeros 20 registros del fichero `EPIDURAL` con el comando `head()`.
-```{r include=FALSE}
+```{r include=TRUE}
 head(EPIDURAL,n=20)
 ```
 
 * Calcula cuántos registros y cuantas variables tiene el fichero `EPIDURAL` con el comando `dim()`.
-```{r include=FALSE}
+```{r include=TRUE}
 dim(EPIDURAL)
 ```
 
 * Calcula cuántos registros y cuantas variables tiene el fichero `EPIDURAL` con el comando `str()`.
-```{r include=FALSE}
+```{r include=TRUE}
 str(EPIDURAL)
 ```
 
@@ -47,68 +47,68 @@ str(EPIDURAL)
 ## 1.2. Selección de filas (individuos) y columnas (variables).
 
 * Selecciona la variable `doctor` del fichero `EPIDURAL` y visualízala en pantalla
-```{r include=FALSE}
+```{r include=TRUE}
 EPIDURAL$doctor
 ```
 
 * Selecciona la variable `kg` del fichero `EPIDURAL` y visualízala en pantalla
-```{r include=FALSE}
+```{r include=TRUE}
 EPIDURAL$kg
 ```
   
 * Selecciona la variable `cm` del fichero `EPIDURAL` y visualízala en pantalla
-```{r include=FALSE}
+```{r include=TRUE}
 EPIDURAL$cm
 ```
 
 * Crea una nueva variable llamada `ratio` definida como el cociente entre `kg`/`cm`. Añádela al fichero `EPIDURAL`
-```{r include=FALSE}
+```{r include=TRUE}
 EPIDURAL$ratio <- EPIDURAL$kg/EPIDURAL$cm
 
 head(EPIDURAL)
 ```
 
 * Selecciona la paciente número 19 del fichero `EPIDURAL`. Visualízala por pantalla y averigua cuánto pesa y cuánto mide
-```{r include=FALSE}
+```{r include=TRUE}
 EPIDURAL[19, ]
 ```
 
-* Elimina la paciente 1 del fichero `EPIDURAL`
-```{r include=FALSE}
-head(EPIDURAL[-1, ])
-```
+<!-- * Elimina la paciente 1 del fichero `EPIDURAL` -->
+<!-- ```{r include=FALSE} -->
+<!-- head(EPIDURAL[-1, ]) -->
+<!-- ``` -->
 
-* Elimina la variable `doctor` del fichero `EPIDURAL`
-```{r include=FALSE}
-head(EPIDURAL[,-1])
-```
+<!-- * Elimina la variable `doctor` del fichero `EPIDURAL` -->
+<!-- ```{r include=FALSE} -->
+<!-- head(EPIDURAL[,-1]) -->
+<!-- ``` -->
 
 * Selecciona aquellos valores de la variable `kg` menores que 85 kg
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(EPIDURAL$kg<85)
 EPIDURAL$kg[pos]
 ```
 
 * Selecciona aquellos valores de la variable `cm` mayores que 170 cm
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(EPIDURAL$cm>170)
 EPIDURAL$cm[pos]
 ```
 
 * Selecciona aquellos valores de la variable `cm` mayores que 170 cm o menores que 165 cm
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(EPIDURAL$cm>170 | EPIDURAL$cm<165)
 EPIDURAL$cm[pos]
 ```
 
 * Selecciona aquellos valores de la variable `cm` mayores que 165 cm y menores que 170 cm
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(EPIDURAL$cm>165 & EPIDURAL$cm<170)
 EPIDURAL$cm[pos]
 ```
 
 * Crea un nuevo fichero llamado `EPIDURAL2` con aquellas pacientes que pesan menos de 85 kg. ¿Cuántos registros tiene el fichero `EPIDURAL2`?
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(EPIDURAL$kg<85)
 EPIDURAL2 <- EPIDURAL[pos, ]
 
@@ -117,7 +117,7 @@ dim(EPIDURAL2)
 ```
 
 * Crea un nuevo fichero llamado `EPIDURAL3` con aquellas pacientes que miden más de 170 cm. ¿Cuántos registros tiene el fichero `EPIDURAL3`?
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(EPIDURAL$cm>170)
 EPIDURAL3 <- EPIDURAL[pos, ]
 
@@ -126,7 +126,7 @@ dim(EPIDURAL3)
 ```
 
 * Crea un nuevo fichero llamado `EPIDURAL4` con aquellas pacientes atendidas por el Doctor A. ¿Cuántos registros tiene el fichero `EPIDURAL4`?
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(EPIDURAL$doctor=="Dr. A")
 EPIDURAL4 <- EPIDURAL[pos, ]
 
@@ -137,29 +137,28 @@ dim(EPIDURAL4)
 # 2. Lectura de ficheros externos
 
 ## 2.1. Descarga el fichero `Bodyfat.txt` desde MiAulario. Léelo en `R` y almacénalo en un objeto llamado `datos`. Imprímelo por pantalla
-```{r include=FALSE}
+```{r include=TRUE}
 datos <- read.table("BodyFat.txt",header=TRUE)
 datos
 ```
 
+<!-- ## 2.2. Descarga el fichero `Bodyfat.xlsx` desde MiAulario. Léelo en `R` y almacénalo en un objeto llamado `datos2`. Imprímelo por pantalla -->
+<!-- ```{r, message=FALSE, warning=FALSE, include=FALSE} -->
+<!-- library(xlsx) -->
 
-## 2.2. Descarga el fichero `Bodyfat.xlsx` desde MiAulario. Léelo en `R` y almacénalo en un objeto llamado `datos2`. Imprímelo por pantalla
-```{r, message=FALSE, warning=FALSE, include=FALSE}
-library(xlsx)
+<!-- datos2 <- read.xlsx("Bodyfat.xlsx", sheetIndex="Hoja1") -->
+<!-- datos2 -->
+<!-- ``` -->
 
-datos2 <- read.xlsx("Bodyfat.xlsx", sheetIndex="Hoja1")
-datos2
-```
-
-## 2.3. Realiza los siguientes ejercicios
+## 2.2. Realiza los siguientes ejercicios
 
 * Con el fichero `datos`, visualiza en pantalla la variable `fat`
-```{r include=FALSE}
+```{r include=TRUE}
 datos$fat
 ```
 
 * Selecciona las observaciones de las variable `fat` cuyo valor sea menor que 25 y guárdalas en un objeto llamado `low.fat`
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(datos$fat<25)
 
 low.fat <- datos[pos,]
@@ -167,26 +166,26 @@ low.fat
 ```
 
 * Utiliza el comando `table` para averiguar cuántos hombres y mujeres hay en el fichero `datos`.
-```{r include=FALSE}
+```{r include=TRUE}
 table(datos$sex)
 ```
 
 * Haz un _summary_ del fichero `datos`
-```{r include=FALSE}
+```{r include=TRUE}
 summary(datos)
 ```
 
-* Elimina la variable `fat` del fichero `datos`
-```{r include=FALSE}
-datos[,-2]
-```
+<!-- * Elimina la variable `fat` del fichero `datos` -->
+<!-- ```{r include=TRUE} -->
+<!-- datos[,-2] -->
+<!-- ``` -->
 
-* Elimina las observaciones 7, 9 y 15 del fichero `datos`
-```{r include=FALSE}
-datos[-c(7,9,15),]
-```
+<!-- * Elimina las observaciones 7, 9 y 15 del fichero `datos` -->
+<!-- ```{r include=FALSE} -->
+<!-- datos[-c(7,9,15),] -->
+<!-- ``` -->
 
 * Utiliza la función `eda()` del paquete `PASWR2` para realizar un análisis exploratorio de la variable `fat`
-```{r include=FALSE}
+```{r include=TRUE}
 eda(datos$fat)
 ```

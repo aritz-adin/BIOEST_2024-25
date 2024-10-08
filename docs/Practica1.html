@@ -153,8 +153,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#lectura-de-ficheros-externos" id="toc-lectura-de-ficheros-externos" class="nav-link" data-scroll-target="#lectura-de-ficheros-externos">2. Lectura de ficheros externos</a>
   <ul class="collapse">
   <li><a href="#descarga-el-fichero-bodyfat.txt-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos.-imprímelo-por-pantalla" id="toc-descarga-el-fichero-bodyfat.txt-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos.-imprímelo-por-pantalla" class="nav-link" data-scroll-target="#descarga-el-fichero-bodyfat.txt-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos.-imprímelo-por-pantalla">2.1. Descarga el fichero <code>Bodyfat.txt</code> desde MiAulario. Léelo en <code>R</code> y almacénalo en un objeto llamado <code>datos</code>. Imprímelo por pantalla</a></li>
-  <li><a href="#descarga-el-fichero-bodyfat.xlsx-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos2.-imprímelo-por-pantalla" id="toc-descarga-el-fichero-bodyfat.xlsx-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos2.-imprímelo-por-pantalla" class="nav-link" data-scroll-target="#descarga-el-fichero-bodyfat.xlsx-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos2.-imprímelo-por-pantalla">2.2. Descarga el fichero <code>Bodyfat.xlsx</code> desde MiAulario. Léelo en <code>R</code> y almacénalo en un objeto llamado <code>datos2</code>. Imprímelo por pantalla</a></li>
-  <li><a href="#realiza-los-siguientes-ejercicios" id="toc-realiza-los-siguientes-ejercicios" class="nav-link" data-scroll-target="#realiza-los-siguientes-ejercicios">2.3. Realiza los siguientes ejercicios</a></li>
+  <li><a href="#realiza-los-siguientes-ejercicios" id="toc-realiza-los-siguientes-ejercicios" class="nav-link" data-scroll-target="#realiza-los-siguientes-ejercicios">2.2. Realiza los siguientes ejercicios</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -202,51 +201,387 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"EPIDURAL"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li><p>Visualiza los primeros 6 registros del fichero <code>EPIDURAL</code> con el comando <code>head()</code>.</p></li>
-<li><p>Visualiza los primeros 20 registros del fichero <code>EPIDURAL</code> con el comando <code>head()</code>.</p></li>
-<li><p>Calcula cuántos registros y cuantas variables tiene el fichero <code>EPIDURAL</code> con el comando <code>dim()</code>.</p></li>
-<li><p>Calcula cuántos registros y cuantas variables tiene el fichero <code>EPIDURAL</code> con el comando <code>str()</code>.</p></li>
+<li>Visualiza los primeros 6 registros del fichero <code>EPIDURAL</code> con el comando <code>head()</code>.</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EPIDURAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  doctor  kg  cm       ease           treatment oc complications
+1  Dr. B 116 172  Difficult Traditional Sitting  0          None
+2  Dr. C  86 176       Easy   Hamstring Stretch  0          None
+3  Dr. B  72 157  Difficult Traditional Sitting  0          None
+4  Dr. B  63 169       Easy   Hamstring Stretch  2          None
+5  Dr. B 114 163 Impossible Traditional Sitting  0          None
+6  Dr. B 121 163  Difficult   Hamstring Stretch  3          None</code></pre>
+</div>
+</div>
+<ul>
+<li>Visualiza los primeros 20 registros del fichero <code>EPIDURAL</code> con el comando <code>head()</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EPIDURAL,<span class="at">n=</span><span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   doctor  kg  cm       ease           treatment oc complications
+1   Dr. B 116 172  Difficult Traditional Sitting  0          None
+2   Dr. C  86 176       Easy   Hamstring Stretch  0          None
+3   Dr. B  72 157  Difficult Traditional Sitting  0          None
+4   Dr. B  63 169       Easy   Hamstring Stretch  2          None
+5   Dr. B 114 163 Impossible Traditional Sitting  0          None
+6   Dr. B 121 163  Difficult   Hamstring Stretch  3          None
+7   Dr. D  90 170  Difficult   Hamstring Stretch  2   Paresthesia
+8   Dr. B  87 164  Difficult Traditional Sitting  6          None
+9   Dr. D  74 166       Easy   Hamstring Stretch  0          None
+10  Dr. C  91 175       Easy   Hamstring Stretch  1          None
+11  Dr. A  67 167       Easy Traditional Sitting  6          None
+12  Dr. C  65 155       Easy Traditional Sitting  2          None
+13  Dr. C  91 163  Difficult   Hamstring Stretch  2   Paresthesia
+14  Dr. C  48 152       Easy   Hamstring Stretch  0          None
+15  Dr. C  85 168       Easy   Hamstring Stretch  2   Paresthesia
+16  Dr. C  80 173       Easy   Hamstring Stretch  0          None
+17  Dr. D 114 168 Impossible   Hamstring Stretch  1          None
+18  Dr. D  75 157       Easy Traditional Sitting  0   Paresthesia
+19  Dr. D  59 152       Easy   Hamstring Stretch  0          None
+20  Dr. A  57 165       Easy   Hamstring Stretch  1          None</code></pre>
+</div>
+</div>
+<ul>
+<li>Calcula cuántos registros y cuantas variables tiene el fichero <code>EPIDURAL</code> con el comando <code>dim()</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(EPIDURAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 85  7</code></pre>
+</div>
+</div>
+<ul>
+<li>Calcula cuántos registros y cuantas variables tiene el fichero <code>EPIDURAL</code> con el comando <code>str()</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(EPIDURAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   85 obs. of  7 variables:
+ $ doctor       : Factor w/ 4 levels "Dr. A","Dr. B",..: 2 3 2 2 2 2 4 2 4 3 ...
+ $ kg           : int  116 86 72 63 114 121 90 87 74 91 ...
+ $ cm           : int  172 176 157 169 163 163 170 164 166 175 ...
+ $ ease         : Factor w/ 3 levels "Difficult","Easy",..: 1 2 1 2 3 1 1 1 2 2 ...
+ $ treatment    : Factor w/ 2 levels "Hamstring Stretch",..: 2 1 2 1 2 1 1 2 1 1 ...
+ $ oc           : int  0 0 0 2 0 3 2 6 0 1 ...
+ $ complications: Factor w/ 5 levels "Failure - person got dizzy",..: 3 3 3 3 3 3 4 3 3 3 ...</code></pre>
+</div>
+</div>
 </section>
 <section id="selección-de-filas-individuos-y-columnas-variables." class="level2">
 <h2 class="anchored" data-anchor-id="selección-de-filas-individuos-y-columnas-variables.">1.2. Selección de filas (individuos) y columnas (variables).</h2>
 <ul>
-<li><p>Selecciona la variable <code>doctor</code> del fichero <code>EPIDURAL</code> y visualízala en pantalla</p></li>
-<li><p>Selecciona la variable <code>kg</code> del fichero <code>EPIDURAL</code> y visualízala en pantalla</p></li>
-<li><p>Selecciona la variable <code>cm</code> del fichero <code>EPIDURAL</code> y visualízala en pantalla</p></li>
-<li><p>Crea una nueva variable llamada <code>ratio</code> definida como el cociente entre <code>kg</code>/<code>cm</code>. Añádela al fichero <code>EPIDURAL</code></p></li>
-<li><p>Selecciona la paciente número 19 del fichero <code>EPIDURAL</code>. Visualízala por pantalla y averigua cuánto pesa y cuánto mide</p></li>
-<li><p>Elimina la paciente 1 del fichero <code>EPIDURAL</code></p></li>
-<li><p>Elimina la variable <code>doctor</code> del fichero <code>EPIDURAL</code></p></li>
-<li><p>Selecciona aquellos valores de la variable <code>kg</code> menores que 85 kg</p></li>
-<li><p>Selecciona aquellos valores de la variable <code>cm</code> mayores que 170 cm</p></li>
-<li><p>Selecciona aquellos valores de la variable <code>cm</code> mayores que 170 cm o menores que 165 cm</p></li>
-<li><p>Selecciona aquellos valores de la variable <code>cm</code> mayores que 165 cm y menores que 170 cm</p></li>
-<li><p>Crea un nuevo fichero llamado <code>EPIDURAL2</code> con aquellas pacientes que pesan menos de 85 kg. ¿Cuántos registros tiene el fichero <code>EPIDURAL2</code>?</p></li>
-<li><p>Crea un nuevo fichero llamado <code>EPIDURAL3</code> con aquellas pacientes que miden más de 170 cm. ¿Cuántos registros tiene el fichero <code>EPIDURAL3</code>?</p></li>
-<li><p>Crea un nuevo fichero llamado <code>EPIDURAL4</code> con aquellas pacientes atendidas por el Doctor A. ¿Cuántos registros tiene el fichero <code>EPIDURAL4</code>?</p></li>
+<li>Selecciona la variable <code>doctor</code> del fichero <code>EPIDURAL</code> y visualízala en pantalla</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>doctor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] Dr. B Dr. C Dr. B Dr. B Dr. B Dr. B Dr. D Dr. B Dr. D Dr. C Dr. A Dr. C
+[13] Dr. C Dr. C Dr. C Dr. C Dr. D Dr. D Dr. D Dr. A Dr. A Dr. C Dr. C Dr. B
+[25] Dr. B Dr. D Dr. D Dr. A Dr. B Dr. B Dr. D Dr. C Dr. C Dr. A Dr. A Dr. A
+[37] Dr. A Dr. B Dr. D Dr. D Dr. A Dr. D Dr. D Dr. D Dr. A Dr. C Dr. A Dr. A
+[49] Dr. C Dr. A Dr. C Dr. C Dr. B Dr. D Dr. D Dr. B Dr. D Dr. A Dr. A Dr. B
+[61] Dr. B Dr. B Dr. C Dr. C Dr. D Dr. A Dr. D Dr. C Dr. A Dr. A Dr. A Dr. A
+[73] Dr. C Dr. B Dr. C Dr. C Dr. B Dr. B Dr. B Dr. D Dr. D Dr. B Dr. A Dr. A
+[85] Dr. A
+Levels: Dr. A Dr. B Dr. C Dr. D</code></pre>
+</div>
+</div>
+<ul>
+<li>Selecciona la variable <code>kg</code> del fichero <code>EPIDURAL</code> y visualízala en pantalla</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>kg</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 116  86  72  63 114 121  90  87  74  91  67  65  91  48  85  80 114  75  59
+[20]  57 105  83  71 108  98  74 134  83  86  76  82  59  75  61 106  81 103 113
+[39]  60  90 142  83  83  89  67  90  71  66  95  70  94  85  86 131  67  97  93
+[58]  90  84  59 112  86  74  92 168  80  79  84  63  85  79  79  77  93  57  96
+[77]  79  69  72 104  89  86 103  72  94</code></pre>
+</div>
+</div>
+<ul>
+<li>Selecciona la variable <code>cm</code> del fichero <code>EPIDURAL</code> y visualízala en pantalla</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>cm</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 172 176 157 169 163 163 170 164 166 175 167 155 163 152 168 173 168 157 152
+[20] 165 165 168 152 175 176 155 169 170 175 165 173 168 173 163 165 163 161 166
+[39] 165 171 170 160 160 173 160 168 163 160 170 165 185 163 165 175 159 162 160
+[58] 163 164 157 170 170 168 163 168 157 163 160 163 165 168 160 157 170 160 180
+[77] 160 157 170 169 172 156 170 160 165</code></pre>
+</div>
+</div>
+<ul>
+<li>Crea una nueva variable llamada <code>ratio</code> definida como el cociente entre <code>kg</code>/<code>cm</code>. Añádela al fichero <code>EPIDURAL</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>ratio <span class="ot">&lt;-</span> EPIDURAL<span class="sc">$</span>kg<span class="sc">/</span>EPIDURAL<span class="sc">$</span>cm</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EPIDURAL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  doctor  kg  cm       ease           treatment oc complications     ratio
+1  Dr. B 116 172  Difficult Traditional Sitting  0          None 0.6744186
+2  Dr. C  86 176       Easy   Hamstring Stretch  0          None 0.4886364
+3  Dr. B  72 157  Difficult Traditional Sitting  0          None 0.4585987
+4  Dr. B  63 169       Easy   Hamstring Stretch  2          None 0.3727811
+5  Dr. B 114 163 Impossible Traditional Sitting  0          None 0.6993865
+6  Dr. B 121 163  Difficult   Hamstring Stretch  3          None 0.7423313</code></pre>
+</div>
+</div>
+<ul>
+<li>Selecciona la paciente número 19 del fichero <code>EPIDURAL</code>. Visualízala por pantalla y averigua cuánto pesa y cuánto mide</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>EPIDURAL[<span class="dv">19</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   doctor kg  cm ease         treatment oc complications     ratio
+19  Dr. D 59 152 Easy Hamstring Stretch  0          None 0.3881579</code></pre>
+</div>
+</div>
+<!-- * Elimina la paciente 1 del fichero `EPIDURAL` -->
+<!-- ```{r include=FALSE} -->
+<!-- head(EPIDURAL[-1, ]) -->
+<!-- ``` -->
+<!-- * Elimina la variable `doctor` del fichero `EPIDURAL` -->
+<!-- ```{r include=FALSE} -->
+<!-- head(EPIDURAL[,-1]) -->
+<!-- ``` -->
+<ul>
+<li>Selecciona aquellos valores de la variable <code>kg</code> menores que 85 kg</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(EPIDURAL<span class="sc">$</span>kg<span class="sc">&lt;</span><span class="dv">85</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>kg[pos]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 72 63 74 67 65 48 80 75 59 57 83 71 74 83 76 82 59 75 61 81 60 83 83 67 71
+[26] 66 70 67 84 59 74 80 79 84 63 79 79 77 57 79 69 72 72</code></pre>
+</div>
+</div>
+<ul>
+<li>Selecciona aquellos valores de la variable <code>cm</code> mayores que 170 cm</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(EPIDURAL<span class="sc">$</span>cm<span class="sc">&gt;</span><span class="dv">170</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>cm[pos]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 172 176 175 173 175 176 175 173 173 171 173 185 175 180 172</code></pre>
+</div>
+</div>
+<ul>
+<li>Selecciona aquellos valores de la variable <code>cm</code> mayores que 170 cm o menores que 165 cm</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(EPIDURAL<span class="sc">$</span>cm<span class="sc">&gt;</span><span class="dv">170</span> <span class="sc">|</span> EPIDURAL<span class="sc">$</span>cm<span class="sc">&lt;</span><span class="dv">165</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>cm[pos]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 172 176 157 163 163 164 175 155 163 152 173 157 152 152 175 176 155 175 173
+[20] 173 163 163 161 171 160 160 173 160 163 160 185 163 175 159 162 160 163 164
+[39] 157 163 157 163 160 163 160 157 160 180 160 157 172 156 160</code></pre>
+</div>
+</div>
+<ul>
+<li>Selecciona aquellos valores de la variable <code>cm</code> mayores que 165 cm y menores que 170 cm</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(EPIDURAL<span class="sc">$</span>cm<span class="sc">&gt;</span><span class="dv">165</span> <span class="sc">&amp;</span> EPIDURAL<span class="sc">$</span>cm<span class="sc">&lt;</span><span class="dv">170</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>EPIDURAL<span class="sc">$</span>cm[pos]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 169 166 167 168 168 168 169 168 166 168 168 168 168 169</code></pre>
+</div>
+</div>
+<ul>
+<li>Crea un nuevo fichero llamado <code>EPIDURAL2</code> con aquellas pacientes que pesan menos de 85 kg. ¿Cuántos registros tiene el fichero <code>EPIDURAL2</code>?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(EPIDURAL<span class="sc">$</span>kg<span class="sc">&lt;</span><span class="dv">85</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>EPIDURAL2 <span class="ot">&lt;-</span> EPIDURAL[pos, ]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EPIDURAL2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   doctor kg  cm      ease           treatment oc complications     ratio
+3   Dr. B 72 157 Difficult Traditional Sitting  0          None 0.4585987
+4   Dr. B 63 169      Easy   Hamstring Stretch  2          None 0.3727811
+9   Dr. D 74 166      Easy   Hamstring Stretch  0          None 0.4457831
+11  Dr. A 67 167      Easy Traditional Sitting  6          None 0.4011976
+12  Dr. C 65 155      Easy Traditional Sitting  2          None 0.4193548
+14  Dr. C 48 152      Easy   Hamstring Stretch  0          None 0.3157895</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(EPIDURAL2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 43  8</code></pre>
+</div>
+</div>
+<ul>
+<li>Crea un nuevo fichero llamado <code>EPIDURAL3</code> con aquellas pacientes que miden más de 170 cm. ¿Cuántos registros tiene el fichero <code>EPIDURAL3</code>?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(EPIDURAL<span class="sc">$</span>cm<span class="sc">&gt;</span><span class="dv">170</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>EPIDURAL3 <span class="ot">&lt;-</span> EPIDURAL[pos, ]</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EPIDURAL3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   doctor  kg  cm       ease           treatment oc complications     ratio
+1   Dr. B 116 172  Difficult Traditional Sitting  0          None 0.6744186
+2   Dr. C  86 176       Easy   Hamstring Stretch  0          None 0.4886364
+10  Dr. C  91 175       Easy   Hamstring Stretch  1          None 0.5200000
+16  Dr. C  80 173       Easy   Hamstring Stretch  0          None 0.4624277
+24  Dr. B 108 175 Impossible Traditional Sitting  5          None 0.6171429
+25  Dr. B  98 176       Easy Traditional Sitting  1          None 0.5568182</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(EPIDURAL3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 15  8</code></pre>
+</div>
+</div>
+<ul>
+<li>Crea un nuevo fichero llamado <code>EPIDURAL4</code> con aquellas pacientes atendidas por el Doctor A. ¿Cuántos registros tiene el fichero <code>EPIDURAL4</code>?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(EPIDURAL<span class="sc">$</span>doctor<span class="sc">==</span><span class="st">"Dr. A"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>EPIDURAL4 <span class="ot">&lt;-</span> EPIDURAL[pos, ]</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EPIDURAL4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   doctor  kg  cm      ease           treatment oc          complications
+11  Dr. A  67 167      Easy Traditional Sitting  6                   None
+20  Dr. A  57 165      Easy   Hamstring Stretch  1                   None
+21  Dr. A 105 165 Difficult   Hamstring Stretch 10 Failure - too many OCs
+28  Dr. A  83 170      Easy Traditional Sitting  1                   None
+34  Dr. A  61 163      Easy Traditional Sitting  1                   None
+35  Dr. A 106 165      Easy Traditional Sitting  2                   None
+       ratio
+11 0.4011976
+20 0.3454545
+21 0.6363636
+28 0.4882353
+34 0.3742331
+35 0.6424242</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(EPIDURAL4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 23  8</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="lectura-de-ficheros-externos" class="level1">
 <h1>2. Lectura de ficheros externos</h1>
 <section id="descarga-el-fichero-bodyfat.txt-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos.-imprímelo-por-pantalla" class="level2">
 <h2 class="anchored" data-anchor-id="descarga-el-fichero-bodyfat.txt-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos.-imprímelo-por-pantalla">2.1. Descarga el fichero <code>Bodyfat.txt</code> desde MiAulario. Léelo en <code>R</code> y almacénalo en un objeto llamado <code>datos</code>. Imprímelo por pantalla</h2>
-</section>
-<section id="descarga-el-fichero-bodyfat.xlsx-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos2.-imprímelo-por-pantalla" class="level2">
-<h2 class="anchored" data-anchor-id="descarga-el-fichero-bodyfat.xlsx-desde-miaulario.-léelo-en-r-y-almacénalo-en-un-objeto-llamado-datos2.-imprímelo-por-pantalla">2.2. Descarga el fichero <code>Bodyfat.xlsx</code> desde MiAulario. Léelo en <code>R</code> y almacénalo en un objeto llamado <code>datos2</code>. Imprímelo por pantalla</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"BodyFat.txt"</span>,<span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>datos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   age  fat sex
+1   23  9.5   M
+2   23 27.9   F
+3   27  7.8   M
+4   27 17.8   M
+5   39 31.4   F
+6   41 25.9   F
+7   45 27.4   M
+8   49 25.2   F
+9   50 31.1   F
+10  53 34.7   F
+11  53 42.0   F
+12  54 29.1   F
+13  56 32.5   F
+14  57 30.3   F
+15  58 33.0   F
+16  58 33.8   F
+17  60 41.1   F
+18  61 34.5   F</code></pre>
+</div>
+</div>
+<!-- ## 2.2. Descarga el fichero `Bodyfat.xlsx` desde MiAulario. Léelo en `R` y almacénalo en un objeto llamado `datos2`. Imprímelo por pantalla -->
+<!-- ```{r, message=FALSE, warning=FALSE, include=FALSE} -->
+<!-- library(xlsx) -->
+<!-- datos2 <- read.xlsx("Bodyfat.xlsx", sheetIndex="Hoja1") -->
+<!-- datos2 -->
+<!-- ``` -->
 </section>
 <section id="realiza-los-siguientes-ejercicios" class="level2">
-<h2 class="anchored" data-anchor-id="realiza-los-siguientes-ejercicios">2.3. Realiza los siguientes ejercicios</h2>
+<h2 class="anchored" data-anchor-id="realiza-los-siguientes-ejercicios">2.2. Realiza los siguientes ejercicios</h2>
 <ul>
-<li><p>Con el fichero <code>datos</code>, visualiza en pantalla la variable <code>fat</code></p></li>
-<li><p>Selecciona las observaciones de las variable <code>fat</code> cuyo valor sea menor que 25 y guárdalas en un objeto llamado <code>low.fat</code></p></li>
-<li><p>Utiliza el comando <code>table</code> para averiguar cuántos hombres y mujeres hay en el fichero <code>datos</code>.</p></li>
-<li><p>Haz un <em>summary</em> del fichero <code>datos</code></p></li>
-<li><p>Elimina la variable <code>fat</code> del fichero <code>datos</code></p></li>
-<li><p>Elimina las observaciones 7, 9 y 15 del fichero <code>datos</code></p></li>
-<li><p>Utiliza la función <code>eda()</code> del paquete <code>PASWR2</code> para realizar un análisis exploratorio de la variable <code>fat</code></p></li>
+<li>Con el fichero <code>datos</code>, visualiza en pantalla la variable <code>fat</code></li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>datos<span class="sc">$</span>fat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  9.5 27.9  7.8 17.8 31.4 25.9 27.4 25.2 31.1 34.7 42.0 29.1 32.5 30.3 33.0
+[16] 33.8 41.1 34.5</code></pre>
+</div>
+</div>
+<ul>
+<li>Selecciona las observaciones de las variable <code>fat</code> cuyo valor sea menor que 25 y guárdalas en un objeto llamado <code>low.fat</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(datos<span class="sc">$</span>fat<span class="sc">&lt;</span><span class="dv">25</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>low.fat <span class="ot">&lt;-</span> datos[pos,]</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>low.fat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age  fat sex
+1  23  9.5   M
+3  27  7.8   M
+4  27 17.8   M</code></pre>
+</div>
+</div>
+<ul>
+<li>Utiliza el comando <code>table</code> para averiguar cuántos hombres y mujeres hay en el fichero <code>datos</code>.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(datos<span class="sc">$</span>sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ F  M 
+14  4 </code></pre>
+</div>
+</div>
+<ul>
+<li>Haz un <em>summary</em> del fichero <code>datos</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      age             fat            sex           
+ Min.   :23.00   Min.   : 7.80   Length:18         
+ 1st Qu.:39.50   1st Qu.:26.27   Class :character  
+ Median :51.50   Median :30.70   Mode  :character  
+ Mean   :46.33   Mean   :28.61                     
+ 3rd Qu.:56.75   3rd Qu.:33.60                     
+ Max.   :61.00   Max.   :42.00                     </code></pre>
+</div>
+</div>
+<!-- * Elimina la variable `fat` del fichero `datos` -->
+<!-- ```{r include=TRUE} -->
+<!-- datos[,-2] -->
+<!-- ``` -->
+<!-- * Elimina las observaciones 7, 9 y 15 del fichero `datos` -->
+<!-- ```{r include=FALSE} -->
+<!-- datos[-c(7,9,15),] -->
+<!-- ``` -->
+<ul>
+<li>Utiliza la función <code>eda()</code> del paquete <code>PASWR2</code> para realizar un análisis exploratorio de la variable <code>fat</code></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eda</span>(datos<span class="sc">$</span>fat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica1_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Size (n)  Missing  Minimum   1st Qu     Mean   Median   TrMean   3rd Qu 
+  18.000    0.000    7.800   26.275   28.611   30.700   28.611   33.600 
+     Max    Stdev      Var  SE Mean   I.Q.R.    Range Kurtosis Skewness 
+  42.000    9.144   83.620    2.155    7.325   34.200    0.141   -0.888 
+SW p-val 
+   0.043 </code></pre>
+</div>
+</div>
 
 
 </section>

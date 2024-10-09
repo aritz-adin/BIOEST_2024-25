@@ -1,12 +1,13 @@
 # Máster Universitario en Salud Pública
 
+
 ## Bioestadística / Curso 2024-25.
 
 | Fecha        | Título                                                       |
 |--------------|--------------------------------------------------------------|
 | 02-octubre   | [Práctica 0: Introducción a `R`](./Practica0.html)           |
 | 07-octubre   | [Práctica 1: Lectura y manejo de ficheros](./Practica1.html) |
-| 16-octubre   | Práctica 2: Estadística descriptiva                          |
+| 16-octubre   | [Práctica 2: Estadística descriptiva](./Practica2.html)      |
 | 28-octubre   | Práctica 3: Contrastes paramétricos                          |
 | 30-octubre   | Práctica repaso: Bloque I                                    |
 | 06-noviembre | Práctica 4: Regresión lineal                                 |

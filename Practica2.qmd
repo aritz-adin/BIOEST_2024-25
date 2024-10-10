@@ -88,7 +88,7 @@ table(diabetes$frame)/nrow(diabetes)
 X <- table(diabetes$frame)
 
 # Diagrama de barras
-barplot(X, xlab="Frame", ylab="Frequency", col=topo.colors(3))
+barplot(X, xlab="Frame", ylab="Frecuencias abs.", col=topo.colors(3))
 legend("topright", legend=levels(diabetes$frame), fill=topo.colors(3))
 
 # Diagrama de sectores
@@ -103,7 +103,9 @@ legend("topleft", legend=levels(diabetes$frame), fill=topo.colors(3))
 ## 1.9 Realiza un histograma y un diagrama de cajas de la variable `chol`. ¿Qué información obtienes de ellos?
 ```{r include=FALSE}
 par(mfrow=c(1,2),pty="s")
+
 hist(diabetes$chol, nclass="scott", col="cyan", main="Histograma", xlab="Colesterol")
+
 boxplot(diabetes$chol, col="pink", main="Diagrama de caja", xlab="Colesterol")
 ```
 
@@ -121,16 +123,11 @@ eda(diabetes$chol)
 
 ## 1.13 Calcula el coeficiente de curtosis de la variable `chol`. ¿Qué indica?
 
-## 1.14 Según el diagrama de cajas, ¿existe alguna observación atípica? ¿Cuál es?
+## 1.14 Según el diagrama de cajas, ¿existe alguna observación atípica?
 ```{r include=FALSE}
-boxplot(diabetes$chol)
+b <- boxplot(diabetes$chol)
 
-library(lattice)
-bwplot(~chol, data=diabetes, as.table=TRUE)
-trellis.focus(name="panel",1,1)
-panel.identify()
-
-#diabetes[c(4,63,134,148,213,295,360,378,381),]
+b$out
 ```
 
 ## 1.15 ¿Cuántos hombres y cuántas mujeres hay en la muestra?
@@ -146,29 +143,29 @@ table(diabetes$location)
 ## 1.17 ¿Puedes calcular la media y la mediana de la variable `location`?
 
 ## 1.18 Realiza un diagrama de cajas de la variable `chol` según las categorías de la variable `frame`.
-```{r include=FALSE}
+```{r include=TRUE}
 boxplot(chol~frame, col=cm.colors(3), data=diabetes)
 ```
 
 ## 1.19 Realiza un diagrama de cajas de la variable `chol` según las categorías de la `frame` y la variable `gender`.
-```{r include=FALSE}
+```{r include=TRUE}
 boxplot(chol~frame+gender, col=cm.colors(3), data=diabetes)
 bwplot(frame~chol|gender, data=diabetes)
 ```
 
 ## 1.20 Calcula la media, mediana, la desviación típica y los cuartiles de la variable `chol` según las categorías de la variable `frame`?
-```{r include=FALSE}
+```{r include=TRUE}
 tapply(diabetes$chol, diabetes$frame, summary)
 tapply(diabetes$chol, diabetes$frame, sd)
 ```
 
 ## 1.21 Realiza un histograma de la variable `chol` según las categorías de la variable `frame` y la variable `gender`.
-```{r include=FALSE}
+```{r include=TRUE}
 histogram( ~ chol | frame*gender, xlab="Colesterol", type="density", data=diabetes)
 ```
 
 ## 1.22 Calcula la media, la mediana, los cuartiles y la desviación típica de la variable `glyhb`. Explica cómo está de dispersa utilizando el histograma, el diagrama de cajas, los cuartiles y la desviación típica.
-```{r include=FALSE}
+```{r include=TRUE}
 eda(diabetes$glyhb)
 
 par(mfrow=c(1,2),pty="s")
@@ -177,7 +174,7 @@ boxplot(diabetes$glyhb, col="pink")
 ```
 
 ## 1.23 Compara la dispersión de las variables `chol` y `glyhb`. ¿Qué variable tiene la desviación típica más alta? ¿Puedes concluir que aquella variable con la desviación típica más alta es la más dispersa? ¿Por qué? ¿Qué medida crees que es la más adecuada?
-```{r include=FALSE}
+```{r include=TRUE}
 eda(diabetes$chol)
 eda(diabetes$glyhb)
 
@@ -189,7 +186,7 @@ CV.glyhb
 ```
 
 ## 1.24 Considera la variable `chol` por sexo. Selecciona el hombre y la mujer con mayor nivel de colesterol. ¿Cuál de los dos destaca más en comparación a la media de su grupo?
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(diabetes$gender=="male")
 chol.male <- diabetes[pos,"chol"]
 

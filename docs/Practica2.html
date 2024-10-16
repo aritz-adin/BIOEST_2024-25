@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -80,7 +80,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -89,6 +95,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -98,6 +105,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -105,9 +139,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">BIOEST 2024-25</span>
     </a>
@@ -119,25 +153,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Programa</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Programa</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Practica0.html" rel="" target="">
- <span class="menu-text">Práctica 0</span></a>
+    <a class="nav-link" href="./Practica0.html"> 
+<span class="menu-text">Práctica 0</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Practica1.html" rel="" target="">
- <span class="menu-text">Práctica 1</span></a>
+    <a class="nav-link" href="./Practica1.html"> 
+<span class="menu-text">Práctica 1</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./Practica2.html" rel="" target="" aria-current="page">
- <span class="menu-text">Práctica 2</span></a>
+    <a class="nav-link active" href="./Practica2.html" aria-current="page"> 
+<span class="menu-text">Práctica 2</span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools ms-auto">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -201,6 +235,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#a-fancy-way-of-visualizing-correlation-a-matrix" id="toc-a-fancy-way-of-visualizing-correlation-a-matrix" class="nav-link" data-scroll-target="#a-fancy-way-of-visualizing-correlation-a-matrix">A fancy way of visualizing correlation a matrix</a></li>
   </ul></li>
   <li><a href="#ejercicios-para-resolver-en-clase" id="toc-ejercicios-para-resolver-en-clase" class="nav-link" data-scroll-target="#ejercicios-para-resolver-en-clase">EJERCICIOS: Para resolver en clase</a></li>
+  <li><a href="#ejercicios-a-entregar" id="toc-ejercicios-a-entregar" class="nav-link" data-scroll-target="#ejercicios-a-entregar">EJERCICIOS A ENTREGAR</a>
+  <ul class="collapse">
+  <li><a href="#realiza-un-histograma-y-un-diagrama-de-cajas-de-la-variable-il6.-qué-puedes-decir-acerca-de-la-simetría-y-la-dispersión-de-la-variable" id="toc-realiza-un-histograma-y-un-diagrama-de-cajas-de-la-variable-il6.-qué-puedes-decir-acerca-de-la-simetría-y-la-dispersión-de-la-variable" class="nav-link" data-scroll-target="#realiza-un-histograma-y-un-diagrama-de-cajas-de-la-variable-il6.-qué-puedes-decir-acerca-de-la-simetría-y-la-dispersión-de-la-variable">1) Realiza un histograma y un diagrama de cajas de la variable <code>IL6</code>. ¿Qué puedes decir acerca de la simetría y la dispersión de la variable?</a></li>
+  <li><a href="#calcula-la-media-mediana-cuartiles-desviación-típica-coeficientes-de-asimetría-y-de-curtosis-y-los-coeficientes-de-variación.-indica-sus-unidades-e-interpreta-los-estadísticos-en-aquellos-casos-que-sea-posible." id="toc-calcula-la-media-mediana-cuartiles-desviación-típica-coeficientes-de-asimetría-y-de-curtosis-y-los-coeficientes-de-variación.-indica-sus-unidades-e-interpreta-los-estadísticos-en-aquellos-casos-que-sea-posible." class="nav-link" data-scroll-target="#calcula-la-media-mediana-cuartiles-desviación-típica-coeficientes-de-asimetría-y-de-curtosis-y-los-coeficientes-de-variación.-indica-sus-unidades-e-interpreta-los-estadísticos-en-aquellos-casos-que-sea-posible.">2) Calcula la media, mediana, cuartiles, desviación típica, coeficientes de asimetría y de curtosis, y los coeficientes de variación. Indica sus unidades e interpreta los estadísticos (en aquellos casos que sea posible).</a></li>
+  <li><a href="#dibuja-un-histograma-y-un-diagrama-de-cajas-en-función-de-la-variable-cancerstage.-interpreta-los-gráficos-obtenidos." id="toc-dibuja-un-histograma-y-un-diagrama-de-cajas-en-función-de-la-variable-cancerstage.-interpreta-los-gráficos-obtenidos." class="nav-link" data-scroll-target="#dibuja-un-histograma-y-un-diagrama-de-cajas-en-función-de-la-variable-cancerstage.-interpreta-los-gráficos-obtenidos.">3) Dibuja un histograma y un diagrama de cajas en función de la variable <code>CancerStage</code>. Interpreta los gráficos obtenidos.</a></li>
+  <li><a href="#realiza-un-diagrama-de-dispersión-de-las-variables-il6-y-crp.-crees-que-existe-relación-lineal-entre-ellas-calcula-e-interpreta-la-covarianza-y-el-coeficiente-de-correlación-lineal-indica-sus-unidades." id="toc-realiza-un-diagrama-de-dispersión-de-las-variables-il6-y-crp.-crees-que-existe-relación-lineal-entre-ellas-calcula-e-interpreta-la-covarianza-y-el-coeficiente-de-correlación-lineal-indica-sus-unidades." class="nav-link" data-scroll-target="#realiza-un-diagrama-de-dispersión-de-las-variables-il6-y-crp.-crees-que-existe-relación-lineal-entre-ellas-calcula-e-interpreta-la-covarianza-y-el-coeficiente-de-correlación-lineal-indica-sus-unidades.">4) Realiza un diagrama de dispersión de las variables <code>IL6</code> y <code>CRP</code>. ¿Crees que existe relación lineal entre ellas? Calcula e interpreta la covarianza y el coeficiente de correlación lineal (indica sus unidades).</a></li>
+  <li><a href="#selecciona-el-paciente-fumador-never-y-ex-fumador-former-con-valores-más-bajos-en-la-variable-crp.-cuál-de-los-dos-pacientes-destaca-más-en-comparación-a-la-media-de-su-grupo-justifica-la-respuesta." id="toc-selecciona-el-paciente-fumador-never-y-ex-fumador-former-con-valores-más-bajos-en-la-variable-crp.-cuál-de-los-dos-pacientes-destaca-más-en-comparación-a-la-media-de-su-grupo-justifica-la-respuesta." class="nav-link" data-scroll-target="#selecciona-el-paciente-fumador-never-y-ex-fumador-former-con-valores-más-bajos-en-la-variable-crp.-cuál-de-los-dos-pacientes-destaca-más-en-comparación-a-la-media-de-su-grupo-justifica-la-respuesta.">5) Selecciona el paciente fumador (<em>never</em>) y ex-fumador (<em>former</em>) con valores más bajos en la variable <code>CRP</code>. ¿Cuál de los dos pacientes destaca más en comparación a la media de su grupo? Justifica la respuesta.</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -234,7 +276,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </div>
   
 
+
 </header>
+
 
 <section id="descripción" class="level1">
 <h1>Descripción</h1>
@@ -421,13 +465,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(X, <span class="at">xlab=</span><span class="st">"Frame"</span>, <span class="at">ylab=</span><span class="st">"Frecuencias abs."</span>, <span class="at">col=</span><span class="fu">topo.colors</span>(<span class="dv">3</span>))</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend=</span><span class="fu">levels</span>(diabetes<span class="sc">$</span>frame), <span class="at">fill=</span><span class="fu">topo.colors</span>(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Diagrama de sectores</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pie</span>(X, <span class="at">labels=</span><span class="fu">names</span>(X), <span class="at">col=</span><span class="fu">topo.colors</span>(<span class="dv">3</span>))</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, <span class="at">legend=</span><span class="fu">levels</span>(diabetes<span class="sc">$</span>frame), <span class="at">fill=</span><span class="fu">topo.colors</span>(<span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -446,7 +498,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(diabetes<span class="sc">$</span>chol, <span class="at">col=</span><span class="st">"pink"</span>, <span class="at">main=</span><span class="st">"Diagrama de caja"</span>, <span class="at">xlab=</span><span class="st">"Colesterol"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -470,7 +526,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eda</span>(diabetes<span class="sc">$</span>chol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Size (n)  Missing  Minimum   1st Qu     Mean   Median   TrMean   3rd Qu 
@@ -493,7 +553,11 @@ SW p-val
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">boxplot</span>(diabetes<span class="sc">$</span>chol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>b<span class="sc">$</span>out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -539,7 +603,11 @@ Buckingham     Louisa
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(chol<span class="sc">~</span>frame, <span class="at">col=</span><span class="fu">cm.colors</span>(<span class="dv">3</span>), <span class="at">data=</span>diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -548,7 +616,11 @@ Buckingham     Louisa
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(chol<span class="sc">~</span>frame<span class="sc">+</span>gender, <span class="at">col=</span><span class="fu">cm.colors</span>(<span class="dv">3</span>), <span class="at">data=</span>diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -581,7 +653,11 @@ $small
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">histogram</span>( <span class="sc">~</span> chol <span class="sc">|</span> frame<span class="sc">*</span>gender, <span class="at">xlab=</span><span class="st">"Colesterol"</span>, <span class="at">type=</span><span class="st">"density"</span>, <span class="at">data=</span>diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -590,7 +666,11 @@ $small
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eda</span>(diabetes<span class="sc">$</span>glyhb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Size (n)  Missing  Minimum   1st Qu     Mean   Median   TrMean   3rd Qu 
@@ -604,7 +684,11 @@ SW p-val
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(diabetes<span class="sc">$</span>glyhb, <span class="at">nclass=</span><span class="st">"scott"</span>, <span class="at">col=</span><span class="st">"cyan"</span>)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(diabetes<span class="sc">$</span>glyhb, <span class="at">col=</span><span class="st">"pink"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-16-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -613,7 +697,11 @@ SW p-val
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eda</span>(diabetes<span class="sc">$</span>chol)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Size (n)  Missing  Minimum   1st Qu     Mean   Median   TrMean   3rd Qu 
@@ -625,7 +713,11 @@ SW p-val
 </div>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eda</span>(diabetes<span class="sc">$</span>glyhb)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-17-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Size (n)  Missing  Minimum   1st Qu     Mean   Median   TrMean   3rd Qu 
@@ -691,7 +783,11 @@ SW p-val
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(diabetes<span class="sc">$</span>ratioWH,<span class="at">nclass=</span><span class="st">"scott"</span>,<span class="at">col=</span><span class="st">"cyan"</span>)</span>
 <span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(diabetes<span class="sc">$</span>ratioWH,<span class="at">col=</span><span class="st">"pink"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -700,7 +796,11 @@ SW p-val
 <div class="cell">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">eda</span>(diabetes<span class="sc">$</span>ratioWH)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="Practica2_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="Practica2_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Size (n)  Missing  Minimum   1st Qu     Mean   Median   TrMean   3rd Qu 
@@ -763,75 +863,72 @@ SW p-val
 <li>¿Cuál es el porcentaje de hombres con body frame <em>small</em>?</li>
 <li>¿Qué porcentaje de pacientes con body frame <em>medium</em> son hombres?</li>
 </ul>
-<!-- # EJERCICIOS A ENTREGAR -->
-<!-- Una Organización de Salud busca identificar qué factores de los pacientes están más asociados con la remisión del cáncer de pulmón tras el tratamiento, en el marco de un estudio más amplio sobre los resultados del tratamiento y la calidad de vida de los pacientes con esta enfermedad. -->
-<!-- El archivo `patients.txt` contiene las siguientes variables medidas sobre un conjunto de datos de 8.525 pacientes. -->
-<!-- * `remission`: response variable (0=no, 1=yes) -->
-<!-- * `Age`: age of the patient (in years) -->
-<!-- * `IL6`: Interleukin-6 concentration in blood (pg/ml) -->
-<!-- * `CRP`: C-reactive protein concentration in blood (mg/dl) -->
-<!-- * `LengthofStay`: duration of a patient's hospital stay (in weeks) -->
-<!-- * `CancerStage`: lung cancer stage (I, II, III or IV) -->
-<!-- * `Smoking`: is the patient a smoker? (1=never, 2=former, 3=current) -->
-<!-- * `ID.hospital`: ID of the hospital -->
-<!-- ```{r} -->
-
-<!-- patients <- read.table(file="patients.txt", header=T, stringsAsFactors=T) -->
-<!-- head(patients) -->
-<!-- ``` -->
-<!-- En primer lugar, selecciona los pacientes asociados a tu código de hospital (`ID.hospital`) e indica cuántos pacientes pertenecen a dicho hospital. -->
-<!-- Por ejemplo: -->
-<!-- ```{r} -->
-<!-- pos <- which(patients$ID.hospital=="1") -->
-<!-- datos <- patients[pos,] -->
-<!-- str(datos) -->
-<!-- ``` -->
-<!-- El hospital "1" contiene 252 pacientes. -->
-<!-- ## 1) Realiza un histograma y un diagrama de cajas de la variable `IL6`. ¿Qué puedes decir acerca de la simetría y la dispersión de la variable?  -->
-<!-- ```{r include=FALSE} -->
-<!-- par(mfrow=c(1,2)) -->
-<!-- hist(datos$IL6, xlab="Interleukin-6 concentration in blood", main=paste0("ID.hospital=",1)) -->
-<!-- boxplot(datos$IL6, xlab="Interleukin-6 concentration in blood", main=paste0("ID.hospital=",1)) -->
-<!-- ``` -->
-<!-- ## 2) Calcula la media, mediana, cuartiles, desviación típica, coeficientes de asimetría y de curtosis, y los coeficientes de variación. Indica sus unidades e interpreta los estadísticos (en aquellos casos que sea posible). -->
-<!-- ```{r include=FALSE} -->
-<!-- PASWR2::eda(datos$IL6) -->
-<!-- CV <- sd(datos$IL6)/mean(datos$IL6) -->
-<!-- CV -->
-<!-- ``` -->
-<!-- ## 3) Dibuja un histograma y un diagrama de cajas en función de la variable `CancerStage`. Interpreta los gráficos obtenidos. -->
-<!-- ```{r, include=FALSE} -->
-<!-- library(lattice) -->
-<!-- boxplot(datos$IL6 ~ datos$CancerStage, -->
-<!--         ylab="IL6 concentration in blood (pg/ml)", xlab="Remission") -->
-<!-- histogram(~ IL6 | CancerStage, xlab="IL6 concentration in blood (pg/ml)", type="density", data=datos) -->
-<!-- ``` -->
-<!-- ## 4) Realiza un diagrama de dispersión de las variables `IL6` y `CRP`. ¿Crees que existe relación lineal entre ellas? Calcula e interpreta la covarianza y el coeficiente de correlación lineal (indica sus unidades). -->
-<!-- ```{r, include=FALSE} -->
-<!-- plot(datos$IL6, datos$CRP, -->
-<!--      xlab="IL6 concentration in blood", -->
-<!--      ylab="C-reactive protein concentration in blood") -->
-<!-- abline(lm(IL6 ~ CRP, data=datos), col="red") -->
-<!-- cov(datos$IL6, datos$CRP) -->
-<!-- cor(datos$IL6, datos$CRP) -->
-<!-- ``` -->
-<!-- ## 5) Selecciona el paciente fumador (*never*) y ex-fumador (*former*) con valores más bajos en la variable `CRP`. ¿Cuál de los dos pacientes destaca más en comparación a la media de su grupo? Justifica la respuesta. -->
-<!-- ```{r include=FALSE} -->
-<!-- pos <- which(datos$Smoking=="never") -->
-<!-- datos.never <- datos[pos,] -->
-<!-- pos <- which(datos$Smoking=="former") -->
-<!-- datos.former <- datos[pos,] -->
-<!-- # Calculamos los niveles de CRP mínimos -->
-<!-- x <- min(datos.never$CRP) -->
-<!-- y <- min(datos.former$CRP) -->
-<!-- # Tipificamos los valores  -->
-<!-- x.tipif <- (x-mean(datos.never$CRP))/sd(datos.never$CRP) -->
-<!-- x.tipif -->
-<!-- y.tipif <- (y-mean(datos.former$CRP))/sd(datos.former$CRP) -->
-<!-- y.tipif -->
-<!-- ``` -->
+</section>
+<section id="ejercicios-a-entregar" class="level1">
+<h1>EJERCICIOS A ENTREGAR</h1>
+<p>Una Organización de Salud busca identificar qué factores de los pacientes están más asociados con la remisión del cáncer de pulmón tras el tratamiento, en el marco de un estudio más amplio sobre los resultados del tratamiento y la calidad de vida de los pacientes con esta enfermedad.</p>
+<p>El archivo <code>patients.txt</code> contiene las siguientes variables medidas sobre un conjunto de datos de 8.525 pacientes.</p>
+<ul>
+<li><p><code>remission</code>: response variable (0=no, 1=yes)</p></li>
+<li><p><code>Age</code>: age of the patient (in years)</p></li>
+<li><p><code>IL6</code>: Interleukin-6 concentration in blood (pg/ml)</p></li>
+<li><p><code>CRP</code>: C-reactive protein concentration in blood (mg/dl)</p></li>
+<li><p><code>LengthofStay</code>: duration of a patient’s hospital stay (in weeks)</p></li>
+<li><p><code>CancerStage</code>: lung cancer stage (I, II, III or IV)</p></li>
+<li><p><code>Smoking</code>: is the patient a smoker? (1=never, 2=former, 3=current)</p></li>
+<li><p><code>ID.hospital</code>: ID of the hospital</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>patients <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="at">file=</span><span class="st">"patients.txt"</span>, <span class="at">header=</span>T, <span class="at">stringsAsFactors=</span>T)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(patients)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  remission Age    IL6   CRP LengthofStay CancerStage Smoking ID.hospital
+1         0  65  3.699 8.086            6          II  former           1
+2         0  54  2.627 0.803            6          II  former           1
+3         0  53 13.896 4.034            5          II   never           1
+4         0  41  3.008 2.126            5           I  former           1
+5         0  47  3.891 1.349            6          II   never           1
+6         0  52  1.418 2.195            5           I   never           1</code></pre>
+</div>
+</div>
+<p>En primer lugar, selecciona los pacientes asociados a tu código de hospital (<code>ID.hospital</code>) e indica cuántos pacientes pertenecen a dicho hospital.</p>
+<p>Por ejemplo:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(patients<span class="sc">$</span>ID.hospital<span class="sc">==</span><span class="st">"1"</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> patients[pos,]</span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   252 obs. of  8 variables:
+ $ remission   : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ Age         : int  65 54 53 41 47 52 54 47 54 51 ...
+ $ IL6         : num  3.7 2.63 13.9 3.01 3.89 ...
+ $ CRP         : num  8.086 0.803 4.034 2.126 1.349 ...
+ $ LengthofStay: int  6 6 5 5 6 5 4 5 6 7 ...
+ $ CancerStage : Factor w/ 4 levels "I","II","III",..: 2 2 2 1 2 1 2 2 2 2 ...
+ $ Smoking     : Factor w/ 3 levels "current","former",..: 2 2 3 2 3 3 1 2 2 3 ...
+ $ ID.hospital : int  1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+</div>
+</div>
+<p>El hospital “1” contiene 252 pacientes.</p>
+<section id="realiza-un-histograma-y-un-diagrama-de-cajas-de-la-variable-il6.-qué-puedes-decir-acerca-de-la-simetría-y-la-dispersión-de-la-variable" class="level2">
+<h2 class="anchored" data-anchor-id="realiza-un-histograma-y-un-diagrama-de-cajas-de-la-variable-il6.-qué-puedes-decir-acerca-de-la-simetría-y-la-dispersión-de-la-variable">1) Realiza un histograma y un diagrama de cajas de la variable <code>IL6</code>. ¿Qué puedes decir acerca de la simetría y la dispersión de la variable?</h2>
+</section>
+<section id="calcula-la-media-mediana-cuartiles-desviación-típica-coeficientes-de-asimetría-y-de-curtosis-y-los-coeficientes-de-variación.-indica-sus-unidades-e-interpreta-los-estadísticos-en-aquellos-casos-que-sea-posible." class="level2">
+<h2 class="anchored" data-anchor-id="calcula-la-media-mediana-cuartiles-desviación-típica-coeficientes-de-asimetría-y-de-curtosis-y-los-coeficientes-de-variación.-indica-sus-unidades-e-interpreta-los-estadísticos-en-aquellos-casos-que-sea-posible.">2) Calcula la media, mediana, cuartiles, desviación típica, coeficientes de asimetría y de curtosis, y los coeficientes de variación. Indica sus unidades e interpreta los estadísticos (en aquellos casos que sea posible).</h2>
+</section>
+<section id="dibuja-un-histograma-y-un-diagrama-de-cajas-en-función-de-la-variable-cancerstage.-interpreta-los-gráficos-obtenidos." class="level2">
+<h2 class="anchored" data-anchor-id="dibuja-un-histograma-y-un-diagrama-de-cajas-en-función-de-la-variable-cancerstage.-interpreta-los-gráficos-obtenidos.">3) Dibuja un histograma y un diagrama de cajas en función de la variable <code>CancerStage</code>. Interpreta los gráficos obtenidos.</h2>
+</section>
+<section id="realiza-un-diagrama-de-dispersión-de-las-variables-il6-y-crp.-crees-que-existe-relación-lineal-entre-ellas-calcula-e-interpreta-la-covarianza-y-el-coeficiente-de-correlación-lineal-indica-sus-unidades." class="level2">
+<h2 class="anchored" data-anchor-id="realiza-un-diagrama-de-dispersión-de-las-variables-il6-y-crp.-crees-que-existe-relación-lineal-entre-ellas-calcula-e-interpreta-la-covarianza-y-el-coeficiente-de-correlación-lineal-indica-sus-unidades.">4) Realiza un diagrama de dispersión de las variables <code>IL6</code> y <code>CRP</code>. ¿Crees que existe relación lineal entre ellas? Calcula e interpreta la covarianza y el coeficiente de correlación lineal (indica sus unidades).</h2>
+</section>
+<section id="selecciona-el-paciente-fumador-never-y-ex-fumador-former-con-valores-más-bajos-en-la-variable-crp.-cuál-de-los-dos-pacientes-destaca-más-en-comparación-a-la-media-de-su-grupo-justifica-la-respuesta." class="level2">
+<h2 class="anchored" data-anchor-id="selecciona-el-paciente-fumador-never-y-ex-fumador-former-con-valores-más-bajos-en-la-variable-crp.-cuál-de-los-dos-pacientes-destaca-más-en-comparación-a-la-media-de-su-grupo-justifica-la-respuesta.">5) Selecciona el paciente fumador (<em>never</em>) y ex-fumador (<em>former</em>) con valores más bajos en la variable <code>CRP</code>. ¿Cuál de los dos pacientes destaca más en comparación a la media de su grupo? Justifica la respuesta.</h2>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -914,10 +1011,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+          // target, if specified
+          link.setAttribute("target", "_blank");
+          if (link.getAttribute("rel") === null) {
+            link.setAttribute("rel", "noopener");
+          }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -927,8 +1046,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -940,7 +1068,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -984,6 +1235,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1009,6 +1261,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1066,23 +1344,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       });
     }
   }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-          // target, if specified
-          link.setAttribute("target", "_blank");
-      }
-    }
 });
 </script>
 </div> <!-- /content -->
+
 
 
 

@@ -228,49 +228,49 @@
     "href": "Practica2.html#forma-una-tabla-de-doble-entrada-cruzando-las-variables-gender-y-frame.-cuántas-mujeres-tienen-un-body-frame-medium",
     "title": "Práctica 2: Estadística Descriptiva",
     "section": "2.4 Forma una tabla de doble entrada cruzando las variables gender y frame. ¿Cuántas mujeres tienen un body frame medium?",
-    "text": "2.4 Forma una tabla de doble entrada cruzando las variables gender y frame. ¿Cuántas mujeres tienen un body frame medium?"
+    "text": "2.4 Forma una tabla de doble entrada cruzando las variables gender y frame. ¿Cuántas mujeres tienen un body frame medium?\n\nY &lt;- table(diabetes$gender,diabetes$frame)\nY  \n\n        \n         large medium small\n  female    42    123    69\n  male      61     73    35"
   },
   {
     "objectID": "Practica2.html#qué-porcentaje-de-hombres-tienen-un-body-frame-large",
     "href": "Practica2.html#qué-porcentaje-de-hombres-tienen-un-body-frame-large",
     "title": "Práctica 2: Estadística Descriptiva",
     "section": "2.5 Qué porcentaje de hombres tienen un body frame large?",
-    "text": "2.5 Qué porcentaje de hombres tienen un body frame large?"
+    "text": "2.5 Qué porcentaje de hombres tienen un body frame large?\n\nprop.table(Y)\n\n        \n              large     medium      small\n  female 0.10421836 0.30521092 0.17121588\n  male   0.15136476 0.18114144 0.08684864\n\nprop.table(Y,1)\n\n        \n             large    medium     small\n  female 0.1794872 0.5256410 0.2948718\n  male   0.3609467 0.4319527 0.2071006"
   },
   {
     "objectID": "Practica2.html#realiza-un-diagrama-de-dispersión-de-las-variables-weight-y-waist.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "href": "Practica2.html#realiza-un-diagrama-de-dispersión-de-las-variables-weight-y-waist.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "title": "Práctica 2: Estadística Descriptiva",
     "section": "3.1 Realiza un diagrama de dispersión de las variables weight y waist. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.",
-    "text": "3.1 Realiza un diagrama de dispersión de las variables weight y waist. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal."
+    "text": "3.1 Realiza un diagrama de dispersión de las variables weight y waist. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.\n\nplot(diabetes$weight,diabetes$waist)\nabline(lm(waist ~ weight, data=diabetes), col=\"red\")\n\n\n\ncov(diabetes$weight,diabetes$waist)\n\n[1] 194.8847\n\ncor(diabetes$weight,diabetes$waist)\n\n[1] 0.8463617"
   },
   {
     "objectID": "Practica2.html#realiza-un-diagrama-de-dispersión-de-las-variables-chol-y-weight.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "href": "Practica2.html#realiza-un-diagrama-de-dispersión-de-las-variables-chol-y-weight.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "title": "Práctica 2: Estadística Descriptiva",
     "section": "3.2 Realiza un diagrama de dispersión de las variables chol y weight. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.",
-    "text": "3.2 Realiza un diagrama de dispersión de las variables chol y weight. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal."
+    "text": "3.2 Realiza un diagrama de dispersión de las variables chol y weight. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.\n\nplot(diabetes$weight, diabetes$chol)\nabline(lm(chol ~ weight, data=diabetes), col=\"red\")\n\n\n\ncov(diabetes$chol,diabetes$weight)\n\n[1] 118.4692\n\ncor(diabetes$chol,diabetes$weight)\n\n[1] 0.06623929"
   },
   {
     "objectID": "Practica2.html#selecciona-las-personas-del-condado-de-buckingham-y-realiza-un-diagrama-de-dispersión-de-las-variables-waist-y-hip.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "href": "Practica2.html#selecciona-las-personas-del-condado-de-buckingham-y-realiza-un-diagrama-de-dispersión-de-las-variables-waist-y-hip.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "title": "Práctica 2: Estadística Descriptiva",
     "section": "3.3 Selecciona las personas del condado de Buckingham y realiza un diagrama de dispersión de las variables waist y hip. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.",
-    "text": "3.3 Selecciona las personas del condado de Buckingham y realiza un diagrama de dispersión de las variables waist y hip. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal."
+    "text": "3.3 Selecciona las personas del condado de Buckingham y realiza un diagrama de dispersión de las variables waist y hip. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.\n\npos &lt;- which(diabetes$location==\"Buckingham\")\ndiabetes.B &lt;- diabetes[pos,]\n\nplot(diabetes.B$waist,diabetes.B$hip)\nabline(lm(hip ~ waist, data=diabetes.B), col=\"red\")\n\n\n\ncov(diabetes.B$waist,diabetes.B$hip)\n\n[1] 32.66462\n\ncor(diabetes.B$waist,diabetes.B$hip)\n\n[1] 0.854653"
   },
   {
     "objectID": "Practica2.html#selecciona-las-mujeres-con-body-frame-medium-y-realiza-un-diagrama-de-dispersión-de-las-variables-bp.1s-y-age.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "href": "Practica2.html#selecciona-las-mujeres-con-body-frame-medium-y-realiza-un-diagrama-de-dispersión-de-las-variables-bp.1s-y-age.-crees-que-existe-relación-lineal-entre-ambas-variables-calcula-la-covarianza-y-el-coeficiente-de-correlación-lineal.",
     "title": "Práctica 2: Estadística Descriptiva",
     "section": "3.4 Selecciona las mujeres con body frame medium y realiza un diagrama de dispersión de las variables bp.1s y age. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.",
-    "text": "3.4 Selecciona las mujeres con body frame medium y realiza un diagrama de dispersión de las variables bp.1s y age. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal."
+    "text": "3.4 Selecciona las mujeres con body frame medium y realiza un diagrama de dispersión de las variables bp.1s y age. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.\n\npos &lt;- which(diabetes$gender==\"female\" & diabetes$frame ==\"medium\")\ndatos &lt;- diabetes[pos,]\n\nplot(datos$age,datos$bp.1s)\nabline(lm(bp.1s ~ age, data=diabetes.B), col=\"red\")\n\n\n\ncov(datos$bp.1s,datos$age)\n\n[1] 237.8738\n\ncor(datos$bp.1s,datos$age)\n\n[1] 0.5473436"
   },
   {
     "objectID": "Practica2.html#a-fancy-way-of-visualizing-correlation-a-matrix",
     "href": "Practica2.html#a-fancy-way-of-visualizing-correlation-a-matrix",
     "title": "Práctica 2: Estadística Descriptiva",
     "section": "A fancy way of visualizing correlation a matrix",
-    "text": "A fancy way of visualizing correlation a matrix"
+    "text": "A fancy way of visualizing correlation a matrix\n\nlibrary(corrplot)\n\nWarning: package 'corrplot' was built under R version 4.4.1\n\n\ncorrplot 0.94 loaded\n\ndiabetes.X &lt;- diabetes[,c(\"chol\",\"stab.glu\",\"hdl\",\"glyhb\",\"age\",\"height\",\"weight\",\"bp.1s\",\"bp.1d\",\"waist\",\"hip\")]\ncor.matrix &lt;- cor(diabetes.X)\n\ncorrplot(cor.matrix, method=\"circle\", type=\"upper\")\n\n\n\ncorrplot(cor.matrix, method=\"number\", type=\"upper\")"
   },
   {
     "objectID": "Practica0.html",

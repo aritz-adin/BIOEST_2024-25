@@ -278,14 +278,14 @@ barplot(t(X),beside=TRUE,main="Barplot where frame is grouped \n within levels o
 
 ## 2.4 Forma una tabla de doble entrada cruzando las variables `gender` y `frame`. ¿Cuántas mujeres tienen un body frame *medium*?
 
-```{r include=FALSE}
+```{r include=TRUE}
 Y <- table(diabetes$gender,diabetes$frame)
 Y  
 ```
 
 ## 2.5 Qué porcentaje de hombres tienen un body frame *large*?
 
-```{r include=FALSE}
+```{r include=TRUE}
 prop.table(Y)
 prop.table(Y,1)
 ```
@@ -294,7 +294,7 @@ prop.table(Y,1)
 
 ## 3.1 Realiza un diagrama de dispersión de las variables `weight` y `waist`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
 
-```{r include=FALSE}
+```{r include=TRUE}
 plot(diabetes$weight,diabetes$waist)
 abline(lm(waist ~ weight, data=diabetes), col="red")
 
@@ -304,7 +304,7 @@ cor(diabetes$weight,diabetes$waist)
 
 ## 3.2 Realiza un diagrama de dispersión de las variables `chol` y `weight`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
 
-```{r include=FALSE}
+```{r include=TRUE}
 plot(diabetes$weight, diabetes$chol)
 abline(lm(chol ~ weight, data=diabetes), col="red")
 
@@ -314,7 +314,7 @@ cor(diabetes$chol,diabetes$weight)
 
 ## 3.3 Selecciona las personas del condado de Buckingham y realiza un diagrama de dispersión de las variables `waist` y `hip`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
 
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(diabetes$location=="Buckingham")
 diabetes.B <- diabetes[pos,]
 
@@ -327,7 +327,7 @@ cor(diabetes.B$waist,diabetes.B$hip)
 
 ## 3.4 Selecciona las mujeres con body frame medium y realiza un diagrama de dispersión de las variables `bp.1s` y `age`. ¿Crees que existe relación lineal entre ambas variables? Calcula la covarianza y el coeficiente de correlación lineal.
 
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(diabetes$gender=="female" & diabetes$frame =="medium")
 datos <- diabetes[pos,]
 
@@ -340,7 +340,7 @@ cor(datos$bp.1s,datos$age)
 
 ## A fancy way of visualizing correlation a matrix
 
-```{r include=FALSE}
+```{r include=TRUE}
 library(corrplot)
 
 diabetes.X <- diabetes[,c("chol","stab.glu","hdl","glyhb","age","height","weight","bp.1s","bp.1d","waist","hip")]

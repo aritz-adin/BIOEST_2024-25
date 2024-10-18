@@ -1,0 +1,321 @@
+---
+title: "Práctica 3: Contrastes de hipótesis y análisis de la varianza"
+author: "Aritz Adin"
+date: "2024-10-16"
+date-format: "DD/MM/YYYY"
+format:
+  html:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)  
+```
+
+# Descripción
+
+En esta práctica vamos a trabajar con el fichero de datos `Diabetes`.
+
+-   El fichero de datos contiene 19 variables medidas sobre 403 pacientes. Estos pacientes forman parte de un estudio con 1046 sujetos diseñado para investigar la prevalencia de la de obesidad, diabetes, y otros factores de riesgo cardiovasculares para Afroamericanos en Virginia, EEUU.
+
+-   Según Dr John Hong, Diabetes Mellitus Tipo II está asociada con la obesidad. El índice cintura-cadera puede ser un predictor en diabetes y enfermedades de corazón.
+
+-   Diabetes Mellitus Tipo II está también asociada con hipertensión y ambos pueden ser parte del "Síndrome X".
+
+-   Los 403 sujetos del estudio son aquellos a los que se les hizo un seguimiento de diabetes. La hemoglobina glicosilada $>7.0$ se toma normalmente como diagnóstico positivo de diabetes.
+
+El fichero puede descargarse de la web <http://biostat.mc.vanderbilt.edu/wiki/Main/DataSets>
+
+Para más información ver el paper
+
+Willems JP, Saunders JT, DE Hunt, JB Schorling. Prevalence of coronary heart disease risk factors among rural blacks: A community-based study. *Southern Medical Journal* 90:814-820; 1997. <https://europepmc.org/abstract/med/9258308>
+
+## Variables
+
+Estas son las variables que contiene el fichero (se han eliminado alguna del fichero original y se han reemplazado algunos valores perdidos):
+
+| Variable   | Descripción                            |
+|------------|----------------------------------------|
+| `id`       | Subject ID                             |
+| `chol`     | Total Cholesterol (mg/dL)              |
+| `stab.glu` | Stabilized Glucose (mg/dL)             |
+| `hdl`      | High Density Lipoprotein (mg/dL)       |
+| `ratio`    | Cholesterol / HDL ratio                |
+| `glyhb`    | Glycolsolated Hemoglobin (%)           |
+| `location` | Buckingham or Louisa                   |
+| `age`      | Age of patient (years)                 |
+| `gender`   | Male or Female                         |
+| `height`   | Height (inches)                        |
+| `weight`   | Weight (pounds)                        |
+| `frame`    | Body frame size (small, medium, large) |
+| `bp.1s`    | First Systolic Blood Pressure (mmHg)   |
+| `pb.1d`    | First Diastolic Blood Pressure (mmHg)  |
+| `waist`    | Waistline (inches)                     |
+| `hip`      | Hip measurement (inches)               |
+
+**Para leer el fichero de diabetes en `R`:**
+
+```{r}
+diabetes <- read.table("diabetes.txt", header=TRUE, sep="", dec=".", stringsAsFactors=TRUE)
+head(diabetes)
+```
+
+**IMPORTANTE:**
+
+-   Contraste bilateral –\> `alternative="two.sided"`
+
+-   Contraste unilateral inferior –\> `alternative="less"`
+
+-   Contraste unilateral superior –\> `alternative="greater"`
+
+# 1. Contrastes paramétricos
+
+## 1.1. Contrasta al nivel de significación 0.05 si el nivel medio de colesterol en los hombres del condado de Buckingham es superior a 200. Justifica si puedes asumir normalidad
+
+```{r include=FALSE}
+pos <- which(diabetes$gender=="male" & diabetes$location=="Buckingham")
+chol.manB <- diabetes$chol[pos] 
+
+# Comprobamos la condición de normalidad
+library(PASWR2)
+eda(chol.manB)
+
+# Contraste de hiótesis (alpha=0.05)
+# H0: mu=200
+# H1: mu>200
+t.test(chol.manB, mu=200, alternative="greater")
+```
+
+## 1.2. Contrasta al nivel de significación 0.10 si la presión diastólica media de los hombres es distinta a la presión diastólica media de las mujeres. Comprueba que las dos muestras provienen de poblaciones normales. Realiza el correspondiente test de medias.
+
+```{r include=FALSE}
+table(diabetes$gender)
+
+pos1 <- which(diabetes$gender=="male")
+bp1d.male <- diabetes$bp.1d[pos1]
+
+pos2 <- which(diabetes$gender=="female")
+bp1d.female <-diabetes$bp.1d[pos2]
+ 
+# Comprobamos la condición de normalidad
+eda(bp1d.male)
+eda(bp1d.female)
+                                                                       
+# Contraste de hipótesis (alpha=0.10)
+# H0: muX-muY=0
+# H1: muX-muY!=0
+t.test(bp1d.male, bp1d.female, mu=0, alternative="two.sided", conf.level=0.9)
+```
+
+## 1.3. Se dispone de dos aparatos, uno nuevo y otro antiguo, para medir los niveles de glucosa en sangre. Los médicos sospechan que el nuevo aparato proporciona niveles de glucosa en sangre superiores al antiguo. Se dispone de una muestra con 15 pacientes diabéticos a los que se les ha medido los niveles de glucosa con los dos aparatos. Las medidas se encuentran en el fichero `GLUCOSE` de la librería `PASWR2`.
+
+```{r include=FALSE}
+head(GLUCOSE)
+```
+
+-   **¿Son las muestras independientes?**
+-   **Comprueba si puede asumirse la hipótesis de normalidad.**
+-   **Contrasta al nivel de significación** $\alpha=0.05$ **si el nuevo aparato proporciona medidas más altas que el antiguo.**
+
+```{r include=FALSE}
+# NOTA: Se tratan de muestran emparejadas (mismos individuos)
+d <- GLUCOSE$new - GLUCOSE$old
+
+# Comprobamos la condición de normalidad
+eda(d)
+
+# Contraste de hipótesis (alpha=0.05)
+# H0: muD=0
+# H1: muD>0
+t.test(d, mu=0, alternative="greater")
+
+# or
+t.test(GLUCOSE$new, GLUCOSE$old, mu=0, paired=TRUE, alternative="greater")
+```
+
+## 1.4. Contrasta al nivel de significación 0.05 si la proporción de hombres con hemoglobina glicosilada (`glyhb`) por encima del 6% es superior a 0.2.
+
+-   **Calcula el número de hombres en la muestra con `glyhb` por encima del 6% y el total de hombres en la muestra.**
+
+```{r include=FALSE}
+# Casos favorables
+x <- sum(diabetes$gender=="male" & diabetes$glyhb>6)
+
+# Casos totales
+n <- sum(diabetes$gender=="male")
+```
+
+-   **Realiza un test exacto y un test aproximado para la proporción verdadera.**
+
+```{r include=FALSE}
+# Contraste de hipótesis (alpha=0.05)
+# H0: p=0.2
+# H1: p>0.2
+binom.test(x, n, p=0.2, alternative="greater")  # Test exacto 
+prop.test(x, n, p=0.2, alternative="greater")   # Test aproximado
+```
+
+## 1.5. Contrasta al nivel de significación 0.05 si la proporción de hombres con colesterol por debajo de 200mg/dL es superior a la proporción de mujeres con colesterol por debajo de 200mg/dL.
+
+-   **Calcula el número de hombres en la muestra con colesterol por debajo de 200mg/dL y el total de hombres de la muestra (**$n_X$).
+
+```{r include=FALSE}
+# Nº de hombres con colesterol por debajo de 200mg/dL (casos favorables) y nº de hombres en la muestra (casos totales)
+x <- sum(diabetes$gender=="male" & diabetes$chol<200)
+x
+
+nx <- sum(diabetes$gender=="male")
+nx
+```
+
+-   **Calcula el número de mujeres en la muestra con colesterol por debajo de 200mg/dL y el total de mujeres de la muestra (**$n_Y$).
+
+```{r include=FALSE}
+# Nº de hombres con colesterol por debajo de 200mg/dL (casos favorables) y nº de hombres en la muestra (casos totales)
+y <- sum(diabetes$gender=="female" & diabetes$chol<200)
+y
+
+ny <- sum(diabetes$gender=="female")
+ny
+```
+
+-   **Realiza un test para la diferencia de proporciones.**
+
+```{r include=FALSE}
+# Contraste de hipótesis (alpha=0.05)
+# H0: pX-pY=0
+# H1: pX-pY!=0
+prop.test(c(x,y), c(nx,ny), alternative="greater")
+```
+
+# 2. Contrastes no-paramétricos
+
+## 2.1. ¿Puede asumirse que la variable 'hdl' en mujeres sigue una distribución normal? Contrasta al nivel de significación 0.05 si la media de la variable 'hdl' en mujeres es superior a 47.
+
+```{r include=FALSE}
+pos <- which(diabetes$gender=="female")
+hdl.female <- diabetes$hdl[pos]
+
+# Comprobamos la condición de normalidad
+eda(hdl.female)
+
+# Contraste de hipótesis (alpha=0.05)
+# H0: mu=47
+# H1: mu>47
+wilcox.test(hdl.female, mu=47, alternative="greater")
+```
+
+## 2.2. ¿Contrasta al nivel de significación 0.05 si existen diferencias entre los niveles de hdl en hombres y en mujeres. Comprueba si puede asumirse normalidad y realiza el contraste adecuado.
+
+```{r include=FALSE}
+pos1 <- which(diabetes$gender=="male")
+hdl.male <- diabetes$hdl[pos1]
+
+pos2 <- which(diabetes$gender=="female")
+hdl.female <- diabetes$hdl[pos2]
+
+# Comprobamos la condición de normalidad
+eda(hdl.male)
+eda(hdl.female)
+
+# Contraste de hipótesis (alpha=0.05)
+# H0: muX-muY=0
+# H1: muX-muY!=0
+wilcox.test(hdl.male, hdl.female, mu=0, alternative="two.sided")
+```
+
+## 2.3. Considera el fichero `PHENYL` de la libreria `PASWR2`. Contrasta al nivel de significación 0.05 si existen diferencias en los niveles medios de la coenzima Q10 en el momento de comenzar el estudio (variable `Q10.1`) y al finalizar el estudio (variable `Q10.4`).
+
+```{r include=FALSE}
+head(PHENYL)
+
+# NOTA: Se tratan de muestran emparejadas (mismos individuos)
+d <- PHENYL$Q10.4-PHENYL$Q10.1  
+
+# Comprobamos la condición de normalidad
+eda(d)
+
+# Contraste de hipótesis (alpha=0.05)
+# H0: muD=0
+# H1: muD!=0
+wilcox.test(d, mu=0, alternative="two.sided")
+
+# or
+wilcox.test(PHENYL$Q10.4, PHENYL$Q10.1, mu=0, paired=TRUE, alternative="two.sided")
+```
+
+# 3. Análisis de la varianza y test de Kruskal-Wallis
+
+## 3.1. Contrasta al nivel de significación 0.10 si el tamaño del cuerpo (`frame`) influye en la presión diastólica (`bp.1d`) de las mujeres.
+
+**a) Crea un nuevo fichero llamado `diabetes.female` solo con las mujeres.**
+
+```{r include=FALSE}
+pos <- which(diabetes$gender=="female")
+diabetes.female <- diabetes[pos,]
+```
+
+**b) Exploración gráfica: representa los diagrama de caja de la variable `bp.1d` según la variable `frame`.**
+
+```{r include=FALSE}
+boxplot(bp.1d ~ frame, data=diabetes.female)
+```
+
+**c) Realiza el análisis de la varianza con la función `aov()`**
+
+```{r include=FALSE}
+bp.aov <- aov(bp.1d ~ frame, data=diabetes.female)
+summary(bp.aov)
+```
+
+**d) Comprueba si pueden asumirse las hipótesis del modelo.**
+
+```{r include=FALSE}
+library(car)
+checking.plots(bp.aov)
+
+r <- rstandard(bp.aov)
+shapiro.test(r)             ## Normalidad de los errores
+
+leveneTest(bp.aov)          ## Test de Levene para homogeneidad de varianzas
+
+```
+
+**e) Utiliza un test de Tukey para averiguar entre qué niveles de la variable `frame` existen diferencias significativas en los niveles medios de la variable `bp.1d`**
+
+```{r include=FALSE}
+bp.mc <- TukeyHSD(bp.aov, conf.level=0.9)
+bp.mc
+
+plot(bp.mc)                 ## Graficos de intervalos de confianza del test de Tukey
+```
+
+## 3.2. Utiliza el fichero `diabetes.female` para responder a las siguientes cuestiones.
+
+**a) Contrasta al nivel de significación** $\alpha=0.05$ **si existen diferencias entre los niveles medios de glucosa glicosilada (`glyhb`) según la constitución del tamaño del cuerpo (`frame`) entre las mujeres.**
+
+```{r include=FALSE}
+boxplot(glyhb ~ frame, data=diabetes)
+
+glyhb.aov <- aov(glyhb~frame, data=diabetes.female)
+summary(glyhb.aov)
+
+# Comprobamos las hipótesis del modelo
+checking.plots(glyhb.aov)
+
+r <- rstandard(glyhb.aov)
+shapiro.test(r) 
+
+leveneTest(glyhb.aov)
+
+# Como no se cumplen las hipótesis del modelo, realizamos el test de Kruskal-Wallis
+kruskal.test(glyhb~frame, data=diabetes.female)
+```
+
+**b) Si has detectado diferencias, averigua entre qué grupos existen diferencias estadísticamente significativas.**
+
+```{r include=FALSE}
+library(agricolae)
+
+kruskal(diabetes.female$glyhb, diabetes.female$frame, alpha=0.05, group=FALSE, console=TRUE)
+```

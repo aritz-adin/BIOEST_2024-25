@@ -60,6 +60,7 @@ diabetes <- read.table("diabetes.txt", header=TRUE, sep="", dec=".", stringsAsFa
 head(diabetes)
 ```
 
+
 **IMPORTANTE:**
 
 -   Contraste bilateral –\> `alternative="two.sided"`
@@ -72,40 +73,88 @@ head(diabetes)
 
 ## 1.1. Contrasta al nivel de significación 0.05 si el nivel medio de colesterol en los hombres del condado de Buckingham es superior a 200. Justifica si puedes asumir normalidad
 
-```{r include=FALSE}
+Sea X="Nivel de colesterol de los hombres del condado de Buckingham (mg/dL)".
+
+El contraste que debemos realizar ($\alpha=0.05$) se escribe como:
+
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \mu=200 \\
+H_1: & \mu>200 \\
+\end{array}
+\end{eqnarray*}
+
+En primer lugar seleccionamos los datos de la muestra:
+```{r include=TRUE}
 pos <- which(diabetes$gender=="male" & diabetes$location=="Buckingham")
 chol.manB <- diabetes$chol[pos] 
+```
 
-# Comprobamos la condición de normalidad
+Comprobamos la condición de normalidad:
+```{r include=TRUE, message=FALSE}
+# shapiro.test(chol.manB)
+
 library(PASWR2)
 eda(chol.manB)
-
-# Contraste de hiótesis (alpha=0.05)
-# H0: mu=200
-# H1: mu>200
-t.test(chol.manB, mu=200, alternative="greater")
 ```
+Realizamos el test (paramétrico) para una media:
+```{r, include=TRUE}
+t.test(chol.manB, mu=200, alternative="greater", conf.level=0.95)
+```
+
+Como p-valor$=0.23>\alpha=0.05 \Rightarrow$ No rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 5%, no existen evidencias estadísticas para afirmar que el nivel medio de colesterol en los hombres de Buckingham es superior a 200 mg/dL.
+
 
 ## 1.2. Contrasta al nivel de significación 0.10 si la presión diastólica media de los hombres es distinta a la presión diastólica media de las mujeres. Comprueba que las dos muestras provienen de poblaciones normales. Realiza el correspondiente test de medias.
 
-```{r include=FALSE}
-table(diabetes$gender)
+Definimos las variables:
+
+X="Presión diastólica de los hombres (mmHg)"
+
+Y="Presión diastólica de las mujeres (mmHg)"
+
+El contraste que debemos realizar ($\alpha=0.10$) se escribe como:
+
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \mu_X - \mu_Y = 0 \\
+H_1: & \mu_X - \mu_Y \neq 0 \\
+\end{array}
+\end{eqnarray*}
+
+En primer lugar seleccionamos los datos de las muestras:
+```{r include=TRUE}
+# table(diabetes$gender)
 
 pos1 <- which(diabetes$gender=="male")
 bp1d.male <- diabetes$bp.1d[pos1]
 
 pos2 <- which(diabetes$gender=="female")
 bp1d.female <-diabetes$bp.1d[pos2]
- 
-# Comprobamos la condición de normalidad
+```
+
+Comprobamos la condición de normalidad en ambas variables:
+```{r include=TRUE}
 eda(bp1d.male)
 eda(bp1d.female)
-                                                                       
-# Contraste de hipótesis (alpha=0.10)
-# H0: muX-muY=0
-# H1: muX-muY!=0
-t.test(bp1d.male, bp1d.female, mu=0, alternative="two.sided", conf.level=0.9)
 ```
+
+Verificamos si podemos asumir que las varianzas son iguales o no:
+```{r include=TRUE}
+boxplot(bp.1d ~ gender, data=diabetes)
+```
+
+Realizamos el test (paramétrico) para la diferencia de medias en poblaciones independientes:                 
+```{r include=TRUE}
+t.test(bp1d.male, bp1d.female, mu=0, alternative="two.sided",
+       var.equal=TRUE,  conf.level=0.9)
+```
+Como p-valor$=0.15>\alpha=0.10 \Rightarrow$ No rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 10%, no existen evidencias estadísticas para afirmar que la presión diastólica media de los hombres sea distinta del de las mujeres.
+
 
 ## 1.3. Se dispone de dos aparatos, uno nuevo y otro antiguo, para medir los niveles de glucosa en sangre. Los médicos sospechan que el nuevo aparato proporciona niveles de glucosa en sangre superiores al antiguo. Se dispone de una muestra con 15 pacientes diabéticos a los que se les ha medido los niveles de glucosa con los dos aparatos. Las medidas se encuentran en el fichero `GLUCOSE` de la librería `PASWR2`.
 
@@ -192,37 +241,80 @@ prop.test(c(x,y), c(nx,ny), alternative="greater")
 
 ## 2.1. ¿Puede asumirse que la variable 'hdl' en mujeres sigue una distribución normal? Contrasta al nivel de significación 0.05 si la media de la variable 'hdl' en mujeres es superior a 47.
 
-```{r include=FALSE}
+Sea X="Nivel de HDL de las mujeres (mg/dL)".
+
+El contraste que debemos realizar ($\alpha=0.05$) se escribe como:
+
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \mu=47 \\
+H_1: & \mu>47 \\
+\end{array}
+\end{eqnarray*}
+
+En primer lugar seleccionamos los datos de la muestra:
+```{r include=TRUE}
 pos <- which(diabetes$gender=="female")
 hdl.female <- diabetes$hdl[pos]
+```
 
-# Comprobamos la condición de normalidad
+Comprobamos la condición de normalidad:
+```{r include=TRUE, message=FALSE}
 eda(hdl.female)
+```
 
-# Contraste de hipótesis (alpha=0.05)
-# H0: mu=47
-# H1: mu>47
+Como no se verifica la normalidad (p-valor $<0.05$), realizamos el test no-paramétrico para una media (test de Wilcoxon):
+```{r include=TRUE}
 wilcox.test(hdl.female, mu=47, alternative="greater")
 ```
+Como p-valor$=0.0015 < \alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 5%, existen evidencias estadísticas para afirmar que el nivel medio de HDL en mujeres es superior a 47 mg/dL.
+
 
 ## 2.2. ¿Contrasta al nivel de significación 0.05 si existen diferencias entre los niveles de hdl en hombres y en mujeres. Comprueba si puede asumirse normalidad y realiza el contraste adecuado.
 
-```{r include=FALSE}
+Definimos las variables:
+
+X="Nivel de HDL en hombres (mg/dL)"
+
+Y="Nivel de HDL en mujeres (mg/dL)"
+
+El contraste que debemos realizar ($\alpha=0.10$) se escribe como:
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \mu_X - \mu_Y = 0 \\
+H_1: & \mu_X - \mu_Y \neq 0 \\
+\end{array}
+\end{eqnarray*}
+
+En primer lugar seleccionamos los datos de las muestras:
+```{r include=TRUE}
 pos1 <- which(diabetes$gender=="male")
 hdl.male <- diabetes$hdl[pos1]
 
 pos2 <- which(diabetes$gender=="female")
 hdl.female <- diabetes$hdl[pos2]
+```
 
-# Comprobamos la condición de normalidad
+Comprobamos la condición de normalidad en ambas variables:
+```{r include=TRUE}
 eda(hdl.male)
 eda(hdl.female)
-
-# Contraste de hipótesis (alpha=0.05)
-# H0: muX-muY=0
-# H1: muX-muY!=0
-wilcox.test(hdl.male, hdl.female, mu=0, alternative="two.sided")
 ```
+
+En este caso no es necesario, pero podríamos verificar la igualdad de varianzas:
+```{r include=TRUE}
+boxplot(hdl ~ gender, data=diabetes)
+```
+Como no se verifica la normalidad, realizamos el test no-paramétrico para la diferencia de medias (test de Mann-Withney):
+```{r include=TRUE}
+wilcox.test(hdl.male, hdl.female, mu=0, alternative="two.sided", conf.level=0.05)
+```
+
+Como p-valor$=0.006<\alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 5%, existen evidencias estadísticas para afirmar que el nivel medio de HDL en hombres y mujeres es distinto.
 
 ## 2.3. Considera el fichero `PHENYL` de la libreria `PASWR2`. Contrasta al nivel de significación 0.05 si existen diferencias en los niveles medios de la coenzima Q10 en el momento de comenzar el estudio (variable `Q10.1`) y al finalizar el estudio (variable `Q10.4`).
 

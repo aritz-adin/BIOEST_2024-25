@@ -336,12 +336,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="contrasta-al-nivel-de-significación-0.05-si-el-nivel-medio-de-colesterol-en-los-hombres-del-condado-de-buckingham-es-superior-a-200.-justifica-si-puedes-asumir-normalidad">1.1. Contrasta al nivel de significación 0.05 si el nivel medio de colesterol en los hombres del condado de Buckingham es superior a 200. Justifica si puedes asumir normalidad</h2>
 <p>Sea X=“Nivel de colesterol de los hombres del condado de Buckingham (mg/dL)”.</p>
 <p>El contraste que debemos realizar (<span class="math inline">\(\alpha=0.05\)</span>) se escribe como:</p>
-<p><span class="math display">\[\begin{eqnarray*}
+<span class="math display">\[\begin{eqnarray*}
 \begin{array}{rl}
 H_0: &amp; \mu=200 \\
 H_1: &amp; \mu&gt;200 \\
 \end{array}
-\end{eqnarray*}\]</span></p>
+\end{eqnarray*}\]</span>
 <p>En primer lugar seleccionamos los datos de la muestra:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(diabetes<span class="sc">$</span>gender<span class="sc">==</span><span class="st">"male"</span> <span class="sc">&amp;</span> diabetes<span class="sc">$</span>location<span class="sc">==</span><span class="st">"Buckingham"</span>)</span>
@@ -391,12 +391,12 @@ mean of x
 <p>X=“Presión diastólica de los hombres (mmHg)”</p>
 <p>Y=“Presión diastólica de las mujeres (mmHg)”</p>
 <p>El contraste que debemos realizar (<span class="math inline">\(\alpha=0.10\)</span>) se escribe como:</p>
-<p><span class="math display">\[\begin{eqnarray*}
+<span class="math display">\[\begin{eqnarray*}
 \begin{array}{rl}
 H_0: &amp; \mu_X - \mu_Y = 0 \\
 H_1: &amp; \mu_X - \mu_Y \neq 0 \\
 \end{array}
-\end{eqnarray*}\]</span></p>
+\end{eqnarray*}\]</span>
 <p>En primer lugar seleccionamos los datos de las muestras:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># table(diabetes$gender)</span></span>
@@ -492,12 +492,12 @@ mean of x mean of y
 <h2 class="anchored" data-anchor-id="puede-asumirse-que-la-variable-hdl-en-mujeres-sigue-una-distribución-normal-contrasta-al-nivel-de-significación-0.05-si-la-media-de-la-variable-hdl-en-mujeres-es-superior-a-47.">2.1. ¿Puede asumirse que la variable ‘hdl’ en mujeres sigue una distribución normal? Contrasta al nivel de significación 0.05 si la media de la variable ‘hdl’ en mujeres es superior a 47.</h2>
 <p>Sea X=“Nivel de HDL de las mujeres (mg/dL)”.</p>
 <p>El contraste que debemos realizar (<span class="math inline">\(\alpha=0.05\)</span>) se escribe como:</p>
-<p><span class="math display">\[\begin{eqnarray*}
+<span class="math display">\[\begin{eqnarray*}
 \begin{array}{rl}
 H_0: &amp; \mu=47 \\
 H_1: &amp; \mu&gt;47 \\
 \end{array}
-\end{eqnarray*}\]</span></p>
+\end{eqnarray*}\]</span>
 <p>En primer lugar seleccionamos los datos de la muestra:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(diabetes<span class="sc">$</span>gender<span class="sc">==</span><span class="st">"female"</span>)</span>
@@ -619,6 +619,51 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <h2 class="anchored" data-anchor-id="utiliza-el-fichero-diabetes.female-para-responder-a-las-siguientes-cuestiones.">3.2. Utiliza el fichero <code>diabetes.female</code> para responder a las siguientes cuestiones.</h2>
 <p><strong>a) Contrasta al nivel de significación</strong> <span class="math inline">\(\alpha=0.05\)</span> <strong>si existen diferencias entre los niveles medios de glucosa glicosilada (<code>glyhb</code>) según la constitución del tamaño del cuerpo (<code>frame</code>) entre las mujeres.</strong></p>
 <p><strong>b) Si has detectado diferencias, averigua entre qué grupos existen diferencias estadísticamente significativas.</strong></p>
+<!-- # 4. Para entregar -->
+<!-- Responde a las siguientes cuestiones, utilizando la misma muestra de pacientes que te ha sido asignada en la Práctica 2 para el fichero `patients.txt`. -->
+<!-- ## 4.1. Contrasta al nivel de significación 0.05 si los niveles medios de la concentración de Interleukina-6 (`IL6`) son significativamente más bajos en pacientes con cáncer en estadío I que en paciente con cáncer en estadío II. -->
+<!-- -   Comprueba que las dos muestras provienen de poblaciones normales. -->
+<!-- -   Realiza el correspondiente test de medias. -->
+<!-- ```{r include=TRUE} -->
+
+<!-- patients <- read.table(file="patients.txt", header=T, stringsAsFactors=T) -->
+<!-- # Creamos un nuevo fichero con los pacientes del hospital "1"  -->
+<!-- pos <- which(patients$ID.hospital=="1") -->
+<!-- datos <- patients[pos,] -->
+<!-- str(datos) -->
+<!-- ``` -->
+<!-- Definimos las variables -->
+<!-- X="Niveles de IL6 en pacientes con cáncer en estadío I (pg/dL)" -->
+<!-- Y="Niveles de IL6 en pacientes con cáncer en estadío II (pg/dL)" -->
+<!-- El contraste que queremos realizar ($\alpha=0.05$) se escribe como: \begin{eqnarray*} -->
+<!-- \begin{array}{rl} -->
+<!-- H_0: & \mu_X-\mu_Y=0 \\ -->
+<!-- H_1: & \mu_X-\mu_Y<0 \\ -->
+<!-- \end{array} -->
+<!-- \end{eqnarray*} -->
+<!-- En primer lugar, seleccionamos las muestras y comprobamos la condición de normalidad en ambas variables: -->
+<!-- ```{r include=TRUE} -->
+<!-- pos1 <- which(datos$CancerStage=="I") -->
+<!-- pos2 <- which(datos$CancerStage=="II") -->
+<!-- x <- datos$IL6[pos1] -->
+<!-- y <- datos$IL6[pos2] -->
+<!-- eda(x) -->
+<!-- eda(y) -->
+<!-- ``` -->
+<!-- Como los p-valores del test de Shapiro-Wilk son \<0.05, rechazamos la hipótesis nula de normalidad. -->
+<!-- Por lo tanto, debemos realizar el test no-paramétrico para la diferencia de medias en poblaciones independientes: -->
+<!-- ```{r include=TRUE} -->
+<!-- wilcox.test(x, y, mu=0, alternative="less", conf.level=0.95) -->
+<!-- ``` -->
+<!-- Como p-valor$=0.098>\alpha=0.05 \Rightarrow$ No rechazamos $H_0$. -->
+<!-- **Interpretación**: Con un nivel de significación del 5%, no existen evidencias estadísticas suficientes para afirmar que los niveles medios de la concentración de Interleukina-6 sean más bajos en pacientes con cáncer en estadío I que en paciente con cáncer en estadío II. -->
+<!-- ## 4.2. Se estudió la eficacia de la sulfinpirazona en prevenir la muerte después de sufrir infarto de miocardio. Para ello se consideraron pacientes que habían sufrido infarto de miocardio. A un grupo se les proporcion´o sulfinpirazona y a otro grupo se les suministró placebo. En la siguiente tabla se muestra el número de pacientes de cada grupo que murieron y que superaron el infarto. -->
+<!-- |                 | Death (all causes) | Survivors | -->
+<!-- |-----------------|--------------------|-----------| -->
+<!-- | Sulphinpyrazole | 41                 | 692       | -->
+<!-- | Placebo         | 60                 | 682       | -->
+<!-- **Contrasta al nivel de significación $\alpha=0.01$ si la proporción de muertes de pacientes que tomaron sulfinpirazona es inferior a la de pacientes que tomaron un placebo.** -->
+<!-- ## 4.3. Ejercicio sobre ANOVA -->
 
 
 </section>

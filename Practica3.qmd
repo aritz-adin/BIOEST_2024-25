@@ -60,7 +60,6 @@ diabetes <- read.table("diabetes.txt", header=TRUE, sep="", dec=".", stringsAsFa
 head(diabetes)
 ```
 
-
 **IMPORTANTE:**
 
 -   Contraste bilateral –\> `alternative="two.sided"`
@@ -77,27 +76,32 @@ Sea X="Nivel de colesterol de los hombres del condado de Buckingham (mg/dL)".
 
 El contraste que debemos realizar ($\alpha=0.05$) se escribe como:
 
+```{=tex}
 \begin{eqnarray*}
 \begin{array}{rl}
 H_0: & \mu=200 \\
 H_1: & \mu>200 \\
 \end{array}
 \end{eqnarray*}
-
+```
 En primer lugar seleccionamos los datos de la muestra:
+
 ```{r include=TRUE}
 pos <- which(diabetes$gender=="male" & diabetes$location=="Buckingham")
 chol.manB <- diabetes$chol[pos] 
 ```
 
 Comprobamos la condición de normalidad:
+
 ```{r include=TRUE, message=FALSE}
 # shapiro.test(chol.manB)
 
 library(PASWR2)
 eda(chol.manB)
 ```
+
 Realizamos el test (paramétrico) para una media:
+
 ```{r, include=TRUE}
 t.test(chol.manB, mu=200, alternative="greater", conf.level=0.95)
 ```
@@ -105,7 +109,6 @@ t.test(chol.manB, mu=200, alternative="greater", conf.level=0.95)
 Como p-valor$=0.23>\alpha=0.05 \Rightarrow$ No rechazamos $H_0$.
 
 **Interpretación**: Con un nivel de significación del 5%, no existen evidencias estadísticas para afirmar que el nivel medio de colesterol en los hombres de Buckingham es superior a 200 mg/dL.
-
 
 ## 1.2. Contrasta al nivel de significación 0.10 si la presión diastólica media de los hombres es distinta a la presión diastólica media de las mujeres. Comprueba que las dos muestras provienen de poblaciones normales. Realiza el correspondiente test de medias.
 
@@ -117,14 +120,16 @@ Y="Presión diastólica de las mujeres (mmHg)"
 
 El contraste que debemos realizar ($\alpha=0.10$) se escribe como:
 
+```{=tex}
 \begin{eqnarray*}
 \begin{array}{rl}
 H_0: & \mu_X - \mu_Y = 0 \\
 H_1: & \mu_X - \mu_Y \neq 0 \\
 \end{array}
 \end{eqnarray*}
-
+```
 En primer lugar seleccionamos los datos de las muestras:
+
 ```{r include=TRUE}
 # table(diabetes$gender)
 
@@ -136,25 +141,28 @@ bp1d.female <-diabetes$bp.1d[pos2]
 ```
 
 Comprobamos la condición de normalidad en ambas variables:
+
 ```{r include=TRUE}
 eda(bp1d.male)
 eda(bp1d.female)
 ```
 
 Verificamos si podemos asumir que las varianzas son iguales o no:
+
 ```{r include=TRUE}
 boxplot(bp.1d ~ gender, data=diabetes)
 ```
 
-Realizamos el test (paramétrico) para la diferencia de medias en poblaciones independientes:                 
+Realizamos el test (paramétrico) para la diferencia de medias en poblaciones independientes:
+
 ```{r include=TRUE}
 t.test(bp1d.male, bp1d.female, mu=0, alternative="two.sided",
        var.equal=TRUE,  conf.level=0.9)
 ```
+
 Como p-valor$=0.15>\alpha=0.10 \Rightarrow$ No rechazamos $H_0$.
 
 **Interpretación**: Con un nivel de significación del 10%, no existen evidencias estadísticas para afirmar que la presión diastólica media de los hombres sea distinta del de las mujeres.
-
 
 ## 1.3. Se dispone de dos aparatos, uno nuevo y otro antiguo, para medir los niveles de glucosa en sangre. Los médicos sospechan que el nuevo aparato proporciona niveles de glucosa en sangre superiores al antiguo. Se dispone de una muestra con 15 pacientes diabéticos a los que se les ha medido los niveles de glucosa con los dos aparatos. Las medidas se encuentran en el fichero `GLUCOSE` de la librería `PASWR2`.
 
@@ -245,32 +253,36 @@ Sea X="Nivel de HDL de las mujeres (mg/dL)".
 
 El contraste que debemos realizar ($\alpha=0.05$) se escribe como:
 
+```{=tex}
 \begin{eqnarray*}
 \begin{array}{rl}
 H_0: & \mu=47 \\
 H_1: & \mu>47 \\
 \end{array}
 \end{eqnarray*}
-
+```
 En primer lugar seleccionamos los datos de la muestra:
+
 ```{r include=TRUE}
 pos <- which(diabetes$gender=="female")
 hdl.female <- diabetes$hdl[pos]
 ```
 
 Comprobamos la condición de normalidad:
+
 ```{r include=TRUE, message=FALSE}
 eda(hdl.female)
 ```
 
 Como no se verifica la normalidad (p-valor $<0.05$), realizamos el test no-paramétrico para una media (test de Wilcoxon):
+
 ```{r include=TRUE}
 wilcox.test(hdl.female, mu=47, alternative="greater")
 ```
+
 Como p-valor$=0.0015 < \alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
 
 **Interpretación**: Con un nivel de significación del 5%, existen evidencias estadísticas para afirmar que el nivel medio de HDL en mujeres es superior a 47 mg/dL.
-
 
 ## 2.2. ¿Contrasta al nivel de significación 0.05 si existen diferencias entre los niveles de hdl en hombres y en mujeres. Comprueba si puede asumirse normalidad y realiza el contraste adecuado.
 
@@ -280,8 +292,7 @@ X="Nivel de HDL en hombres (mg/dL)"
 
 Y="Nivel de HDL en mujeres (mg/dL)"
 
-El contraste que debemos realizar ($\alpha=0.10$) se escribe como:
-\begin{eqnarray*}
+El contraste que debemos realizar ($\alpha=0.10$) se escribe como: \begin{eqnarray*}
 \begin{array}{rl}
 H_0: & \mu_X - \mu_Y = 0 \\
 H_1: & \mu_X - \mu_Y \neq 0 \\
@@ -289,6 +300,7 @@ H_1: & \mu_X - \mu_Y \neq 0 \\
 \end{eqnarray*}
 
 En primer lugar seleccionamos los datos de las muestras:
+
 ```{r include=TRUE}
 pos1 <- which(diabetes$gender=="male")
 hdl.male <- diabetes$hdl[pos1]
@@ -298,16 +310,20 @@ hdl.female <- diabetes$hdl[pos2]
 ```
 
 Comprobamos la condición de normalidad en ambas variables:
+
 ```{r include=TRUE}
 eda(hdl.male)
 eda(hdl.female)
 ```
 
 En este caso no es necesario, pero podríamos verificar la igualdad de varianzas:
+
 ```{r include=TRUE}
 boxplot(hdl ~ gender, data=diabetes)
 ```
+
 Como no se verifica la normalidad, realizamos el test no-paramétrico para la diferencia de medias (test de Mann-Withney):
+
 ```{r include=TRUE}
 wilcox.test(hdl.male, hdl.female, mu=0, alternative="two.sided", conf.level=0.05)
 ```
@@ -411,3 +427,71 @@ library(agricolae)
 
 kruskal(diabetes.female$glyhb, diabetes.female$frame, alpha=0.05, group=FALSE, console=TRUE)
 ```
+
+<!-- # 4. Para entregar -->
+
+<!-- Responde a las siguientes cuestiones, utilizando la misma muestra de pacientes que te ha sido asignada en la Práctica 2 para el fichero `patients.txt`. -->
+
+<!-- ## 4.1. Contrasta al nivel de significación 0.05 si los niveles medios de la concentración de Interleukina-6 (`IL6`) son significativamente más bajos en pacientes con cáncer en estadío I que en paciente con cáncer en estadío II. -->
+
+<!-- -   Comprueba que las dos muestras provienen de poblaciones normales. -->
+<!-- -   Realiza el correspondiente test de medias. -->
+
+<!-- ```{r include=TRUE} -->
+<!-- patients <- read.table(file="patients.txt", header=T, stringsAsFactors=T) -->
+
+<!-- # Creamos un nuevo fichero con los pacientes del hospital "1"  -->
+<!-- pos <- which(patients$ID.hospital=="1") -->
+<!-- datos <- patients[pos,] -->
+
+<!-- str(datos) -->
+<!-- ``` -->
+
+<!-- Definimos las variables -->
+
+<!-- X="Niveles de IL6 en pacientes con cáncer en estadío I (pg/dL)" -->
+
+<!-- Y="Niveles de IL6 en pacientes con cáncer en estadío II (pg/dL)" -->
+
+<!-- El contraste que queremos realizar ($\alpha=0.05$) se escribe como: \begin{eqnarray*} -->
+<!-- \begin{array}{rl} -->
+<!-- H_0: & \mu_X-\mu_Y=0 \\ -->
+<!-- H_1: & \mu_X-\mu_Y<0 \\ -->
+<!-- \end{array} -->
+<!-- \end{eqnarray*} -->
+
+<!-- En primer lugar, seleccionamos las muestras y comprobamos la condición de normalidad en ambas variables: -->
+
+<!-- ```{r include=TRUE} -->
+<!-- pos1 <- which(datos$CancerStage=="I") -->
+<!-- pos2 <- which(datos$CancerStage=="II") -->
+
+<!-- x <- datos$IL6[pos1] -->
+<!-- y <- datos$IL6[pos2] -->
+
+<!-- eda(x) -->
+<!-- eda(y) -->
+<!-- ``` -->
+
+<!-- Como los p-valores del test de Shapiro-Wilk son \<0.05, rechazamos la hipótesis nula de normalidad. -->
+
+<!-- Por lo tanto, debemos realizar el test no-paramétrico para la diferencia de medias en poblaciones independientes: -->
+
+<!-- ```{r include=TRUE} -->
+<!-- wilcox.test(x, y, mu=0, alternative="less", conf.level=0.95) -->
+<!-- ``` -->
+
+<!-- Como p-valor$=0.098>\alpha=0.05 \Rightarrow$ No rechazamos $H_0$. -->
+
+<!-- **Interpretación**: Con un nivel de significación del 5%, no existen evidencias estadísticas suficientes para afirmar que los niveles medios de la concentración de Interleukina-6 sean más bajos en pacientes con cáncer en estadío I que en paciente con cáncer en estadío II. -->
+
+<!-- ## 4.2. Se estudió la eficacia de la sulfinpirazona en prevenir la muerte después de sufrir infarto de miocardio. Para ello se consideraron pacientes que habían sufrido infarto de miocardio. A un grupo se les proporcion´o sulfinpirazona y a otro grupo se les suministró placebo. En la siguiente tabla se muestra el número de pacientes de cada grupo que murieron y que superaron el infarto. -->
+
+<!-- |                 | Death (all causes) | Survivors | -->
+<!-- |-----------------|--------------------|-----------| -->
+<!-- | Sulphinpyrazole | 41                 | 692       | -->
+<!-- | Placebo         | 60                 | 682       | -->
+
+<!-- **Contrasta al nivel de significación $\alpha=0.01$ si la proporción de muertes de pacientes que tomaron sulfinpirazona es inferior a la de pacientes que tomaron un placebo.** -->
+
+<!-- ## 4.3. Ejercicio sobre ANOVA -->

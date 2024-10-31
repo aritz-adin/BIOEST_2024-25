@@ -1,7 +1,7 @@
 ---
 title: "Práctica 3: Contrastes de hipótesis y análisis de la varianza"
 author: "Aritz Adin"
-date: "2024-10-16"
+date: "2024-10-30"
 date-format: "DD/MM/YYYY"
 format:
   html:
@@ -166,35 +166,65 @@ Como p-valor$=0.15>\alpha=0.10 \Rightarrow$ No rechazamos $H_0$.
 
 ## 1.3. Se dispone de dos aparatos, uno nuevo y otro antiguo, para medir los niveles de glucosa en sangre. Los médicos sospechan que el nuevo aparato proporciona niveles de glucosa en sangre superiores al antiguo. Se dispone de una muestra con 15 pacientes diabéticos a los que se les ha medido los niveles de glucosa con los dos aparatos. Las medidas se encuentran en el fichero `GLUCOSE` de la librería `PASWR2`.
 
-```{r include=FALSE}
+```{r include=TRUE}
+data("GLUCOSE")
 head(GLUCOSE)
 ```
 
+Definimos las variables:
+
+X="Nivel de glucosa (mg/dL) con el aparato viejo"
+
+Y="Nivel de glucosa (mg/dL) con el aparato nuevo"
+
 -   **¿Son las muestras independientes?**
+
+Como se tratan de los mismos individuos medidos en distintos instantes de tiempo, las muestras son dependientes (o emparejadas). Por lo tanto, trabajaremos con la diferencia entre ambas variables:
+
+```{r include=TRUE}
+D <- GLUCOSE$old - GLUCOSE$new
+```
+
 -   **Comprueba si puede asumirse la hipótesis de normalidad.**
+
+```{r include=TRUE}
+eda(D)
+```
+
 -   **Contrasta al nivel de significación** $\alpha=0.05$ **si el nuevo aparato proporciona medidas más altas que el antiguo.**
 
-```{r include=FALSE}
-# NOTA: Se tratan de muestran emparejadas (mismos individuos)
-d <- GLUCOSE$new - GLUCOSE$old
+El contraste que debemos realizar se escribe como:
 
-# Comprobamos la condición de normalidad
-eda(d)
-
-# Contraste de hipótesis (alpha=0.05)
-# H0: muD=0
-# H1: muD>0
-t.test(d, mu=0, alternative="greater")
-
-# or
-t.test(GLUCOSE$new, GLUCOSE$old, mu=0, paired=TRUE, alternative="greater")
+```{=tex}
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \mu_D = 0 \\
+H_1: & \mu_D < 0 \\
+\end{array}
+\end{eqnarray*}
 ```
+Como se verifica la hipótesis de normalidad, realizamo el test (paramétrico) para una media:
+
+```{r include=TRUE}
+t.test(D, mu=0, alternative="less", conf.level=0.95)
+
+# Otra opción:
+t.test(GLUCOSE$old, GLUCOSE$new, paired=TRUE, mu=0, alternative="less", conf.level=0.95)
+```
+
+Como p-valor$\approx 0<\alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 5%, existen evidencias estadísticas para afirmar que el aparato nuevo proporciona niveles de medios de glucosa en sangre superiores al aparato viejo.
 
 ## 1.4. Contrasta al nivel de significación 0.05 si la proporción de hombres con hemoglobina glicosilada (`glyhb`) por encima del 6% es superior a 0.2.
 
+Definimos la variable:
+
+X="Nº de hombres con valores de hemoglobina glicosilada superior al 6%" $\sim Bin(n,\pi)$
+
 -   **Calcula el número de hombres en la muestra con `glyhb` por encima del 6% y el total de hombres en la muestra.**
 
-```{r include=FALSE}
+```{r include=TRUE}
 # Casos favorables
 x <- sum(diabetes$gender=="male" & diabetes$glyhb>6)
 
@@ -204,20 +234,37 @@ n <- sum(diabetes$gender=="male")
 
 -   **Realiza un test exacto y un test aproximado para la proporción verdadera.**
 
-```{r include=FALSE}
-# Contraste de hipótesis (alpha=0.05)
-# H0: p=0.2
-# H1: p>0.2
-binom.test(x, n, p=0.2, alternative="greater")  # Test exacto 
-prop.test(x, n, p=0.2, alternative="greater")   # Test aproximado
+El contraste que debemos realizar se escribe como:
+
+```{=tex}
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \pi = 0.2 \\
+H_1: & \pi > 0.2 \\
+\end{array}
+\end{eqnarray*}
 ```
+Como se verifica que $n*\pi_0 =169*0.2 = 33.8 > 10$ y $n*(1-\pi_0) =169*0.8 = 135.2 > 10$, podemos realizar el test aproximado como:
+
+```{r include=TRUE}
+prop.test(x, n, p=0.2, alternative="greater", conf.level=0.95)
+```
+
+Como p-valor$=0.183 > \alpha=0.05 \Rightarrow$ No rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 5%, no podemos afirmar que la proporción de hombres con valores de hemoglobina glicosilada superior al 6% sea superior a 0.2.
 
 ## 1.5. Contrasta al nivel de significación 0.05 si la proporción de hombres con colesterol por debajo de 200mg/dL es superior a la proporción de mujeres con colesterol por debajo de 200mg/dL.
 
+Definimos la variable:
+
+X="Nº de hombres con colesterol por debajo de 200mg/dL" $\sim Bin(n_X,\pi_X)$
+
+Y="Nº de mujeres con colesterol por debajo de 200mg/dL" $\sim Bin(n_Y,\pi_Y)$
+
 -   **Calcula el número de hombres en la muestra con colesterol por debajo de 200mg/dL y el total de hombres de la muestra (**$n_X$).
 
-```{r include=FALSE}
-# Nº de hombres con colesterol por debajo de 200mg/dL (casos favorables) y nº de hombres en la muestra (casos totales)
+```{r include=TRUE}
 x <- sum(diabetes$gender=="male" & diabetes$chol<200)
 x
 
@@ -227,7 +274,7 @@ nx
 
 -   **Calcula el número de mujeres en la muestra con colesterol por debajo de 200mg/dL y el total de mujeres de la muestra (**$n_Y$).
 
-```{r include=FALSE}
+```{r include=TRUE}
 # Nº de hombres con colesterol por debajo de 200mg/dL (casos favorables) y nº de hombres en la muestra (casos totales)
 y <- sum(diabetes$gender=="female" & diabetes$chol<200)
 y
@@ -238,12 +285,25 @@ ny
 
 -   **Realiza un test para la diferencia de proporciones.**
 
-```{r include=FALSE}
-# Contraste de hipótesis (alpha=0.05)
-# H0: pX-pY=0
-# H1: pX-pY!=0
-prop.test(c(x,y), c(nx,ny), alternative="greater")
+El contraste que debemos realizar se escribe como:
+
+```{=tex}
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \pi_X - \pi_Y = 0 \\
+H_1: & \pi_X - \pi_Y > 0 \\
+\end{array}
+\end{eqnarray*}
 ```
+Realizamos el test en R:
+
+```{r include=TRUE}
+prop.test(c(x,y), c(nx,ny), alternative="greater", conf.level=0.95)
+```
+
+Como p-valor$=0.3931 > \alpha=0.05 \Rightarrow$ No rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 5%, no podemos afirmar que la proporción de hombres con colesterol por debajo de 200mg/dL sea superior a la proporción de mujeres con colesterol por debajo de 200mg/dL.
 
 # 2. Contrastes no-paramétricos
 
@@ -334,23 +394,48 @@ Como p-valor$=0.006<\alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
 
 ## 2.3. Considera el fichero `PHENYL` de la libreria `PASWR2`. Contrasta al nivel de significación 0.05 si existen diferencias en los niveles medios de la coenzima Q10 en el momento de comenzar el estudio (variable `Q10.1`) y al finalizar el estudio (variable `Q10.4`).
 
-```{r include=FALSE}
-head(PHENYL)
+Definimos las variables:
 
-# NOTA: Se tratan de muestran emparejadas (mismos individuos)
-d <- PHENYL$Q10.4-PHENYL$Q10.1  
+X="Nivel de coenzima Q10 al comienzo del estudio"
+
+X="Nivel de coenzima Q10 al final del estudio"
+
+```{r include=TRUE}
+data("PHENYL")
+head(PHENYL)
+```
+
+Como se tratan de los mismos individuos medidos en distintos instantes de tiempo, las muestras son dependientes (o emparejadas). Por lo tanto, trabajaremos con la diferencia entre ambas variables:
+
+```{r include=TRUE}
+D <- PHENYL$Q10.1-PHENYL$Q10.4
 
 # Comprobamos la condición de normalidad
-eda(d)
-
-# Contraste de hipótesis (alpha=0.05)
-# H0: muD=0
-# H1: muD!=0
-wilcox.test(d, mu=0, alternative="two.sided")
-
-# or
-wilcox.test(PHENYL$Q10.4, PHENYL$Q10.1, mu=0, paired=TRUE, alternative="two.sided")
+eda(D)
 ```
+
+El contraste que debemos realizar se escribe como:
+
+```{=tex}
+\begin{eqnarray*}
+\begin{array}{rl}
+H_0: & \mu_D = 0 \\
+H_1: & \mu_D \neq 0 \\
+\end{array}
+\end{eqnarray*}
+```
+Como no se verifica la hipótesis de normalidad, realizamo el test no-paramétrico para la diferencia de medias.
+
+```{r include=TRUE}
+wilcox.test(D, mu=0, alternative="two.sided", conf.level=0.95)
+
+# Otra opción
+wilcox.test(PHENYL$Q10.1, PHENYL$Q10.4, paired=TRUE, mu=0, alternative="two.sided", conf.level=0.95)
+```
+
+Como p-valor$=0.0005 < \alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
+
+**Interpretación**: Con un nivel de significación del 5%, tenemos evidencias estadísticas para afirmar que los niveles medios de la coenzima Q10 han cambiado a lo largo del estudio.
 
 # 3. Análisis de la varianza y test de Kruskal-Wallis
 
@@ -428,49 +513,66 @@ library(agricolae)
 kruskal(diabetes.female$glyhb, diabetes.female$frame, alpha=0.05, group=FALSE, console=TRUE)
 ```
 
-<!-- # 4. Para entregar -->
+# 4. Para entregar
 
-<!-- Responde a las siguientes cuestiones, utilizando la misma muestra de pacientes que te ha sido asignada en la Práctica 2 para el fichero `patients.txt`. -->
+Responde a las siguientes cuestiones, utilizando la misma muestra de pacientes que te ha sido asignada en la Práctica 2 para el fichero `patients.txt`.
 
-<!-- ## 4.1. Contrasta al nivel de significación 0.05 si los niveles medios de la concentración de Interleukina-6 (`IL6`) son significativamente más bajos en pacientes con cáncer en estadío I que en paciente con cáncer en estadío II. -->
+## 4.1. Contrasta al nivel de significación 0.05 si los niveles medios de la concentración de Interleukina-6 (`IL6`) son significativamente más bajos en pacientes con cáncer en estadio I que en paciente con cáncer en estadio II.
 
-<!-- -   Comprueba que las dos muestras provienen de poblaciones normales. -->
-<!-- -   Realiza el correspondiente test de medias. -->
+-   Define correctamente las variables del problema.
+
+-   Comprueba que las dos muestras provienen de poblaciones normales.
+
+-   Realiza el correspondiente test de hipótesis.
 
 <!-- ```{r include=TRUE} -->
+
 <!-- patients <- read.table(file="patients.txt", header=T, stringsAsFactors=T) -->
 
-<!-- # Creamos un nuevo fichero con los pacientes del hospital "1"  -->
+<!-- # Creamos un nuevo fichero con los pacientes del hospital "1" -->
+
 <!-- pos <- which(patients$ID.hospital=="1") -->
+
 <!-- datos <- patients[pos,] -->
 
 <!-- str(datos) -->
+
 <!-- ``` -->
 
 <!-- Definimos las variables -->
 
-<!-- X="Niveles de IL6 en pacientes con cáncer en estadío I (pg/dL)" -->
+<!-- X="Niveles de IL6 en pacientes con cáncer en estadio I (pg/dL)" -->
 
-<!-- Y="Niveles de IL6 en pacientes con cáncer en estadío II (pg/dL)" -->
+<!-- Y="Niveles de IL6 en pacientes con cáncer en estadio II (pg/dL)" -->
 
 <!-- El contraste que queremos realizar ($\alpha=0.05$) se escribe como: \begin{eqnarray*} -->
+
 <!-- \begin{array}{rl} -->
+
 <!-- H_0: & \mu_X-\mu_Y=0 \\ -->
+
 <!-- H_1: & \mu_X-\mu_Y<0 \\ -->
+
 <!-- \end{array} -->
+
 <!-- \end{eqnarray*} -->
 
 <!-- En primer lugar, seleccionamos las muestras y comprobamos la condición de normalidad en ambas variables: -->
 
 <!-- ```{r include=TRUE} -->
+
 <!-- pos1 <- which(datos$CancerStage=="I") -->
+
 <!-- pos2 <- which(datos$CancerStage=="II") -->
 
 <!-- x <- datos$IL6[pos1] -->
+
 <!-- y <- datos$IL6[pos2] -->
 
 <!-- eda(x) -->
+
 <!-- eda(y) -->
+
 <!-- ``` -->
 
 <!-- Como los p-valores del test de Shapiro-Wilk son \<0.05, rechazamos la hipótesis nula de normalidad. -->
@@ -478,20 +580,58 @@ kruskal(diabetes.female$glyhb, diabetes.female$frame, alpha=0.05, group=FALSE, c
 <!-- Por lo tanto, debemos realizar el test no-paramétrico para la diferencia de medias en poblaciones independientes: -->
 
 <!-- ```{r include=TRUE} -->
+
 <!-- wilcox.test(x, y, mu=0, alternative="less", conf.level=0.95) -->
+
 <!-- ``` -->
 
 <!-- Como p-valor$=0.098>\alpha=0.05 \Rightarrow$ No rechazamos $H_0$. -->
 
-<!-- **Interpretación**: Con un nivel de significación del 5%, no existen evidencias estadísticas suficientes para afirmar que los niveles medios de la concentración de Interleukina-6 sean más bajos en pacientes con cáncer en estadío I que en paciente con cáncer en estadío II. -->
+<!-- **Interpretación**: Con un nivel de significación del 5%, no existen evidencias estadísticas suficientes para afirmar que los niveles medios de la concentración de Interleukina-6 sean más bajos en pacientes con cáncer en estadio I que en paciente con cáncer en estadio II. -->
 
-<!-- ## 4.2. Se estudió la eficacia de la sulfinpirazona en prevenir la muerte después de sufrir infarto de miocardio. Para ello se consideraron pacientes que habían sufrido infarto de miocardio. A un grupo se les proporcion´o sulfinpirazona y a otro grupo se les suministró placebo. En la siguiente tabla se muestra el número de pacientes de cada grupo que murieron y que superaron el infarto. -->
+## 4.2. Se estudió la eficacia de la sulfinpirazona en prevenir la muerte después de sufrir infarto de miocardio. Para ello se consideraron pacientes que habían sufrido infarto de miocardio. A un grupo se les proporcionó sulfinpirazona y a otro grupo se les suministró placebo. En la siguiente tabla se muestra el número de pacientes de cada grupo que murieron y que superaron el infarto.
 
-<!-- |                 | Death (all causes) | Survivors | -->
-<!-- |-----------------|--------------------|-----------| -->
-<!-- | Sulphinpyrazole | 41                 | 692       | -->
-<!-- | Placebo         | 60                 | 682       | -->
+|                 | Death (all causes) | Survivors |
+|-----------------|--------------------|-----------|
+| Sulphinpyrazole | 41                 | 692       |
+| Placebo         | 60                 | 682       |
 
-<!-- **Contrasta al nivel de significación $\alpha=0.01$ si la proporción de muertes de pacientes que tomaron sulfinpirazona es inferior a la de pacientes que tomaron un placebo.** -->
+-   **Contrasta al nivel de significación** $\alpha=0.01$ si la proporción de muertes de pacientes que tomaron sulfinpirazona es inferior a la de pacientes que tomaron un placebo.
 
-<!-- ## 4.3. Ejercicio sobre ANOVA -->
+## 4.3. Contrasta al nivel de significación $\alpha=0.1$ si existen diferencias en la edad media de los pacientes según el estadio de cancer (`CancerStage`).
+
+-   **Realiza una exploración gráfica y el análisis de varianza correspondiente**
+
+-   **Comprueba si pueden asumirse las hipótesis del modelo**
+
+-   **Si has detectado diferencias, averigua entre qué grupos existen diferencias estadísticamente significativas**
+
+<!-- ```{r include=TRUE} -->
+
+<!-- pos <- which(patients$ID.hospital=="1") -->
+
+<!-- datos <- patients[pos,] -->
+
+<!-- boxplot(Age ~ CancerStage, data=datos) -->
+
+<!-- model <- aov(Age ~ CancerStage, data=datos) -->
+
+<!-- summary(model) -->
+
+<!-- checking.plots(model) -->
+
+<!-- r <- rstandard(model) -->
+
+<!-- shapiro.test(r)  -->
+
+<!-- library(car) -->
+
+<!-- leveneTest(model) -->
+
+<!-- bp.mc <- TukeyHSD(model, conf.level=0.9) -->
+
+<!-- bp.mc -->
+
+<!-- plot(bp.mc) -->
+
+<!-- ``` -->

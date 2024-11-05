@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Aritz Adin">
 
-<title>BIOEST 2024-25 - Prácticas</title>
+<title>BIOEST 2024-25 - Práctica 4: Regresión</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -82,7 +117,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" rel="" target="" aria-current="page">
+    <a class="nav-link" href="./index.html" rel="" target="">
  <span class="menu-text">Programa</span></a>
   </li>  
   <li class="nav-item">
@@ -102,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Práctica 3</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./Practica4.html" rel="" target="">
+    <a class="nav-link active" href="./Practica4.html" rel="" target="" aria-current="page">
  <span class="menu-text">Práctica 4</span></a>
   </li>  
 </ul>
@@ -121,8 +156,15 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#bioestadística-curso-2024-25." id="toc-bioestadística-curso-2024-25." class="nav-link active" data-scroll-target="#bioestadística-curso-2024-25.">Bioestadística / Curso 2024-25.</a></li>
-  <li><a href="#bibliografía" id="toc-bibliografía" class="nav-link" data-scroll-target="#bibliografía">Bibliografía</a></li>
+  <li><a href="#regresión" id="toc-regresión" class="nav-link active" data-scroll-target="#regresión">1. Regresión</a>
+  <ul class="collapse">
+  <li><a href="#emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-hombres-según-la-edad." id="toc-emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-hombres-según-la-edad." class="nav-link" data-scroll-target="#emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-hombres-según-la-edad.">1.1. Emplea el fichero <code>bloodpress1.txt</code> para ajustar un modelo de regresión lineal que permita estimar la presión sistólica en hombres según la edad.</a></li>
+  <li><a href="#emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-mujeres-según-la-edad." id="toc-emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-mujeres-según-la-edad." class="nav-link" data-scroll-target="#emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-mujeres-según-la-edad.">1.2. Emplea el fichero <code>bloodpress1.txt</code> para ajustar un modelo de regresión lineal que permita estimar la presión sistólica en mujeres según la edad.</a></li>
+  </ul></li>
+  <li><a href="#para-entregar" id="toc-para-entregar" class="nav-link" data-scroll-target="#para-entregar">2. Para entregar</a>
+  <ul class="collapse">
+  <li><a href="#con-el-fichero-hswrester-de-la-librería-paswr2-ajusta-un-modelo-de-regresión-para-predecir-la-cantidad-de-grasa-tanfat.-selecciona-las-variables-age-ht-wt-triceps-y-subscap-que-mejor-sirvan-para-predecir-los-valores-de-tanfat." id="toc-con-el-fichero-hswrester-de-la-librería-paswr2-ajusta-un-modelo-de-regresión-para-predecir-la-cantidad-de-grasa-tanfat.-selecciona-las-variables-age-ht-wt-triceps-y-subscap-que-mejor-sirvan-para-predecir-los-valores-de-tanfat." class="nav-link" data-scroll-target="#con-el-fichero-hswrester-de-la-librería-paswr2-ajusta-un-modelo-de-regresión-para-predecir-la-cantidad-de-grasa-tanfat.-selecciona-las-variables-age-ht-wt-triceps-y-subscap-que-mejor-sirvan-para-predecir-los-valores-de-tanfat.">2.1. Con el fichero <code>HSWRESTER</code> de la librería PASWR2, ajusta un modelo de regresión para predecir la cantidad de grasa (<code>tanfat</code>). Selecciona las variables <code>age</code>, <code>ht</code>, <code>wt</code>, <code>triceps</code> y <code>subscap</code> que mejor sirvan para predecir los valores de <code>tanfat</code>.</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -131,14 +173,26 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Máster Universitario en Salud Pública</h1>
+<h1 class="title">Práctica 4: Regresión</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Aritz Adin </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">31/12/2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -146,62 +200,63 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="bioestadística-curso-2024-25." class="level2" style="color: green">
-<h2 style="color: green" class="anchored" data-anchor-id="bioestadística-curso-2024-25.">Bioestadística / Curso 2024-25.</h2>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Fecha</th>
-<th>Título</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>02-octubre</td>
-<td><a href="./Practica0.html">Práctica 0: Introducción a <code>R</code></a></td>
-</tr>
-<tr class="even">
-<td>07-octubre</td>
-<td><a href="./Practica1.html">Práctica 1: Lectura y manejo de ficheros</a></td>
-</tr>
-<tr class="odd">
-<td>16-octubre</td>
-<td><a href="./Practica2.html">Práctica 2: Estadística descriptiva</a></td>
-</tr>
-<tr class="even">
-<td>30-octubre</td>
-<td><a href="./Practica3.html">Práctica 3: Contrastes paramétricos</a></td>
-</tr>
-<tr class="odd">
-<td>11-noviembre</td>
-<td><a href="./Practica4.html">Práctica 4: Regresión lineal</a></td>
-</tr>
-<tr class="even">
-<td>18-noviembre</td>
-<td>Práctica 5: Tablas de contingencia</td>
-</tr>
-<tr class="odd">
-<td>27-noviembre</td>
-<td>Práctica 6: Regresión logística</td>
-</tr>
-<tr class="even">
-<td>11-diciembre</td>
-<td>Práctica 7: Análisis de supervivencia</td>
-</tr>
-<tr class="odd">
-<td>18-diciembre</td>
-<td>Práctica repaso: Bloque II</td>
-</tr>
-</tbody>
-</table>
+<section id="regresión" class="level1">
+<h1>1. Regresión</h1>
+<section id="emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-hombres-según-la-edad." class="level2">
+<h2 class="anchored" data-anchor-id="emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-hombres-según-la-edad.">1.1. Emplea el fichero <code>bloodpress1.txt</code> para ajustar un modelo de regresión lineal que permita estimar la presión sistólica en hombres según la edad.</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"bloodpres1.txt"</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(datos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sbp age sex
+1 158  41   M
+2 185  60   M
+3 152  41   M
+4 159  47   M
+5 176  66   M
+6 156  47   M</code></pre>
+</div>
+</div>
+<ul>
+<li><p><strong>Seleccionamos los hombres, representamos un diagrama de dispersión y ajustamos un modelo de regresión lineal con la función <code>lm()</code></strong></p></li>
+<li><p><strong>Proporciona una interpretación para los coeficientes</strong></p></li>
+</ul>
+<!-- * $\beta_0=110.0385$ mmHg: Valor esperado para un hombre de 0 años de edad (en este ejemplo, no tiene sentido) -->
+<!-- * $\beta_1=0.9614$: Por cada año que aumenta la edad de un hombre, se espera que la presión sistólica aumente en 0.9614 mmHg. -->
+<ul>
+<li><p><strong>Representa gráficamente la línea ajustada</strong></p></li>
+<li><p><strong>Verifica que se cumplen las hipótesis del modelo</strong></p></li>
+<li><p><strong>Obtén la predicción para cinco hombres de 20, 29, 46, 58 y 65 años de edad</strong></p></li>
+</ul>
 </section>
-<section id="bibliografía" class="level2" style="color: black">
-<h2 style="color: black" class="anchored" data-anchor-id="bibliografía">Bibliografía</h2>
-<p>Para la realización de esta práctica, puede consultarse el texto:</p>
-<p>Ugarte, M.D., Militino, A.F., and Arnholt, A.T. (2016). <em>Probability and Statistics with R (Second Edition)</em>. Chapman and Hall.</p>
-<p><img src="img/PASWR2.jpg" class="img-fluid"></p>
+<section id="emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-mujeres-según-la-edad." class="level2">
+<h2 class="anchored" data-anchor-id="emplea-el-fichero-bloodpress1.txt-para-ajustar-un-modelo-de-regresión-lineal-que-permita-estimar-la-presión-sistólica-en-mujeres-según-la-edad.">1.2. Emplea el fichero <code>bloodpress1.txt</code> para ajustar un modelo de regresión lineal que permita estimar la presión sistólica en mujeres según la edad.</h2>
+<ul>
+<li><p><strong>Seleccionamos los hombres, representamos un diagrama de dispersión y ajustamos un modelo de regresión lineal con la función <code>lm()</code></strong></p></li>
+<li><p><strong>Proporciona una interpretación para los coeficientes</strong></p></li>
+</ul>
+<!-- * $\beta_0=97.0771$ mmHg: Valor esperado para una mujer de 0 años de edad (en este ejemplo, no tiene sentido) -->
+<!-- * $\beta_1=0.9493$: Por cada año que aumenta la edad de una mujer, se espera que la presión sistólica aumente en 0.9493 mmHg. -->
+<ul>
+<li><p><strong>Representa gráficamente la línea ajustada</strong></p></li>
+<li><p><strong>Verifica que se cumplen las hipótesis del modelo</strong></p></li>
+<li><p><strong>Obtén la predicción para cinco mujeres de 23, 26, 32, 55 y 62 años de edad</strong></p></li>
+</ul>
+</section>
+</section>
+<section id="para-entregar" class="level1">
+<h1>2. Para entregar</h1>
+<section id="con-el-fichero-hswrester-de-la-librería-paswr2-ajusta-un-modelo-de-regresión-para-predecir-la-cantidad-de-grasa-tanfat.-selecciona-las-variables-age-ht-wt-triceps-y-subscap-que-mejor-sirvan-para-predecir-los-valores-de-tanfat." class="level2">
+<h2 class="anchored" data-anchor-id="con-el-fichero-hswrester-de-la-librería-paswr2-ajusta-un-modelo-de-regresión-para-predecir-la-cantidad-de-grasa-tanfat.-selecciona-las-variables-age-ht-wt-triceps-y-subscap-que-mejor-sirvan-para-predecir-los-valores-de-tanfat.">2.1. Con el fichero <code>HSWRESTER</code> de la librería PASWR2, ajusta un modelo de regresión para predecir la cantidad de grasa (<code>tanfat</code>). Selecciona las variables <code>age</code>, <code>ht</code>, <code>wt</code>, <code>triceps</code> y <code>subscap</code> que mejor sirvan para predecir los valores de <code>tanfat</code>.</h2>
+<ul>
+<li><p>Selecciona las variables eliminado secuencialmente aquellas que no son estadísticamente significativas.</p></li>
+<li><p>Utiliza también la función <code>stepAIC()</code> de la librería MASS para seleccionar las variables.</p></li>
+<li><p>Interpreta los coeficientes del modelo.</p></li>
+<li><p>Predice el valor de <code>tanfat</code> para un individuo con valores de la variable <code>abs</code> de 20 y 25 respectivamente.</p></li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

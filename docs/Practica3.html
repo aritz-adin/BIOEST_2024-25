@@ -138,6 +138,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./Practica3.html" rel="" target="" aria-current="page">
  <span class="menu-text">Práctica 3</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Practica4.html" rel="" target="">
+ <span class="menu-text">Práctica 4</span></a>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -768,7 +772,7 @@ SW p-val
 </div>
 <p>Como no se verifica la normalidad, realizamos el test no-paramétrico para la diferencia de medias (test de Mann-Withney):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(hdl.male, hdl.female, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>, <span class="at">conf.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(hdl.male, hdl.female, <span class="at">mu=</span><span class="dv">0</span>, <span class="at">alternative=</span><span class="st">"two.sided"</span>, <span class="at">conf.level=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon rank sum test with continuity correction
@@ -863,15 +867,158 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <section id="contrasta-al-nivel-de-significación-0.10-si-el-tamaño-del-cuerpo-frame-influye-en-la-presión-diastólica-bp.1d-de-las-mujeres." class="level2">
 <h2 class="anchored" data-anchor-id="contrasta-al-nivel-de-significación-0.10-si-el-tamaño-del-cuerpo-frame-influye-en-la-presión-diastólica-bp.1d-de-las-mujeres.">3.1. Contrasta al nivel de significación 0.10 si el tamaño del cuerpo (<code>frame</code>) influye en la presión diastólica (<code>bp.1d</code>) de las mujeres.</h2>
 <p><strong>a) Crea un nuevo fichero llamado <code>diabetes.female</code> solo con las mujeres.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>pos <span class="ot">&lt;-</span> <span class="fu">which</span>(diabetes<span class="sc">$</span>gender<span class="sc">==</span><span class="st">"female"</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>diabetes.female <span class="ot">&lt;-</span> diabetes[pos,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><strong>b) Exploración gráfica: representa los diagrama de caja de la variable <code>bp.1d</code> según la variable <code>frame</code>.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(bp<span class="fl">.1</span>d <span class="sc">~</span> frame, <span class="at">data=</span>diabetes.female)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica3_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p><strong>c) Realiza el análisis de la varianza con la función <code>aov()</code></strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>bp.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(bp<span class="fl">.1</span>d <span class="sc">~</span> frame, <span class="at">data=</span>diabetes.female)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bp.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df Sum Sq Mean Sq F value Pr(&gt;F)  
+frame         2    921   460.7   2.572 0.0786 .
+Residuals   231  41376   179.1                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
 <p><strong>d) Comprueba si pueden asumirse las hipótesis del modelo.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Cargando paquete requerido: carData</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">checking.plots</span>(bp.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica3_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(bp.aov)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(r)             <span class="do">## Normalidad de los errores</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  r
+W = 0.98986, p-value = 0.1008</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(bp.aov)          <span class="do">## Test de Levene para homogeneidad de varianzas</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+       Df F value Pr(&gt;F)
+group   2  1.8214 0.1641
+      231               </code></pre>
+</div>
+</div>
 <p><strong>e) Utiliza un test de Tukey para averiguar entre qué niveles de la variable <code>frame</code> existen diferencias significativas en los niveles medios de la variable <code>bp.1d</code></strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>bp.mc <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(bp.aov, <span class="at">conf.level=</span><span class="fl">0.9</span>)</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>bp.mc</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Tukey multiple comparisons of means
+    90% family-wise confidence level
+
+Fit: aov(formula = bp.1d ~ frame, data = diabetes.female)
+
+$frame
+                  diff       lwr        upr     p adj
+medium-large  2.121373 -2.811945  7.0546917 0.6491061
+small-large  -2.423910 -7.826310  2.9784887 0.6247892
+small-medium -4.545284 -8.697193 -0.3933743 0.0639277</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.mc)                 <span class="do">## Graficos de intervalos de confianza del test de Tukey</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica3_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="utiliza-el-fichero-diabetes.female-para-responder-a-las-siguientes-cuestiones." class="level2">
 <h2 class="anchored" data-anchor-id="utiliza-el-fichero-diabetes.female-para-responder-a-las-siguientes-cuestiones.">3.2. Utiliza el fichero <code>diabetes.female</code> para responder a las siguientes cuestiones.</h2>
 <p><strong>a) Contrasta al nivel de significación</strong> <span class="math inline">\(\alpha=0.05\)</span> <strong>si existen diferencias entre los niveles medios de glucosa glicosilada (<code>glyhb</code>) según la constitución del tamaño del cuerpo (<code>frame</code>) entre las mujeres.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(glyhb <span class="sc">~</span> frame, <span class="at">data=</span>diabetes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica3_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>glyhb.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(glyhb<span class="sc">~</span>frame, <span class="at">data=</span>diabetes.female)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glyhb.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Df Sum Sq Mean Sq F value  Pr(&gt;F)   
+frame         2   40.4  20.207     4.7 0.00998 **
+Residuals   231  993.1   4.299                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Comprobamos las hipótesis del modelo</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">checking.plots</span>(glyhb.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica3_files/figure-html/unnamed-chunk-33-2.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rstandard</span>(glyhb.aov)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(r) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  r
+W = 0.7235, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(glyhb.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Levene's Test for Homogeneity of Variance (center = median)
+       Df F value Pr(&gt;F)
+group   2  1.0362 0.3564
+      231               </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Como no se cumplen las hipótesis del modelo, realizamos el test de Kruskal-Wallis</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(glyhb<span class="sc">~</span>frame, <span class="at">data=</span>diabetes.female)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Kruskal-Wallis rank sum test
+
+data:  glyhb by frame
+Kruskal-Wallis chi-squared = 20.111, df = 2, p-value = 4.295e-05</code></pre>
+</div>
+</div>
 <p><strong>b) Si has detectado diferencias, averigua entre qué grupos existen diferencias estadísticamente significativas.</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal</span>(diabetes.female<span class="sc">$</span>glyhb, diabetes.female<span class="sc">$</span>frame, <span class="at">alpha=</span><span class="fl">0.05</span>, <span class="at">group=</span><span class="cn">FALSE</span>, <span class="at">console=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Study: diabetes.female$glyhb ~ diabetes.female$frame
+Kruskal-Wallis test's
+Ties or no Ties
+
+Critical Value: 20.11077
+Degrees of freedom: 2
+Pvalue Chisq  : 4.295381e-05 
+
+diabetes.female$frame,  means of the ranks
+
+       diabetes.female.glyhb   r
+large              157.07143  42
+medium             114.76423 123
+small               98.28986  69
+
+Post Hoc Analysis
+
+Comparison between treatments mean of the ranks.
+
+               Difference pvalue Signif.       LCL      UCL
+large - medium   42.30720 0.0003     *** 19.424803 65.18960
+large - small    58.78157 0.0000     *** 33.723420 83.83973
+medium - small   16.47437 0.0932       . -2.783587 35.73233</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="para-entregar" class="level1">

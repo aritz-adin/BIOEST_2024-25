@@ -11,7 +11,7 @@ format: gfm
 | 07-octubre   | [Práctica 1: Lectura y manejo de ficheros](./Practica1.html) |
 | 16-octubre   | [Práctica 2: Estadística descriptiva](./Practica2.html)      |
 | 30-octubre   | [Práctica 3: Contrastes paramétricos](./Practica3.html)      |
-| 11-noviembre | Práctica 4: Regresión lineal                                 |
+| 11-noviembre | [Práctica 4: Regresión lineal](./Practica4.html)             |
 | 18-noviembre | Práctica 5: Tablas de contingencia                           |
 | 27-noviembre | Práctica 6: Regresión logística                              |
 | 11-diciembre | Práctica 7: Análisis de supervivencia                        |

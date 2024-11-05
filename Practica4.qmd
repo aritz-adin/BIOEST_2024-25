@@ -1,0 +1,137 @@
+---
+title: "Práctica 4: Regresión"
+author: "Aritz Adin"
+date: "2024-11-31"
+date-format: "DD/MM/YYYY"
+format:
+  html:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)  
+```
+
+# 1. Regresión
+
+## 1.1. Emplea el fichero `bloodpress1.txt` para ajustar un modelo de regresión lineal que permita estimar la presión sistólica en hombres según la edad.
+
+```{r}
+datos <- read.table("bloodpres1.txt", header=TRUE)
+head(datos)
+```
+
+- **Seleccionamos los hombres, representamos un diagrama de dispersión y ajustamos un modelo de regresión lineal con la función `lm()`**
+
+```{r, include=FALSE}
+pos <- which(datos$sex=="M")
+datos.male <- datos[pos,]
+
+## Diagrama de dispersión ##
+plot(datos.male$age, datos.male$sbp)
+
+## Covarianza y correlación ##
+cov(datos.male$age, datos.male$sbp)
+cor(datos.male$age, datos.male$sbp)
+
+## Modelo de regresión lineal ##
+model.male <- lm(sbp~age, data=datos.male)
+```
+- **Proporciona una interpretación para los coeficientes**
+```{r, include=FALSE}
+summary(model.male)
+```
+<!-- * $\beta_0=110.0385$ mmHg: Valor esperado para un hombre de 0 años de edad (en este ejemplo, no tiene sentido) -->
+
+<!-- * $\beta_1=0.9614$: Por cada año que aumenta la edad de un hombre, se espera que la presión sistólica aumente en 0.9614 mmHg. -->
+
+
+- **Representa gráficamente la línea ajustada**
+
+```{r, include=FALSE}
+plot(datos.male$age, datos.male$sbp)
+abline(model.male, col="red", lwd=2)
+```
+
+- **Verifica que se cumplen las hipótesis del modelo**
+
+```{r, include=FALSE}
+library(PASWR2)
+checking.plots(model.male)
+
+res <- rstandard(model.male)
+shapiro.test(res)
+```
+
+- **Obtén la predicción para cinco hombres de 20, 29, 46, 58 y 65 años de edad**
+```{r, include=FALSE}
+newdata <- data.frame(age=c(20,29,46,58,65))
+
+predictions <- predict(model.male, newdata, interval="prediction")
+predictions
+```
+
+## 1.2. Emplea el fichero `bloodpress1.txt` para ajustar un modelo de regresión lineal que permita estimar la presión sistólica en mujeres según la edad.
+
+- **Seleccionamos los hombres, representamos un diagrama de dispersión y ajustamos un modelo de regresión lineal con la función `lm()`**
+
+```{r, include=FALSE}
+pos <- which(datos$sex=="F")
+datos.female <- datos[pos,]
+
+## Diagrama de dispersión ##
+plot(datos.female$age, datos.female$sbp)
+
+## Covarianza y correlación ##
+cov(datos.female$age, datos.female$sbp)
+cor(datos.female$age, datos.female$sbp)
+
+## Modelo de regresión lineal ##
+model.female <- lm(sbp~age, data=datos.female)
+```
+
+- **Proporciona una interpretación para los coeficientes**
+```{r, include=FALSE}
+summary(model.female)
+```
+<!-- * $\beta_0=97.0771$ mmHg: Valor esperado para una mujer de 0 años de edad (en este ejemplo, no tiene sentido) -->
+
+<!-- * $\beta_1=0.9493$: Por cada año que aumenta la edad de una mujer, se espera que la presión sistólica aumente en 0.9493 mmHg. -->
+
+
+- **Representa gráficamente la línea ajustada**
+
+```{r, include=FALSE}
+plot(datos.female$age, datos.female$sbp)
+abline(model.female, col="red", lwd=2)
+```
+
+- **Verifica que se cumplen las hipótesis del modelo**
+
+```{r, include=FALSE}
+library(PASWR2)
+checking.plots(model.female)
+
+res <- rstandard(model.female)
+shapiro.test(res)
+```
+
+- **Obtén la predicción para cinco mujeres de 23, 26, 32, 55 y 62 años de edad**
+```{r, include=FALSE}
+newdata <- data.frame(age=c(23,26,32,55,62))
+
+predictions <- predict(model.female, newdata, interval="prediction")
+predictions
+```
+
+# 2. Para entregar
+
+## 2.1. Con el fichero `HSWRESTER` de la librería PASWR2, ajusta un modelo de regresión para predecir la cantidad de grasa (`tanfat`). Selecciona las variables `age`, `ht`, `wt`, `triceps` y `subscap` que mejor sirvan para predecir los valores de `tanfat`.
+
+- Selecciona las variables eliminado secuencialmente aquellas que no son estadísticamente significativas.
+
+- Utiliza también la función `stepAIC()` de la librería MASS para seleccionar las variables.
+
+- Interpreta los coeficientes del modelo.
+
+- Predice el valor de `tanfat` para un individuo con valores de la variable `abs` de 20 y 25 respectivamente.

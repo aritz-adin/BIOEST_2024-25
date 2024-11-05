@@ -385,7 +385,7 @@ boxplot(hdl ~ gender, data=diabetes)
 Como no se verifica la normalidad, realizamos el test no-paramétrico para la diferencia de medias (test de Mann-Withney):
 
 ```{r include=TRUE}
-wilcox.test(hdl.male, hdl.female, mu=0, alternative="two.sided", conf.level=0.05)
+wilcox.test(hdl.male, hdl.female, mu=0, alternative="two.sided", conf.level=0.95)
 ```
 
 Como p-valor$=0.006<\alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
@@ -443,27 +443,27 @@ Como p-valor$=0.0005 < \alpha=0.05 \Rightarrow$ Rechazamos $H_0$.
 
 **a) Crea un nuevo fichero llamado `diabetes.female` solo con las mujeres.**
 
-```{r include=FALSE}
+```{r include=TRUE}
 pos <- which(diabetes$gender=="female")
 diabetes.female <- diabetes[pos,]
 ```
 
 **b) Exploración gráfica: representa los diagrama de caja de la variable `bp.1d` según la variable `frame`.**
 
-```{r include=FALSE}
+```{r include=TRUE}
 boxplot(bp.1d ~ frame, data=diabetes.female)
 ```
 
 **c) Realiza el análisis de la varianza con la función `aov()`**
 
-```{r include=FALSE}
+```{r include=TRUE}
 bp.aov <- aov(bp.1d ~ frame, data=diabetes.female)
 summary(bp.aov)
 ```
 
 **d) Comprueba si pueden asumirse las hipótesis del modelo.**
 
-```{r include=FALSE}
+```{r include=TRUE}
 library(car)
 checking.plots(bp.aov)
 
@@ -476,7 +476,7 @@ leveneTest(bp.aov)          ## Test de Levene para homogeneidad de varianzas
 
 **e) Utiliza un test de Tukey para averiguar entre qué niveles de la variable `frame` existen diferencias significativas en los niveles medios de la variable `bp.1d`**
 
-```{r include=FALSE}
+```{r include=TRUE}
 bp.mc <- TukeyHSD(bp.aov, conf.level=0.9)
 bp.mc
 
@@ -487,7 +487,7 @@ plot(bp.mc)                 ## Graficos de intervalos de confianza del test de T
 
 **a) Contrasta al nivel de significación** $\alpha=0.05$ **si existen diferencias entre los niveles medios de glucosa glicosilada (`glyhb`) según la constitución del tamaño del cuerpo (`frame`) entre las mujeres.**
 
-```{r include=FALSE}
+```{r include=TRUE}
 boxplot(glyhb ~ frame, data=diabetes)
 
 glyhb.aov <- aov(glyhb~frame, data=diabetes.female)
@@ -507,7 +507,7 @@ kruskal.test(glyhb~frame, data=diabetes.female)
 
 **b) Si has detectado diferencias, averigua entre qué grupos existen diferencias estadísticamente significativas.**
 
-```{r include=FALSE}
+```{r include=TRUE}
 library(agricolae)
 
 kruskal(diabetes.female$glyhb, diabetes.female$frame, alpha=0.05, group=FALSE, console=TRUE)

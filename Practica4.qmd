@@ -1,7 +1,7 @@
 ---
 title: "Práctica 4: Regresión"
 author: "Aritz Adin"
-date: "2024-11-31"
+date: "2024-11-11"
 date-format: "DD/MM/YYYY"
 format:
   html:
@@ -23,7 +23,7 @@ head(datos)
 
 - **Seleccionamos los hombres, representamos un diagrama de dispersión y ajustamos un modelo de regresión lineal con la función `lm()`**
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 pos <- which(datos$sex=="M")
 datos.male <- datos[pos,]
 
@@ -38,24 +38,24 @@ cor(datos.male$age, datos.male$sbp)
 model.male <- lm(sbp~age, data=datos.male)
 ```
 - **Proporciona una interpretación para los coeficientes**
-```{r, include=FALSE}
+```{r, include=TRUE}
 summary(model.male)
 ```
-<!-- * $\beta_0=110.0385$ mmHg: Valor esperado para un hombre de 0 años de edad (en este ejemplo, no tiene sentido) -->
+* $\beta_0=110.0385$ mmHg: Valor esperado para un hombre de 0 años de edad (en este ejemplo, no tiene sentido)
 
-<!-- * $\beta_1=0.9614$: Por cada año que aumenta la edad de un hombre, se espera que la presión sistólica aumente en 0.9614 mmHg. -->
+* $\beta_1=0.9614$: Por cada año que aumenta la edad de un hombre, se espera que la presión sistólica aumente en 0.9614 mmHg.
 
 
 - **Representa gráficamente la línea ajustada**
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 plot(datos.male$age, datos.male$sbp)
 abline(model.male, col="red", lwd=2)
 ```
 
 - **Verifica que se cumplen las hipótesis del modelo**
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 library(PASWR2)
 checking.plots(model.male)
 
@@ -63,8 +63,10 @@ res <- rstandard(model.male)
 shapiro.test(res)
 ```
 
+*Aunque no se verifica la hipótesis de normalidad de los residuos (p-valor$<0.05$), pero seguiremos con el ejercicio.*
+
 - **Obtén la predicción para cinco hombres de 20, 29, 46, 58 y 65 años de edad**
-```{r, include=FALSE}
+```{r, include=TRUE}
 newdata <- data.frame(age=c(20,29,46,58,65))
 
 predictions <- predict(model.male, newdata, interval="prediction")
@@ -75,7 +77,7 @@ predictions
 
 - **Seleccionamos los hombres, representamos un diagrama de dispersión y ajustamos un modelo de regresión lineal con la función `lm()`**
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 pos <- which(datos$sex=="F")
 datos.female <- datos[pos,]
 
@@ -91,24 +93,24 @@ model.female <- lm(sbp~age, data=datos.female)
 ```
 
 - **Proporciona una interpretación para los coeficientes**
-```{r, include=FALSE}
+```{r, include=TRUE}
 summary(model.female)
 ```
-<!-- * $\beta_0=97.0771$ mmHg: Valor esperado para una mujer de 0 años de edad (en este ejemplo, no tiene sentido) -->
+* $\beta_0=97.0771$ mmHg: Valor esperado para una mujer de 0 años de edad (en este ejemplo, no tiene sentido)
 
-<!-- * $\beta_1=0.9493$: Por cada año que aumenta la edad de una mujer, se espera que la presión sistólica aumente en 0.9493 mmHg. -->
+* $\beta_1=0.9493$: Por cada año que aumenta la edad de una mujer, se espera que la presión sistólica aumente en 0.9493 mmHg.
 
 
 - **Representa gráficamente la línea ajustada**
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 plot(datos.female$age, datos.female$sbp)
 abline(model.female, col="red", lwd=2)
 ```
 
 - **Verifica que se cumplen las hipótesis del modelo**
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 library(PASWR2)
 checking.plots(model.female)
 
@@ -117,7 +119,7 @@ shapiro.test(res)
 ```
 
 - **Obtén la predicción para cinco mujeres de 23, 26, 32, 55 y 62 años de edad**
-```{r, include=FALSE}
+```{r, include=TRUE}
 newdata <- data.frame(age=c(23,26,32,55,62))
 
 predictions <- predict(model.female, newdata, interval="prediction")

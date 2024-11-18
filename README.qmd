@@ -12,7 +12,7 @@ format: gfm
 | 16-octubre   | [Práctica 2: Estadística descriptiva](./Practica2.html)      |
 | 30-octubre   | [Práctica 3: Contrastes paramétricos](./Practica3.html)      |
 | 11-noviembre | [Práctica 4: Regresión lineal](./Practica4.html)             |
-| 18-noviembre | Práctica 5: Tablas de contingencia                           |
+| 18-noviembre | [Práctica 5: Asociación. Riesgos relativos y Odds Ratio](./Practica5.html)   |
 | 27-noviembre | Práctica 6: Regresión logística                              |
 | 11-diciembre | Práctica 7: Análisis de supervivencia                        |
 | 18-diciembre | Práctica repaso: Bloque II                                   |

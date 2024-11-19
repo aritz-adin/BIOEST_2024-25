@@ -1,7 +1,7 @@
 ---
 title: "Práctica 5: Asociación. Riesgos relativos y Odds Ratio"
 author: "Aritz Adin"
-date: "2024-16-11"
+date: "2024-11-18"
 date-format: "DD/MM/YYYY"
 format:
   html:
@@ -108,12 +108,10 @@ $$OR=\frac{\widehat{odds}_{sulfin}}{\widehat{odds}_{placebo}}=\frac{0.05924855}{
 o como la razón del producto cruzado
 
 $$OR=\frac{n_{11} \times n_{22}}{n_{21} \times n_{12}}=\frac{41 \times 682}{60 \times 692}=0.6734586$$
-**Interpretación:** ESCRIBIR...
+**Interpretación:** El odds estimado de fallecer en el grupo placebo es aproximadamente 1.5 veces ($1/0.67345=1.484891$) superior al odds estimado de fallecer en el grupo de pacientes que han tomado sulfinpirazona.
 
-<!-- **Interpretación:** El odds estimado de fallecer en el grupo placebo es aproximadamente 1.5 veces ($1/0.67345=1.484891$) superior al odds estimado de fallecer en el grupo de pacientes que han tomado sulfinpirazona. -->
-
-<!-- Calculamos el intervalo de confianza al 90% para el odds ratio: -->
-```{r echo=FALSE, eval=TRUE, include=FALSE}
+Calculamos el intervalo de confianza al 90% para el odds ratio:
+```{r echo=FALSE, eval=TRUE, include=TRUE}
 datos <- data.frame(Muertos=c(60,41), Vivos=c(682,692),
                     row.names=c("Placebo","Sulfin"))
 datos
@@ -121,7 +119,7 @@ datos
 source("odds.R")
 odds(datos, conf.level=0.9)
 ```
-<!-- **Interpretación:** Con una confianza del 90%, el odds ratio se encuentra entre 1.05 y 2.10. Es decir, el odds de fallecer en el grupo de sulfinpirazona es aproximadamente entre 1.05 y 2 veces mayor que el odds de fallecer en el grupo placebo. -->
+**Interpretación:** Con una confianza del 90%, el odds ratio se encuentra entre 1.05 y 2.10. Es decir, el odds de fallecer en el grupo de sulfinpirazona es aproximadamente entre 1.05 y 2 veces mayor que el odds de fallecer en el grupo placebo.
 
 ### e) Utiliza el test exacto de Fisher ($\alpha=0.1$) para decidir si hay independencia.
 

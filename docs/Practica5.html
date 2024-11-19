@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aritz Adin">
-<meta name="dcterms.date" content="2025-11-04">
 
 <title>BIOEST 2024-25 - Práctica 5: Asociación. Riesgos relativos y Odds Ratio</title>
 <style>
@@ -147,6 +146,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./Practica5.html" rel="" target="" aria-current="page">
  <span class="menu-text">Práctica 5</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./Practica6.html" rel="" target="">
+ <span class="menu-text">Práctica 6</span></a>
+  </li>  
 </ul>
             <div class="quarto-navbar-tools ms-auto">
 </div>
@@ -212,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">11/04/2025</p>
+      <p class="date">18/11/2024</p>
     </div>
   </div>
   
@@ -341,10 +344,23 @@ sample estimates:
 <p>El odds ratio estimado, se calcula como el ratio de odds</p>
 <p><span class="math display">\[OR=\frac{\widehat{odds}_{sulfin}}{\widehat{odds}_{placebo}}=\frac{0.05924855}{0.08797654}=0.6734585\]</span></p>
 <p>o como la razón del producto cruzado</p>
-<p><span class="math display">\[OR=\frac{n_{11} \times n_{22}}{n_{21} \times n_{12}}=\frac{41 \times 682}{60 \times 692}=0.6734586\]</span> <strong>Interpretación:</strong> ESCRIBIR…</p>
-<!-- **Interpretación:** El odds estimado de fallecer en el grupo placebo es aproximadamente 1.5 veces ($1/0.67345=1.484891$) superior al odds estimado de fallecer en el grupo de pacientes que han tomado sulfinpirazona. -->
-<!-- Calculamos el intervalo de confianza al 90% para el odds ratio: -->
-<!-- **Interpretación:** Con una confianza del 90%, el odds ratio se encuentra entre 1.05 y 2.10. Es decir, el odds de fallecer en el grupo de sulfinpirazona es aproximadamente entre 1.05 y 2 veces mayor que el odds de fallecer en el grupo placebo. -->
+<p><span class="math display">\[OR=\frac{n_{11} \times n_{22}}{n_{21} \times n_{12}}=\frac{41 \times 682}{60 \times 692}=0.6734586\]</span> <strong>Interpretación:</strong> El odds estimado de fallecer en el grupo placebo es aproximadamente 1.5 veces (<span class="math inline">\(1/0.67345=1.484891\)</span>) superior al odds estimado de fallecer en el grupo de pacientes que han tomado sulfinpirazona.</p>
+<p>Calculamos el intervalo de confianza al 90% para el odds ratio:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>        Muertos Vivos
+Placebo      60   682
+Sulfin       41   692</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Placebo vs Sulfin"
+     oddsratio conf.int.i.OR conf.int.s.OR  log.odds
+[1,]  1.484872      1.051719      2.096421 0.3953288
+     relative.risk conf.int.i.RR conf.int.s.RR
+[1,]      1.445664      1.047573      1.995036</code></pre>
+</div>
+</div>
+<p><strong>Interpretación:</strong> Con una confianza del 90%, el odds ratio se encuentra entre 1.05 y 2.10. Es decir, el odds de fallecer en el grupo de sulfinpirazona es aproximadamente entre 1.05 y 2 veces mayor que el odds de fallecer en el grupo placebo.</p>
 </section>
 <section id="e-utiliza-el-test-exacto-de-fisher-alpha0.1-para-decidir-si-hay-independencia." class="level3">
 <h3 class="anchored" data-anchor-id="e-utiliza-el-test-exacto-de-fisher-alpha0.1-para-decidir-si-hay-independencia.">e) Utiliza el test exacto de Fisher (<span class="math inline">\(\alpha=0.1\)</span>) para decidir si hay independencia.</h3>
@@ -352,8 +368,8 @@ sample estimates:
 <p><span class="math inline">\(H_0\)</span>: No hay asociación entre tomar el medicamento y sufrir o no un infarto de miocardio (hay independencia)</p>
 <p>Si utilizamos la función de R:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>resultado <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(datos)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>resultado</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>resultado <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(datos)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>resultado</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test with Yates' continuity correction
@@ -364,7 +380,7 @@ X-squared = 3.2121, df = 1, p-value = 0.0731</code></pre>
 </div>
 <p>Podemos comprobar cómo se calculan los casos esperados:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>resultado<span class="sc">$</span>expected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>resultado<span class="sc">$</span>expected</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Muertos    Vivos
 Placebo 50.80814 691.1919
@@ -373,7 +389,7 @@ Sulfin  50.19186 682.8081</code></pre>
 </div>
 <p><span class="math display">\[\hat{\mu}_{11}=\dfrac{n_{1+} \times n_{+1}}{n}=\dfrac{(60+682) \times (60+41)}{1475} = 50.80814\]</span> De forma similar, podemos comprobar que el estadístico Ji-cuadrado se calcula como:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((resultado<span class="sc">$</span>observed<span class="sc">-</span>resultado<span class="sc">$</span>expected)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>resultado<span class="sc">$</span>expected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>((resultado<span class="sc">$</span>observed<span class="sc">-</span>resultado<span class="sc">$</span>expected)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>resultado<span class="sc">$</span>expected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3.592256</code></pre>
 </div>
@@ -384,7 +400,7 @@ Sulfin  50.19186 682.8081</code></pre>
 <section id="f-utiliza-el-test-exacto-de-la-ji-cuadrado-para-contrastar-independencia." class="level3">
 <h3 class="anchored" data-anchor-id="f-utiliza-el-test-exacto-de-la-ji-cuadrado-para-contrastar-independencia.">f) Utiliza el test exacto de la ji-cuadrado para contrastar independencia.</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(datos, <span class="at">conf.level=</span><span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(datos, <span class="at">conf.level=</span><span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fisher's Exact Test for Count Data

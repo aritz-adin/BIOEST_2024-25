@@ -38,11 +38,9 @@ Responde a las siguientes preguntas:
 ### 1. Introduce los datos en R mediante la función `data.frame`.
 
 ```{r include=FALSE}
-anchura <- c(23.25,23.75,24.75,25.75,26.75,27.75,28.75,29.25)
-satelites <- c(5,4,17,21,15,20,15,14)
-total <- c(14,14,28,39,22,24,18,14)
-
-cangrejos <- data.frame(anchura, satelites, total)
+cangrejos <- data.frame(anchura=c(23.25,23.75,24.75,25.75,26.75,27.75,28.75,29.25),
+                        satelites=c(5,4,17,21,15,20,15,14),
+                        total=c(14,14,28,39,22,24,18,14))
 print(cangrejos)
 ```
 
@@ -197,66 +195,85 @@ lines(data.pred$anchura, data.pred$prop, col="blue", lwd=2)
 legend(27, 0.3, legend=c("Modelo lineal","Regresión logística"), col=c("red", "blue"), lwd=2, bty="n")
 ```
 
+### 12. Calcula la proporció estimada de cangrejos satélite para una hembra con anchura de caparazón de 28 cm. Calcula e interpreta un intervalo de confianza al 95% para la proporción verdadera.
 
-<!-- ## 2. Para entregar -->
+```{r, include=FALSE}
+data.pred <- data.frame(anchura=28)
+data.pred <- cbind(data.pred,
+                   predict(modelo.glm, data.pred, type="link", se.fit=TRUE))
+data.pred
 
-<!-- Para estudiar cómo afecta una determinada droga sobre una especie de insectos, se realizó un experimento con 8 grupos de insectos a los que se les administró distintas dosis de dicha droga y se les midió: -->
+## Intervalo de confianza para el logit
+lim.inf <- data.pred$fit-1.96*data.pred$se.fit
+lim.sup <- data.pred$fit+1.96*data.pred$se.fit
+IC.logit <- c(lim.inf,lim.sup)
+IC.logit
 
-<!-- * la dosis administrada a cada grupo de insectos ($x$) -->
-<!-- * el número total de insectos por grupo ($n$) -->
-<!-- * el número de insectos muertos en cada grupo tras 5 horas de exposición a la droga -->
-
-<!-- El objetivo es modelizar la proporción de insectos muertos en función de la dosis administrada. Los datos se recogen en la siguiente tabla: -->
-
-<!-- | **Dosis** | **Insectos muertos** | **Total insectos** | -->
-<!-- |:---------:|:--------------------:|:------------------:| -->
-<!-- |  169.1    |       6              |         59         | -->
-<!-- |  172.4    |      13              |         60         | -->
-<!-- |  175.5    |      18              |         62         | -->
-<!-- |  178.4    |      28              |         56         | -->
-<!-- |  181.1    |      52              |         63         | -->
-<!-- |  183.7    |      53              |         59         | -->
-<!-- |  186.1    |      61              |         62         | -->
-<!-- |  188.3    |      60              |         60         | -->
-
-<!-- Responde a las siguientes preguntas: -->
-
-<!-- ### 2.1. Introduce los datos en R mediante la función `data.frame`. -->
-
-<!-- ### 2.2. Define una nueva variable llamada `prop` que indique la proporción de insectos muertos. -->
-
-<!-- ### 2.3. Ajusta el modelo probabilistico lineal $$\pi(x)=\alpha + \beta x$$ donde $y$ corresponde a la variable `prop` y $x$ corresponde a la variable `dosis` -->
-
-<!-- * **¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?** -->
-
-<!-- * **¿Cuál es el coeficiente de determinación? Explica su significado.** -->
-
-<!-- * **¿El modelo ajustado es estadísticamente significativo?** -->
+## Intervalo de confianza para la probabilidad
+IC.prob <- c(plogis(lim.inf),plogis(lim.sup))
+IC.prob
+```
 
 
-<!-- ### 2.4. ¿Cuáles son las predicciones de la proporción de insectos muertos para cada dosis? ¿Y el número esperado de insectos muertos por dosis? -->
+## 2. Para entregar
+
+Para estudiar cómo afecta una determinada droga sobre una especie de insectos, se realizó un experimento con 8 grupos de insectos a los que se les administró distintas dosis de dicha droga y se les midió:
+
+* la dosis administrada a cada grupo de insectos ($x$)
+* el número total de insectos por grupo ($n$)
+* el número de insectos muertos en cada grupo tras 5 horas de exposición a la droga
+
+El objetivo es modelizar la proporción de insectos muertos en función de la dosis administrada. Los datos se recogen en la siguiente tabla:
+
+| **Dosis** | **Insectos muertos** | **Total insectos** |
+|:---------:|:--------------------:|:------------------:|
+|  169.1    |       6              |         59         |
+|  172.4    |      13              |         60         |
+|  175.5    |      18              |         62         |
+|  178.4    |      28              |         56         |
+|  181.1    |      52              |         63         |
+|  183.7    |      53              |         59         |
+|  186.1    |      61              |         62         |
+|  188.3    |      60              |         60         |
+
+Responde a las siguientes preguntas:
+
+### 2.1. Introduce los datos en R mediante la función `data.frame`.
+
+### 2.2. Define una nueva variable llamada `prop` que indique la proporción de insectos muertos.
+
+### 2.3. Ajusta el modelo probabilistico lineal $$\pi(x)=\alpha + \beta x$$ donde $y$ corresponde a la variable `prop` y $x$ corresponde a la variable `dosis`
+
+* **¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?**
+
+* **¿Cuál es el coeficiente de determinación? Explica su significado.**
+
+* **¿El modelo ajustado es estadísticamente significativo?**
 
 
-<!-- ### 2.5. Representa gráficamente las proporciones observadas y las predicciones lineales de las proporciones de satélites por cada anchura del caparazón. -->
+### 2.4. ¿Cuáles son las predicciones de la proporción de insectos muertos para cada dosis? ¿Y el número esperado de insectos muertos por dosis?
 
 
-<!-- ### 2.6. Ajusta el modelo de regresión logística $$\mbox{logit}[\pi(x)] = \log \left(\frac{\pi(x)}{1-\pi(x)} \right) = \alpha + \beta x$$ donde $\pi$ corresponde a la variable `prop`, y $x$ a la variable `dosis`. -->
-
-<!-- * **¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?** -->
-
-<!-- * **¿El modelo ajustado es estadísticamente significativo?** -->
+### 2.5. Representa gráficamente las proporciones observadas y las predicciones lineales de las proporciones de satélites por cada anchura del caparazón.
 
 
-<!-- ### 2.7. ¿Cuál es la tasa incremental de cambio para una dosis de 170? ¿Qué significa? -->
+### 2.6. Ajusta el modelo de regresión logística $$\mbox{logit}[\pi(x)] = \log \left(\frac{\pi(x)}{1-\pi(x)} \right) = \alpha + \beta x$$ donde $\pi$ corresponde a la variable `prop`, y $x$ a la variable `dosis`.
+
+* **¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?**
+
+* **¿El modelo ajustado es estadísticamente significativo?**
 
 
-<!-- ### 2.8. ¿Cuánto crece el odds estimado al aumentar la dosis del primer valor 169.1 al segundo valor 172.4? -->
+### 2.7. ¿Cuál es la tasa incremental de cambio para una dosis de 170? ¿Qué significa?
 
 
-<!-- ### 2.9. ¿Cuáles son las predicciones de la proporción de satélites para cada valor de la anchura observada? -->
+### 2.8. ¿Cuánto crece el odds estimado al aumentar la dosis del primer valor 169.1 al segundo valor 172.4?
 
 
-<!-- ### 2.10. Representa gráficamente las proporciones observadas y las predicciones lineales y logísticas de las proporciones de satélites por cada anchura del caparazón. -->
+### 2.9. ¿Cuáles son las predicciones de la proporción de satélites para cada valor de la anchura observada?
 
 
-<!-- ### 2.11. Calcula la probilidad estimada y su intervalo de confianza al 95\% de que un insecto fallezca con una dosis de 185 unidades. -->
+### 2.10. Representa gráficamente las proporciones observadas y las predicciones lineales y logísticas de las proporciones de satélites por cada anchura del caparazón.
+
+
+### 2.11. Calcula la probabilidad estimada de que un insecto fallezca con una dosis de 185 unidades y su intervalo de confianza al 95\% .

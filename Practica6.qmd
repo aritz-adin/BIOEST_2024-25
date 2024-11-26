@@ -37,7 +37,7 @@ Responde a las siguientes preguntas:
 
 ### 1. Introduce los datos en R mediante la función `data.frame`.
 
-```{r include=FALSE}
+```{r include=TRUE}
 cangrejos <- data.frame(anchura=c(23.25,23.75,24.75,25.75,26.75,27.75,28.75,29.25),
                         satelites=c(5,4,17,21,15,20,15,14),
                         total=c(14,14,28,39,22,24,18,14))
@@ -46,78 +46,78 @@ print(cangrejos)
 
 ### 2. Define una nueva variable llamada `prop` que indique la proporción de satélites para cada anchura.
 
-```{r include=FALSE}
+```{r include=TRUE}
 cangrejos$prop <- cangrejos$satelites/cangrejos$total
 print(cangrejos)
 ```
 
 ### 3. Ajusta el modelo probabilistico lineal $$\pi(x)=\alpha + \beta x$$ donde $y$ corresponde a la variable `prop` y $x$ corresponde a la variable `anchura`
 
-```{r include=FALSE}
-modelo.lm <- lm(prop~anchura, weights=total, data=cangrejos)
-summary(modelo.lm)
+```{r include=TRUE}
+modelo1 <- lm(prop~anchura, weights=total, data=cangrejos)
+summary(modelo1)
 ```
 
 -   **¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?**
 
-    <!-- Las estimaciones de los coeficientes del modelo son: $\hat{\alpha}=`r round(as.numeric(modelo.lm$coefficients[1]),3)`$ y $\hat{\beta}=`r round(as.numeric(modelo.lm$coefficients[2]),3)`$ -->
+    Las estimaciones de los coeficientes del modelo son: $\hat{\alpha}=`r round(as.numeric(modelo1$coefficients[1]),3)`$ y $\hat{\beta}=`r round(as.numeric(modelo1$coefficients[2]),3)`$
 
-    <!-- Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños. -->
+    Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños.
 
 -   **¿Cuál es el coeficiente de determinación? Explica su significado.**
 
-    <!-- $R^2_\mbox{adjusted}=`r round(summary(modelo.lm)$adj.r.squared,4)`$. Es decir, el `r 100*round(summary(modelo.lm)$adj.r.squared,4)`% de la variabilidad total es explicada por el modelo de regresión (variable`anchura). -->
+    $R^2_\mbox{adjusted}=`r round(summary(modelo1)$adj.r.squared,4)`$. Es decir, el `r 100*round(summary(modelo1)$adj.r.squared,4)`% de la variabilidad total es explicada por el modelo de regresión (variable`anchura).
 
 -   **¿El modelo ajustado es estadísticamente significativo?**
 
 ```{r, include=FALSE}
-anova(modelo.lm)
+anova(modelo1)
 ```
 
-<!-- Sí, el modelo es estadísticamente significativo. La función `anova()` presenta el análisis de la varianza con la descomposición de la variabilidad total en sus fuentes de variación y nos indica que la variable `anchura` es estadísticamente significativa. -->
+Sí, el modelo es estadísticamente significativo. La función `anova()` presenta el análisis de la varianza con la descomposición de la variabilidad total en sus fuentes de variación y nos indica que la variable `anchura` es estadísticamente significativa.
 
 ### 4. ¿Cuáles son las predicciones de la proporción de satélites para cada valor de la anchura observada? ¿Y el número esperado de satélites por hembra?
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 data.frame(anchura=cangrejos$anchura,
            prop=cangrejos$prop,
-           prop.pred=fitted(modelo.lm),
+           prop.pred=fitted(modelo1),
            satelite=cangrejos$satelites,
-           satelite.pred=fitted(modelo.lm)*cangrejos$total)
+           satelite.pred=fitted(modelo1)*cangrejos$total)
 ```
 
 ### 5. Representa gráficamente las proporciones observadas y las predicciones lineales de las proporciones de satélites por cada anchura del caparazón.
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 plot(cangrejos$anchura, cangrejos$prop, xlab="Anchura (cm)", ylab="Prop", ylim=c(-0.1,1.1),
      main="Modelo probabilistico lineal")
 abline(h=c(0,1), lty=2)
-abline(modelo.lm, col="red", lwd=2)
+abline(modelo1, col="red", lwd=2)
 ```
 
 ### 6. Ajusta el modelo de regresión logística $$\mbox{logit}[\pi(x)] = \log \left(\frac{\pi(x)}{1-\pi(x)} \right) = \alpha + \beta x$$ donde $\pi$ corresponde a la variable `prop`, y $x$ a la variable `anchura`.
 
-```{r include=FALSE}
-modelo.glm <- glm(prop~anchura, weights=total, family=binomial, data=cangrejos)
-summary(modelo.glm)
+```{r include=TRUE}
+modelo2 <- glm(prop~anchura, weights=total, family=binomial, data=cangrejos)
+summary(modelo2)
 ```
 
 -   **¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?**
 
-    <!-- Las estimaciones de los coeficientes del modelo son: $\hat{\alpha}=`r round(as.numeric(modelo.glm$coefficients[1]),3)`$ y $\hat{\beta}=`r round(as.numeric(modelo.glm$coefficients[2]),3)`$ -->
+    Las estimaciones de los coeficientes del modelo son: $\hat{\alpha}=`r round(as.numeric(modelo2$coefficients[1]),3)`$ y $\hat{\beta}=`r round(as.numeric(modelo2$coefficients[2]),3)`$
 
-    <!-- Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños. -->
+    Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños.
 
-    <!-- Obtenemos la misma conclusión si interpretamos los intervalos de confianza de los parámetros del modelo: -->
+    Obtenemos la misma conclusión si interpretamos los intervalos de confianza de los parámetros del modelo:
 
-```{r, include=FALSE}
-confint(modelo.glm)
+```{r, include=TRUE}
+confint(modelo2)
 ```
 
 -   **¿El modelo ajustado es estadísticamente significativo?**
 
 ```{r, include=FALSE}
-anova(modelo.glm, test="Chi")
+anova(modelo2, test="Chi")
 ```
 
 ### 7. ¿Cuál es la tasa incremental de cambio a los 26 cm? ¿Qué significa?
@@ -126,86 +126,85 @@ La tasa incremental de cambio en un punto $x$ se calcula como $$\hat{\beta}*\hat
 
 Para una anchura de $x=26$ cm su valor es:
 
-```{r, include=FALSE}
-beta <- coef(modelo.glm)[2]
-hat.prop <- predict(modelo.glm, newdata=data.frame(anchura=26), type="response")
+```{r, include=TRUE}
+beta <- coef(modelo2)[2]
+hat.prop <- predict(modelo2, newdata=data.frame(anchura=26), type="response")
 
 beta*hat.prop*(1-hat.prop)
 ```
 
-<!-- También se puede calcular mediante la función `tasa.incremental()` -->
+También se puede calcular mediante la función `tasa.incremental()`
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 source("tasa.incremental.R")
-tasa.incremental(modelo.glm, 26, 27, decimales=4)
+tasa.incremental(modelo2, 26, 27, decimales=4)
 ```
 
-<!-- **Interpretación:** Cuando la anchura del caparazón aumenta de 26 a 27 cm, la proporción de satélites por hembra aumenta en `r round(beta*hat.prop*(1-hat.prop),4)`. -->
+**Interpretación:** Cuando la anchura del caparazón aumenta de 26 a 27 cm, la proporción de satélites por hembra aumenta en `r round(beta*hat.prop*(1-hat.prop),4)`.
 
 ### 8. ¿Cuál es la tasa incremental de cambio de probabilidad para pasar de 23 a 24 cm en la anchura del caparazón? ¿Y de 25 a 26 cm? ¿Qué significan?
 
-```{r, include=FALSE}
-tasa.incremental(modelo.glm, 23, 24, decimales=4)
-tasa.incremental(modelo.glm, 25, 26, decimales=4)
+```{r, include=TRUE}
+tasa.incremental(modelo2, 23, 24, decimales=4)
+tasa.incremental(modelo2, 25, 26, decimales=4)
 ```
 
 ### 9. ¿Cuánto crece el odds estimado (*odds ratio*) por cada cm de aumento del caparazón? Proporciona un intervalo de confianza al 95%.
 
 Cuando la anchura del caparazón aumenta en 1 cm, el odds ratio ($OR=e^\beta$) es de
 
-```{r, include=FALSE}
-exp(coef(modelo.glm)[2])
+```{r, include=TRUE}
+exp(coef(modelo2)[2])
 ```
 
-<!-- Es decir, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece aproximadamente un `r round(exp(coef(modelo.glm)[2])-1,2)*100`%. -->
+Es decir, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece aproximadamente un `r round(exp(coef(modelo2)[2])-1,2)*100`%.
 
 Para calcular un intervalo de confianza al 95% de $e^\beta$, debemos exponenciar los límites inferior y superior del IC para el parámetro $\beta$.
 
-```{r, include=FALSE, message=FALSE}
-IC.beta <- confint(modelo.glm)[2,]
+```{r, include=TRUE, message=FALSE}
+IC.beta <- confint(modelo2)[2,]
 IC.beta
 
-IC.OR <- c(exp(IC.beta[1]), exp(IC.beta[2]))
+IC.OR <- exp(IC.beta)
 IC.OR
 ```
 
-<!-- Es decir, con un nivel de confianza del 95%, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece entre 1.36 y 2.05 veces (o lo que es lo mismo, crece entre un 35% y un 105%). -->
+Es decir, con un nivel de confianza del 95%, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece entre 1.36 y 2.05 veces (o lo que es lo mismo, crece entre un 35% y un 105%).
 
 ### 10. ¿Cuáles son las predicciones de la proporción de satélites para cada valor de la anchura observada?¿Y el número esperado de satélites por hembra?
 
-```{r, include=FALSE}
-data.frame(anchura=cangrejos$anchura,
-           prop=cangrejos$prop,
-           prop.pred=fitted(modelo.glm),
-           satelite=cangrejos$satelites,
-           satelite.pred=fitted(modelo.glm)*cangrejos$total)
+```{r, include=TRUE}
+data.pred <- data.frame(anchura=cangrejos$anchura,
+                        prop=cangrejos$prop,
+                        prop.pred=fitted(modelo2),
+                        satelite=cangrejos$satelites,
+                        satelite.pred=fitted(modelo2)*cangrejos$total)
+data.pred
 ```
 
 ### 11. Representa gráficamente las proporciones observadas y las predicciones lineales y logísticas de las proporciones de satélites por cada anchura del caparazón.
 
-```{r, include=FALSE}
-data.pred <- data.frame(anchura=seq(23,30,0.01))
-data.pred$prop <- predict(modelo.glm, data.pred, type="response")
-
+```{r, include=TRUE}
 plot(cangrejos$anchura, cangrejos$prop, xlab="Anchura (cm)", ylab="Prop", ylim=c(-0.1,1.1),
      main="Modelo regresión logística")
 abline(h=c(0,1), lty=2)
-abline(modelo.lm, col="red", lwd=2)
-lines(data.pred$anchura, data.pred$prop, col="blue", lwd=2)
+abline(modelo1, col="red", lwd=2)
+lines(data.pred$anchura, data.pred$prop.pred, col="blue", lwd=2)
 legend(27, 0.3, legend=c("Modelo lineal","Regresión logística"), col=c("red", "blue"), lwd=2, bty="n")
 ```
 
 ### 12. Calcula la proporció estimada de cangrejos satélite para una hembra con anchura de caparazón de 28 cm. Calcula e interpreta un intervalo de confianza al 95% para la proporción verdadera.
 
-```{r, include=FALSE}
+```{r, include=TRUE}
 data.pred <- data.frame(anchura=28)
 data.pred <- cbind(data.pred,
-                   predict(modelo.glm, data.pred, type="link", se.fit=TRUE))
+                   predict(modelo2, data.pred, type="link", se.fit=TRUE))
 data.pred
 
 ## Intervalo de confianza para el logit
-lim.inf <- data.pred$fit-1.96*data.pred$se.fit
-lim.sup <- data.pred$fit+1.96*data.pred$se.fit
+alpha <- 0.05
+lim.inf <- data.pred$fit-qnorm(1-alpha/2)*data.pred$se.fit
+lim.sup <- data.pred$fit+qnorm(1-alpha/2)*data.pred$se.fit
 IC.logit <- c(lim.inf,lim.sup)
 IC.logit
 

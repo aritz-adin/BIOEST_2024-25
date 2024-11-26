@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -259,63 +293,308 @@ ul.task-list li input[type="checkbox"] {
 <p>Responde a las siguientes preguntas:</p>
 <section id="introduce-los-datos-en-r-mediante-la-función-data.frame." class="level3">
 <h3 class="anchored" data-anchor-id="introduce-los-datos-en-r-mediante-la-función-data.frame.">1. Introduce los datos en R mediante la función <code>data.frame</code>.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cangrejos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">anchura=</span><span class="fu">c</span>(<span class="fl">23.25</span>,<span class="fl">23.75</span>,<span class="fl">24.75</span>,<span class="fl">25.75</span>,<span class="fl">26.75</span>,<span class="fl">27.75</span>,<span class="fl">28.75</span>,<span class="fl">29.25</span>),</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">satelites=</span><span class="fu">c</span>(<span class="dv">5</span>,<span class="dv">4</span>,<span class="dv">17</span>,<span class="dv">21</span>,<span class="dv">15</span>,<span class="dv">20</span>,<span class="dv">15</span>,<span class="dv">14</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">total=</span><span class="fu">c</span>(<span class="dv">14</span>,<span class="dv">14</span>,<span class="dv">28</span>,<span class="dv">39</span>,<span class="dv">22</span>,<span class="dv">24</span>,<span class="dv">18</span>,<span class="dv">14</span>))</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cangrejos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  anchura satelites total
+1   23.25         5    14
+2   23.75         4    14
+3   24.75        17    28
+4   25.75        21    39
+5   26.75        15    22
+6   27.75        20    24
+7   28.75        15    18
+8   29.25        14    14</code></pre>
+</div>
+</div>
 </section>
 <section id="define-una-nueva-variable-llamada-prop-que-indique-la-proporción-de-satélites-para-cada-anchura." class="level3">
 <h3 class="anchored" data-anchor-id="define-una-nueva-variable-llamada-prop-que-indique-la-proporción-de-satélites-para-cada-anchura.">2. Define una nueva variable llamada <code>prop</code> que indique la proporción de satélites para cada anchura.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cangrejos<span class="sc">$</span>prop <span class="ot">&lt;-</span> cangrejos<span class="sc">$</span>satelites<span class="sc">/</span>cangrejos<span class="sc">$</span>total</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(cangrejos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  anchura satelites total      prop
+1   23.25         5    14 0.3571429
+2   23.75         4    14 0.2857143
+3   24.75        17    28 0.6071429
+4   25.75        21    39 0.5384615
+5   26.75        15    22 0.6818182
+6   27.75        20    24 0.8333333
+7   28.75        15    18 0.8333333
+8   29.25        14    14 1.0000000</code></pre>
+</div>
+</div>
 </section>
 <section id="ajusta-el-modelo-probabilistico-lineal-pixalpha-beta-x-donde-y-corresponde-a-la-variable-prop-y-x-corresponde-a-la-variable-anchura" class="level3">
 <h3 class="anchored" data-anchor-id="ajusta-el-modelo-probabilistico-lineal-pixalpha-beta-x-donde-y-corresponde-a-la-variable-prop-y-x-corresponde-a-la-variable-anchura">3. Ajusta el modelo probabilistico lineal <span class="math display">\[\pi(x)=\alpha + \beta x\]</span> donde <span class="math inline">\(y\)</span> corresponde a la variable <code>prop</code> y <span class="math inline">\(x\)</span> corresponde a la variable <code>anchura</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(prop<span class="sc">~</span>anchura, <span class="at">weights=</span>total, <span class="at">data=</span>cangrejos)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = prop ~ anchura, data = cangrejos, weights = total)
+
+Weighted Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.39848 -0.28671 -0.00139  0.18904  0.60386 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -2.00206    0.39604  -5.055  0.00232 ** 
+anchura      0.10081    0.01507   6.692  0.00054 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.3641 on 6 degrees of freedom
+Multiple R-squared:  0.8818,    Adjusted R-squared:  0.8621 
+F-statistic: 44.78 on 1 and 6 DF,  p-value: 0.0005402</code></pre>
+</div>
+</div>
 <ul>
 <li><p><strong>¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?</strong></p>
-<!-- Las estimaciones de los coeficientes del modelo son: $\hat{\alpha}=-2.002$ y $\hat{\beta}=0.101$ -->
-<!-- Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños. --></li>
+<p>Las estimaciones de los coeficientes del modelo son: <span class="math inline">\(\hat{\alpha}=-2.002\)</span> y <span class="math inline">\(\hat{\beta}=0.101\)</span></p>
+<p>Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños.</p></li>
 <li><p><strong>¿Cuál es el coeficiente de determinación? Explica su significado.</strong></p>
-<!-- $R^2_\mbox{adjusted}=0.8621$. Es decir, el 86.21% de la variabilidad total es explicada por el modelo de regresión (variable`anchura). --></li>
+<p><span class="math inline">\(R^2_\mbox{adjusted}=0.8621\)</span>. Es decir, el 86.21% de la variabilidad total es explicada por el modelo de regresión (variable`anchura).</p></li>
 <li><p><strong>¿El modelo ajustado es estadísticamente significativo?</strong></p></li>
 </ul>
-<!-- Sí, el modelo es estadísticamente significativo. La función `anova()` presenta el análisis de la varianza con la descomposición de la variabilidad total en sus fuentes de variación y nos indica que la variable `anchura` es estadísticamente significativa. -->
+<p>Sí, el modelo es estadísticamente significativo. La función <code>anova()</code> presenta el análisis de la varianza con la descomposición de la variabilidad total en sus fuentes de variación y nos indica que la variable <code>anchura</code> es estadísticamente significativa.</p>
 </section>
 <section id="cuáles-son-las-predicciones-de-la-proporción-de-satélites-para-cada-valor-de-la-anchura-observada-y-el-número-esperado-de-satélites-por-hembra" class="level3">
 <h3 class="anchored" data-anchor-id="cuáles-son-las-predicciones-de-la-proporción-de-satélites-para-cada-valor-de-la-anchura-observada-y-el-número-esperado-de-satélites-por-hembra">4. ¿Cuáles son las predicciones de la proporción de satélites para cada valor de la anchura observada? ¿Y el número esperado de satélites por hembra?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">anchura=</span>cangrejos<span class="sc">$</span>anchura,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">prop=</span>cangrejos<span class="sc">$</span>prop,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">prop.pred=</span><span class="fu">fitted</span>(modelo1),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">satelite=</span>cangrejos<span class="sc">$</span>satelites,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">satelite.pred=</span><span class="fu">fitted</span>(modelo1)<span class="sc">*</span>cangrejos<span class="sc">$</span>total)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  anchura      prop prop.pred satelite satelite.pred
+1   23.25 0.3571429 0.3418064        5       4.78529
+2   23.75 0.2857143 0.3922122        4       5.49097
+3   24.75 0.6071429 0.4930236       17      13.80466
+4   25.75 0.5384615 0.5938350       21      23.15957
+5   26.75 0.6818182 0.6946465       15      15.28222
+6   27.75 0.8333333 0.7954579       20      19.09099
+7   28.75 0.8333333 0.8962694       15      16.13285
+8   29.25 1.0000000 0.9466751       14      13.25345</code></pre>
+</div>
+</div>
 </section>
 <section id="representa-gráficamente-las-proporciones-observadas-y-las-predicciones-lineales-de-las-proporciones-de-satélites-por-cada-anchura-del-caparazón." class="level3">
 <h3 class="anchored" data-anchor-id="representa-gráficamente-las-proporciones-observadas-y-las-predicciones-lineales-de-las-proporciones-de-satélites-por-cada-anchura-del-caparazón.">5. Representa gráficamente las proporciones observadas y las predicciones lineales de las proporciones de satélites por cada anchura del caparazón.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cangrejos<span class="sc">$</span>anchura, cangrejos<span class="sc">$</span>prop, <span class="at">xlab=</span><span class="st">"Anchura (cm)"</span>, <span class="at">ylab=</span><span class="st">"Prop"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>,<span class="fl">1.1</span>),</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Modelo probabilistico lineal"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(modelo1, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica6_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="ajusta-el-modelo-de-regresión-logística-mboxlogitpix-log-leftfracpix1-pix-right-alpha-beta-x-donde-pi-corresponde-a-la-variable-prop-y-x-a-la-variable-anchura." class="level3">
 <h3 class="anchored" data-anchor-id="ajusta-el-modelo-de-regresión-logística-mboxlogitpix-log-leftfracpix1-pix-right-alpha-beta-x-donde-pi-corresponde-a-la-variable-prop-y-x-a-la-variable-anchura.">6. Ajusta el modelo de regresión logística <span class="math display">\[\mbox{logit}[\pi(x)] = \log \left(\frac{\pi(x)}{1-\pi(x)} \right) = \alpha + \beta x\]</span> donde <span class="math inline">\(\pi\)</span> corresponde a la variable <code>prop</code>, y <span class="math inline">\(x\)</span> a la variable <code>anchura</code>.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(prop<span class="sc">~</span>anchura, <span class="at">weights=</span>total, <span class="at">family=</span>binomial, <span class="at">data=</span>cangrejos)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = prop ~ anchura, family = binomial, data = cangrejos, 
+    weights = total)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)    
+(Intercept) -12.4421     2.7150  -4.583 4.59e-06 ***
+anchura       0.5011     0.1051   4.767 1.87e-06 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 34.0340  on 7  degrees of freedom
+Residual deviance:  6.4542  on 6  degrees of freedom
+AIC: 33.636
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
 <ul>
 <li><p><strong>¿Cuáles son las estimaciones de los coeficientes? ¿Son estadísticamente significativos?</strong></p>
-<!-- Las estimaciones de los coeficientes del modelo son: $\hat{\alpha}=-12.442$ y $\hat{\beta}=0.501$ -->
-<!-- Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños. -->
-<!-- Obtenemos la misma conclusión si interpretamos los intervalos de confianza de los parámetros del modelo: --></li>
-<li><p><strong>¿El modelo ajustado es estadísticamente significativo?</strong></p></li>
+<p>Las estimaciones de los coeficientes del modelo son: <span class="math inline">\(\hat{\alpha}=-12.442\)</span> y <span class="math inline">\(\hat{\beta}=0.501\)</span></p>
+<p>Ambos coeficientes son estadísticamente significativos, ya que los p-valores son pequeños.</p>
+<p>Obtenemos la misma conclusión si interpretamos los intervalos de confianza de los parámetros del modelo:</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(modelo2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting for profiling to be done...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 2.5 %     97.5 %
+(Intercept) -18.027915 -7.3310864
+anchura       0.303846  0.7180261</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>¿El modelo ajustado es estadísticamente significativo?</strong></li>
 </ul>
 </section>
 <section id="cuál-es-la-tasa-incremental-de-cambio-a-los-26-cm-qué-significa" class="level3">
 <h3 class="anchored" data-anchor-id="cuál-es-la-tasa-incremental-de-cambio-a-los-26-cm-qué-significa">7. ¿Cuál es la tasa incremental de cambio a los 26 cm? ¿Qué significa?</h3>
 <p>La tasa incremental de cambio en un punto <span class="math inline">\(x\)</span> se calcula como <span class="math display">\[\hat{\beta}*\hat{\pi}(x)*(1-\hat{\pi}(x))\]</span></p>
 <p>Para una anchura de <span class="math inline">\(x=26\)</span> cm su valor es:</p>
-<!-- También se puede calcular mediante la función `tasa.incremental()` -->
-<!-- **Interpretación:** Cuando la anchura del caparazón aumenta de 26 a 27 cm, la proporción de satélites por hembra aumenta en 0.1151. -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">coef</span>(modelo2)[<span class="dv">2</span>]</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>hat.prop <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo2, <span class="at">newdata=</span><span class="fu">data.frame</span>(<span class="at">anchura=</span><span class="dv">26</span>), <span class="at">type=</span><span class="st">"response"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>beta<span class="sc">*</span>hat.prop<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>hat.prop)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> anchura 
+0.115072 </code></pre>
+</div>
+</div>
+<p>También se puede calcular mediante la función <code>tasa.incremental()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"tasa.incremental.R"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tasa.incremental</span>(modelo2, <span class="dv">26</span>, <span class="dv">27</span>, <span class="at">decimales=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Argumentos de entrada:
+  x1=26; x2=27; incremento=1 
+
+Probabilidades estimadas:
+  pi.x1=0.6427; pi.x2=0.7481; tasa incremental=0.1151 
+
+Odds estimados:
+ odds.x1=1.7991; odds.x2=2.9695; OR(odds.x2/odds.x1)=1.6506 </code></pre>
+</div>
+</div>
+<p><strong>Interpretación:</strong> Cuando la anchura del caparazón aumenta de 26 a 27 cm, la proporción de satélites por hembra aumenta en 0.1151.</p>
 </section>
 <section id="cuál-es-la-tasa-incremental-de-cambio-de-probabilidad-para-pasar-de-23-a-24-cm-en-la-anchura-del-caparazón-y-de-25-a-26-cm-qué-significan" class="level3">
 <h3 class="anchored" data-anchor-id="cuál-es-la-tasa-incremental-de-cambio-de-probabilidad-para-pasar-de-23-a-24-cm-en-la-anchura-del-caparazón-y-de-25-a-26-cm-qué-significan">8. ¿Cuál es la tasa incremental de cambio de probabilidad para pasar de 23 a 24 cm en la anchura del caparazón? ¿Y de 25 a 26 cm? ¿Qué significan?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tasa.incremental</span>(modelo2, <span class="dv">23</span>, <span class="dv">24</span>, <span class="at">decimales=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Argumentos de entrada:
+  x1=23; x2=24; incremento=1 
+
+Probabilidades estimadas:
+  pi.x1=0.2858; pi.x2=0.3977; tasa incremental=0.1023 
+
+Odds estimados:
+ odds.x1=0.4001; odds.x2=0.6604; OR(odds.x2/odds.x1)=1.6506 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tasa.incremental</span>(modelo2, <span class="dv">25</span>, <span class="dv">26</span>, <span class="at">decimales=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Argumentos de entrada:
+  x1=25; x2=26; incremento=1 
+
+Probabilidades estimadas:
+  pi.x1=0.5215; pi.x2=0.6427; tasa incremental=0.1251 
+
+Odds estimados:
+ odds.x1=1.09; odds.x2=1.7991; OR(odds.x2/odds.x1)=1.6506 </code></pre>
+</div>
+</div>
 </section>
 <section id="cuánto-crece-el-odds-estimado-odds-ratio-por-cada-cm-de-aumento-del-caparazón-proporciona-un-intervalo-de-confianza-al-95." class="level3">
 <h3 class="anchored" data-anchor-id="cuánto-crece-el-odds-estimado-odds-ratio-por-cada-cm-de-aumento-del-caparazón-proporciona-un-intervalo-de-confianza-al-95.">9. ¿Cuánto crece el odds estimado (<em>odds ratio</em>) por cada cm de aumento del caparazón? Proporciona un intervalo de confianza al 95%.</h3>
 <p>Cuando la anchura del caparazón aumenta en 1 cm, el odds ratio (<span class="math inline">\(OR=e^\beta\)</span>) es de</p>
-<!-- Es decir, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece aproximadamente un 65%. -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo2)[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> anchura 
+1.650584 </code></pre>
+</div>
+</div>
+<p>Es decir, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece aproximadamente un 65%.</p>
 <p>Para calcular un intervalo de confianza al 95% de <span class="math inline">\(e^\beta\)</span>, debemos exponenciar los límites inferior y superior del IC para el parámetro <span class="math inline">\(\beta\)</span>.</p>
-<!-- Es decir, con un nivel de confianza del 95%, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece entre 1.36 y 2.05 veces (o lo que es lo mismo, crece entre un 35% y un 105%). -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>IC.beta <span class="ot">&lt;-</span> <span class="fu">confint</span>(modelo2)[<span class="dv">2</span>,]</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>IC.beta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5 %    97.5 % 
+0.3038460 0.7180261 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>IC.OR <span class="ot">&lt;-</span> <span class="fu">exp</span>(IC.beta)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>IC.OR</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   2.5 %   97.5 % 
+1.355060 2.050382 </code></pre>
+</div>
+</div>
+<p>Es decir, con un nivel de confianza del 95%, por cada incremento de 1 cm en la anchura del caparazón el odds estimado crece entre 1.36 y 2.05 veces (o lo que es lo mismo, crece entre un 35% y un 105%).</p>
 </section>
 <section id="cuáles-son-las-predicciones-de-la-proporción-de-satélites-para-cada-valor-de-la-anchura-observaday-el-número-esperado-de-satélites-por-hembra" class="level3">
 <h3 class="anchored" data-anchor-id="cuáles-son-las-predicciones-de-la-proporción-de-satélites-para-cada-valor-de-la-anchura-observaday-el-número-esperado-de-satélites-por-hembra">10. ¿Cuáles son las predicciones de la proporción de satélites para cada valor de la anchura observada?¿Y el número esperado de satélites por hembra?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>data.pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">anchura=</span>cangrejos<span class="sc">$</span>anchura,</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">prop=</span>cangrejos<span class="sc">$</span>prop,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">prop.pred=</span><span class="fu">fitted</span>(modelo2),</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">satelite=</span>cangrejos<span class="sc">$</span>satelites,</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>                        <span class="at">satelite.pred=</span><span class="fu">fitted</span>(modelo2)<span class="sc">*</span>cangrejos<span class="sc">$</span>total)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>data.pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  anchura      prop prop.pred satelite satelite.pred
+1   23.25 0.3571429 0.3119907        5      4.367870
+2   23.75 0.2857143 0.3681261        4      5.153766
+3   24.75 0.6071429 0.4902175       17     13.726090
+4   25.75 0.5384615 0.6134872       21     23.926000
+5   26.75 0.6818182 0.7237468       15     15.922429
+6   27.75 0.8333333 0.8121823       20     19.492375
+7   28.75 0.8333333 0.8771142       15     15.788056
+8   29.25 1.0000000 0.9016724       14     12.623414</code></pre>
+</div>
+</div>
 </section>
 <section id="representa-gráficamente-las-proporciones-observadas-y-las-predicciones-lineales-y-logísticas-de-las-proporciones-de-satélites-por-cada-anchura-del-caparazón." class="level3">
 <h3 class="anchored" data-anchor-id="representa-gráficamente-las-proporciones-observadas-y-las-predicciones-lineales-y-logísticas-de-las-proporciones-de-satélites-por-cada-anchura-del-caparazón.">11. Representa gráficamente las proporciones observadas y las predicciones lineales y logísticas de las proporciones de satélites por cada anchura del caparazón.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(cangrejos<span class="sc">$</span>anchura, cangrejos<span class="sc">$</span>prop, <span class="at">xlab=</span><span class="st">"Anchura (cm)"</span>, <span class="at">ylab=</span><span class="st">"Prop"</span>, <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.1</span>,<span class="fl">1.1</span>),</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main=</span><span class="st">"Modelo regresión logística"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>), <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(modelo1, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(data.pred<span class="sc">$</span>anchura, data.pred<span class="sc">$</span>prop.pred, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="dv">27</span>, <span class="fl">0.3</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"Modelo lineal"</span>,<span class="st">"Regresión logística"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica6_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="calcula-la-proporció-estimada-de-cangrejos-satélite-para-una-hembra-con-anchura-de-caparazón-de-28-cm.-calcula-e-interpreta-un-intervalo-de-confianza-al-95-para-la-proporción-verdadera." class="level3">
 <h3 class="anchored" data-anchor-id="calcula-la-proporció-estimada-de-cangrejos-satélite-para-una-hembra-con-anchura-de-caparazón-de-28-cm.-calcula-e-interpreta-un-intervalo-de-confianza-al-95-para-la-proporción-verdadera.">12. Calcula la proporció estimada de cangrejos satélite para una hembra con anchura de caparazón de 28 cm. Calcula e interpreta un intervalo de confianza al 95% para la proporción verdadera.</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data.pred <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">anchura=</span><span class="dv">28</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>data.pred <span class="ot">&lt;-</span> <span class="fu">cbind</span>(data.pred,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">predict</span>(modelo2, data.pred, <span class="at">type=</span><span class="st">"link"</span>, <span class="at">se.fit=</span><span class="cn">TRUE</span>))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>data.pred</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  anchura      fit   se.fit residual.scale
+1      28 1.589535 0.290366              1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Intervalo de confianza para el logit</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>lim.inf <span class="ot">&lt;-</span> data.pred<span class="sc">$</span>fit<span class="sc">-</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>data.pred<span class="sc">$</span>se.fit</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>lim.sup <span class="ot">&lt;-</span> data.pred<span class="sc">$</span>fit<span class="sc">+</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)<span class="sc">*</span>data.pred<span class="sc">$</span>se.fit</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>IC.logit <span class="ot">&lt;-</span> <span class="fu">c</span>(lim.inf,lim.sup)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>IC.logit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.020428 2.158642</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Intervalo de confianza para la probabilidad</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>IC.prob <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">plogis</span>(lim.inf),<span class="fu">plogis</span>(lim.sup))</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>IC.prob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7350560 0.8964736</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="para-entregar" class="level2">

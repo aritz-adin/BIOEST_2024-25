@@ -346,19 +346,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">summary</span>(diu.surv3)[<span class="fu">c</span>(<span class="st">"time"</span>,<span class="st">"n.risk"</span>,<span class="st">"n.event"</span>,<span class="st">"surv"</span>,<span class="st">"std.err"</span>,<span class="st">"lower"</span>,<span class="st">"upper"</span>)]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(aux)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>aux[aux<span class="sc">$</span>time<span class="sc">==</span><span class="st">"19"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>aux[aux<span class="sc">$</span>time<span class="sc">==</span><span class="st">"19"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  time n.risk n.event      surv    std.err     lower upper
 2   19     15       1 0.8814815 0.07898919 0.7394986     1</code></pre>
 </div>
 </div>
-<p><strong>INTERPRETACIÓN</strong>: …</p>
-<!-- La probabilidad de que el tiempo de uso del dispositivo supere las 19 semanas es de 0.8815 con un intervalo de confianza al 95\% de $[0.7395, 1]$. -->
+<p><strong>INTERPRETACIÓN</strong>: La probabilidad de que el tiempo de uso del dispositivo supere las 19 semanas es de 0.8815 con un intervalo de confianza al 95% de <span class="math inline">\([0.7395, 1]\)</span>.</p>
 </section>
 <section id="a-partir-de-qué-semana-la-supervivencia-es-menor-al-80" class="level3">
 <h3 class="anchored" data-anchor-id="a-partir-de-qué-semana-la-supervivencia-es-menor-al-80">1.5. ¿A partir de qué semana la supervivencia es menor al 80%?</h3>
-<!-- A partir de la semana 36 la supervivencia es menor al 80%. Sin embargo, mirando el intervalo de confianza vemos que no contiene al 0.8 a partir de la semana 97. -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(diu.surv3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: survfit(formula = Surv(time, status) ~ 1, data = diu)
+
+ time n.risk n.event survival std.err lower 95% CI upper 95% CI
+   10     18       1    0.944  0.0540       0.8443        1.000
+   19     15       1    0.881  0.0790       0.7395        1.000
+   30     13       1    0.814  0.0978       0.6429        1.000
+   36     12       1    0.746  0.1107       0.5577        0.998
+   59      8       1    0.653  0.1303       0.4413        0.965
+   75      7       1    0.559  0.1412       0.3411        0.917
+   93      6       1    0.466  0.1452       0.2532        0.858
+   97      5       1    0.373  0.1430       0.1759        0.791
+  107      3       1    0.249  0.1392       0.0829        0.745</code></pre>
+</div>
+</div>
+<p>A partir de la semana 36 la supervivencia es menor al 80%. Sin embargo, mirando el intervalo de confianza vemos que no contiene al 0.8 a partir de la semana 97.</p>
 </section>
 </section>
 <section id="ejercicio-2" class="level2">
@@ -374,8 +389,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>extent</code>: extensión local (1=submucosa, 2=músculo, 3=serosa, 4=estructuras contiguas)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>colon <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"colon.txt"</span>, <span class="at">header=</span>T, <span class="at">stringsAsFactors=</span>T)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(colon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>colon <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"colon.txt"</span>, <span class="at">header=</span>T, <span class="at">stringsAsFactors=</span>T)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(colon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   929 obs. of  8 variables:
  $ id    : int  1 2 3 4 5 6 7 8 9 10 ...
@@ -391,10 +406,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-para-los-distintos-grupos-del-tratamiento.-crees-que-existen-diferencias-entre-las-curvas" class="level3">
 <h3 class="anchored" data-anchor-id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-para-los-distintos-grupos-del-tratamiento.-crees-que-existen-diferencias-entre-las-curvas">1.1. Estima curvas de supervivencia por el método de Kaplan y Meier para los distintos grupos del tratamiento. ¿Crees que existen diferencias entre las curvas?</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>colon.surv <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data=</span>colon)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(colon.surv, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Curvas de supervivencia KM"</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="fu">levels</span>(colon<span class="sc">$</span>rx), <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>colon.surv <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> rx, <span class="at">data=</span>colon)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(colon.surv, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Curvas de supervivencia KM"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="fu">levels</span>(colon<span class="sc">$</span>rx), <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="Practica7_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -405,7 +420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="comprueba-si-las-diferencias-observadas-en-las-curvas-son-o-no-estadísticamente-significativas-utilizando-el-test-de-log-rank-y-el-test-de-peto-peto.">1.2. Comprueba si las diferencias observadas en las curvas son o no estadísticamente significativas utilizando el test de Log-Rank y el test de Peto-Peto.</h3>
 <p>Test Log-Rank</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>rx, colon) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>rx, colon) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 survdiff(formula = Surv(time, status) ~ rx, data = colon)
@@ -420,7 +435,7 @@ rx=Obs     315      168      148      2.58      3.85
 </div>
 <p>Test Peto-Peto</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>rx, <span class="at">rho=</span><span class="dv">1</span>, colon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>rx, <span class="at">rho=</span><span class="dv">1</span>, colon)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 survdiff(formula = Surv(time, status) ~ rx, data = colon, rho = 1)
@@ -438,50 +453,126 @@ rx=Obs     315    126.0      113      1.50      2.86
 <section id="cuál-es-la-probabilidad-que-un-individuo-del-grupo-lev5fu-viva-más-de-127-días-proporciona-un-intervalo-de-confianza-al-95-para-dicha-probabilidad." class="level3">
 <h3 class="anchored" data-anchor-id="cuál-es-la-probabilidad-que-un-individuo-del-grupo-lev5fu-viva-más-de-127-días-proporciona-un-intervalo-de-confianza-al-95-para-dicha-probabilidad.">1.3. ¿Cuál es la probabilidad que un individuo del grupo “Lev+5FU” viva más de 127 días? Proporciona un intervalo de confianza al 95% para dicha probabilidad.</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">summary</span>(colon.surv)[<span class="fu">c</span>(<span class="st">"strata"</span>,<span class="st">"time"</span>,<span class="st">"n.risk"</span>,<span class="st">"n.event"</span>,<span class="st">"surv"</span>,<span class="st">"std.err"</span>,<span class="st">"lower"</span>,<span class="st">"upper"</span>)]</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(aux)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> aux[aux<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"rx=Lev+5FU"</span>,]</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(aux, <span class="at">n=</span><span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">summary</span>(colon.surv)[<span class="fu">c</span>(<span class="st">"strata"</span>,<span class="st">"time"</span>,<span class="st">"n.risk"</span>,<span class="st">"n.event"</span>,<span class="st">"surv"</span>,<span class="st">"std.err"</span>,<span class="st">"lower"</span>,<span class="st">"upper"</span>)]</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(aux)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>aux <span class="ot">&lt;-</span> aux[aux<span class="sc">$</span>strata<span class="sc">==</span><span class="st">"rx=Lev+5FU"</span>,]</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>aux[aux<span class="sc">$</span>time<span class="sc">==</span><span class="st">"127"</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        strata time n.risk n.event      surv     std.err     lower     upper
-155 rx=Lev+5FU   23    304       1 0.9967105 0.003284059 0.9902946 1.0000000
-156 rx=Lev+5FU   34    303       1 0.9934211 0.004636690 0.9843747 1.0000000
-157 rx=Lev+5FU   45    302       1 0.9901316 0.005669353 0.9790820 1.0000000
-158 rx=Lev+5FU   52    301       1 0.9868421 0.006535521 0.9741155 0.9997350
-159 rx=Lev+5FU   79    300       1 0.9835526 0.007294747 0.9693586 0.9979545
-160 rx=Lev+5FU  127    299       1 0.9802632 0.007977621 0.9647513 0.9960244
-161 rx=Lev+5FU  138    298       1 0.9769737 0.008602345 0.9602580 0.9939803
-162 rx=Lev+5FU  141    297       1 0.9736842 0.009180799 0.9558554 0.9918455
-163 rx=Lev+5FU  144    296       1 0.9703947 0.009721245 0.9515273 0.9896363
-164 rx=Lev+5FU  186    295       1 0.9671053 0.010229709 0.9472618 0.9873644</code></pre>
+160 rx=Lev+5FU  127    299       1 0.9802632 0.007977621 0.9647513 0.9960244</code></pre>
 </div>
 </div>
-<p><strong>INTERPRETACIÓN</strong>: …</p>
-<!-- La probabilidad de que un individuo del grupo "Lev+5FU" viva más de 127 días es de 0.9803 con un intervalo de confianza al 95\% de $[0.9648, 0.996]$. -->
+<p><strong>INTERPRETACIÓN</strong>: La probabilidad de que un individuo del grupo “Lev+5FU” viva más de 127 días es de 0.9803 con un intervalo de confianza al 95% de <span class="math inline">\([0.9648, 0.996]\)</span>.</p>
 </section>
 <section id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-según-el-sexo.-crees-que-existen-diferencias-entre-las-curvas" class="level3">
 <h3 class="anchored" data-anchor-id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-según-el-sexo.-crees-que-existen-diferencias-entre-las-curvas">1.4. Estima curvas de supervivencia por el método de Kaplan y Meier según el sexo. ¿Crees que existen diferencias entre las curvas?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>colon.surv2 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> sex, <span class="at">data=</span>colon)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>sex, colon) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(time, status) ~ sex, data = colon)
+
+        N Observed Expected (O-E)^2/E (O-E)^2/V
+sex=0 445      215      217   0.01049    0.0202
+sex=1 484      237      235   0.00965    0.0202
+
+ Chisq= 0  on 1 degrees of freedom, p= 0.9 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(colon.surv2, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Curvas de supervivencia KM"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="fu">c</span>(<span class="st">"Male"</span>,<span class="st">"Female"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica7_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-según-si-el-tumor-se-diferencia-bien-moderadamente-o-mal.-crees-que-existen-diferencias-entre-las-curvas" class="level3">
 <h3 class="anchored" data-anchor-id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-según-si-el-tumor-se-diferencia-bien-moderadamente-o-mal.-crees-que-existen-diferencias-entre-las-curvas">1.5. Estima curvas de supervivencia por el método de Kaplan y Meier según si el tumor se diferencia bien, moderadamente o mal. ¿Crees que existen diferencias entre las curvas?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>colon.surv3 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> differ, <span class="at">data=</span>colon)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>differ, colon) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(time, status) ~ differ, data = colon)
+
+n=906, 23 observations deleted due to missingness.
+
+           N Observed Expected (O-E)^2/E (O-E)^2/V
+differ=1  93       42     47.5     0.643     0.721
+differ=2 663      311    334.9     1.708     7.108
+differ=3 150       88     58.6    14.808    17.105
+
+ Chisq= 17.2  on 2 degrees of freedom, p= 2e-04 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(colon.surv3, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Curvas de supervivencia KM"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="fu">c</span>(<span class="st">"Bien"</span>,<span class="st">"Moderadamente"</span>,<span class="st">"Mal"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica7_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-según-la-extensión-del-tumor.-crees-que-existen-diferencias-entre-las-curvas" class="level3">
 <h3 class="anchored" data-anchor-id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-según-la-extensión-del-tumor.-crees-que-existen-diferencias-entre-las-curvas">1.6. Estima curvas de supervivencia por el método de Kaplan y Meier según la extensión del tumor. ¿Crees que existen diferencias entre las curvas?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>colon.surv4 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> extent, <span class="at">data=</span>colon)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>extent, colon) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(time, status) ~ extent, data = colon)
+
+           N Observed Expected (O-E)^2/E (O-E)^2/V
+extent=1  21        4     12.8      6.06      6.25
+extent=2 106       36     60.9     10.21     11.82
+extent=3 759      383    361.7      1.26      6.29
+extent=4  43       29     16.6      9.34      9.71
+
+ Chisq= 26.9  on 3 degrees of freedom, p= 6e-06 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(colon.surv4, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Curvas de supervivencia KM"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="fu">c</span>(<span class="st">"submucosa"</span>,<span class="st">"músculo"</span>,<span class="st">"serosa"</span>,<span class="st">"estructuras contiguas"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica7_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 <section id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-a-partir-de-los-siguientes-valores-de-la-variable-edad-grupo-1-1845-grupo-2-4565-y-grupo-3-65.-crees-que-existen-diferencias-entre-las-curvas" class="level3">
 <h3 class="anchored" data-anchor-id="estima-curvas-de-supervivencia-por-el-método-de-kaplan-y-meier-a-partir-de-los-siguientes-valores-de-la-variable-edad-grupo-1-1845-grupo-2-4565-y-grupo-3-65.-crees-que-existen-diferencias-entre-las-curvas">1.7. Estima curvas de supervivencia por el método de Kaplan y Meier a partir de los siguientes valores de la variable edad: grupo 1 [18,45], grupo 2 (45,65] y grupo 3 (65,+]. ¿Crees que existen diferencias entre las curvas?</h3>
 <p>En primer lugar definimos la nueva variable:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>colon<span class="sc">$</span>grupo <span class="ot">&lt;-</span> <span class="fu">cut</span>(colon<span class="sc">$</span>age, <span class="at">include.lowest=</span><span class="cn">TRUE</span>, <span class="at">right=</span><span class="cn">TRUE</span>,</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">45</span>,<span class="dv">65</span>,<span class="fu">max</span>(colon<span class="sc">$</span>age)),</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"grupo 1"</span>,<span class="st">"grupo 2"</span>,<span class="st">"grupo 3"</span>))</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(colon<span class="sc">$</span>grupo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>colon<span class="sc">$</span>grupo <span class="ot">&lt;-</span> <span class="fu">cut</span>(colon<span class="sc">$</span>age, <span class="at">include.lowest=</span><span class="cn">TRUE</span>, <span class="at">right=</span><span class="cn">TRUE</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">45</span>,<span class="dv">65</span>,<span class="fu">max</span>(colon<span class="sc">$</span>age)),</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"grupo 1"</span>,<span class="st">"grupo 2"</span>,<span class="st">"grupo 3"</span>))</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(colon<span class="sc">$</span>grupo)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>grupo 1 grupo 2 grupo 3 
     124     471     334 </code></pre>
 </div>
 </div>
 <p>A continuación, estimamos las curvas de supervivencia por el método KM y comprobamos si existen diferencias significativas entre los grupos de edad:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>colon.surv5 <span class="ot">&lt;-</span> <span class="fu">survfit</span>(<span class="fu">Surv</span>(time, status) <span class="sc">~</span> grupo, <span class="at">data=</span>colon)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">survdiff</span>(<span class="fu">Surv</span>(time,status)<span class="sc">~</span>grupo, colon) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+survdiff(formula = Surv(time, status) ~ grupo, data = colon)
+
+                N Observed Expected (O-E)^2/E (O-E)^2/V
+grupo=grupo 1 124       65     57.9     0.874      1.00
+grupo=grupo 2 471      209    237.4     3.386      7.14
+grupo=grupo 3 334      178    156.8     2.878      4.41
+
+ Chisq= 7.2  on 2 degrees of freedom, p= 0.03 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(colon.surv5, <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">main=</span><span class="st">"Curvas de supervivencia KM"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomleft"</span>, <span class="fu">c</span>(<span class="st">"[18,45] años"</span>,<span class="st">"(45,65] años"</span>,<span class="st">"(65,+] años"</span>), <span class="at">col=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">bty=</span><span class="st">"n"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="Practica7_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 </section>
 <section id="para-entregar" class="level2">
@@ -498,10 +589,10 @@ rx=Obs     315    126.0      113      1.50      2.86
 <li><code>prior</code>: variable lógica que determina si hubo terapia a priori (0=no, 10=yes)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"VA"</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(VA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"VA"</span>)</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(VA)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>'data.frame':   137 obs. of  8 variables:
  $ stime    : num  72 411 228 126 118 10 82 110 314 100 ...

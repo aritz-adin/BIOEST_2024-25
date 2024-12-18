@@ -1,0 +1,482 @@
+---
+title: "Práctica repaso"
+author: "Aritz Adin"
+date: "2024-12-18"
+date-format: "DD/MM/YYYY"
+format:
+  html:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)  
+```
+
+## Descripción
+
+En esta práctica vamos a trabajar con el fichero de datos `ZBS.csv`. Este fichero contiene información sobre algunas Zonas Básicas de Salud de Navarra (año 2021). En concreto, se dispone de información de las siguientes variables:
+
+| Variable    | Descripción                                              |
+|-------------|----------------------------------------------------------|
+| ZBS         | Zona Básica de Salud                                     |
+| Region      | Región geográfica                                        |
+| COVID19     | Casos acumulados de COVID-19                             |
+| Diabeticos  | Número de diabéticos diagnosticados                      |
+| Pob         | Población total                                          |
+| Pob14       | Población mayor de 14 años                               |
+| Pob90       | Población mayor de 90 años                               |
+| Extranjeros | Población nacida en el extranjero                        |
+| Sexo        | Sexo mayoritario en la ZBS                               |
+| Natalidad   | Tasas de natalidad (nacimientos por cada mil habitantes) |
+| Tasa_paro   | Tasa de desempleo (%)                                    |
+| Esperanza   | Esperanza de vida (años)                                 |
+| Pobreza     | Riesgo de pobreza                                        |
+| Indice      | Índice de envejecimiento (%)                             |
+
+En primer lugar, debemos leer el fichero `ZBS.csv` en R utilizando el asistente $$\mbox{Import Dataset -> Front text (base)}$$ y seleccionando la opción *Strings as factors*.
+
+```{r, include=FALSE, eval=TRUE}
+ZBS <- read.delim2("ZBS.csv", stringsAsFactors=TRUE, header=TRUE)
+head(ZBS)
+```
+
+## 1. Estadística Descriptiva Univariante
+
+```{r, include=TRUE, message=FALSE}
+## Cargamos los paquetes necesarios ##
+library(PASWR2)
+library(car)
+```
+
+#### 1.1. ¿Cuántas observaciones tiene el fichero?
+
+```{r, include=FALSE}
+dim(ZBS)
+ncol(ZBS)
+```
+
+#### 1.2. ¿Cuántas variables tiene? ¿De qué tipo es cada una?
+
+```{r, include=FALSE}
+str(ZBS)
+```
+
+#### 1.3. ¿Cuántas categorías tiene la variable `Region`?
+
+```{r, include=FALSE}
+levels(ZBS$Region)
+```
+
+#### 1.4. Obtén una tabla de frecuencias absolutas y relativas para la variable `Region`.
+
+```{r, include=FALSE}
+table(ZBS$Region)
+table(ZBS$Region)/nrow(ZBS)
+```
+
+#### 1.5. Realiza una representación gráfica adecuada para la variable `Region`. Calcula las medidas de tendencia central adecuadas para esta variable.
+
+```{r, include=FALSE}
+Tabla <- table(ZBS$Region)
+
+par(mfrow=c(1,2), pty="s")
+pie(Tabla, main="Region")
+barplot(Tabla, main="Region")
+```
+
+#### 1.6. Realiza un histograma y un diagrama de cajas de la variable `Diabeticos`. A la vista de estas representaciones gráficas, ¿qué puedes decir acerca de la simetría de esta variable? ¿Qué crees que será mayor, la media o la mediana?
+
+```{r, include=FALSE}
+par(mfrow=c(1,2), pty="s")
+hist(ZBS$Diabeticos, main="Nº de diabéticos", xlab="")
+boxplot(ZBS$Diabeticos, main="Nº de diabéticos")
+```
+#### 1.7. Calcula el coeficiente de asimetría, la media y la mediana de la variable `Diabeticos`. ¿Confirman dichos valores lo observado en el histograma y el diagrama de cajas?
+
+```{r, include=FALSE}
+eda(ZBS$Diabeticos)
+```
+
+#### 1.8. Compara la dispersión de las variables `Pob14` y `Pob90`.
+
+```{r, include=FALSE}
+CV.Pob14 <- sd(ZBS$Pob14)/mean(ZBS$Pob14)
+CV.Pob14
+
+CV.Pob90 <- sd(ZBS$Pob90)/mean(ZBS$Pob90)
+CV.Pob90
+```
+
+## 2. Estadística Descriptiva Bivariante
+
+#### 2.1. Realiza un diagrama de cajas de la esperanza de vida en función de la variable `Pobreza`. ¿Qué observas?
+
+```{r, include=FALSE}
+boxplot(ZBS$Esperanza ~ ZBS$Pobreza)
+```
+#### 2.2. Realiza un diagrama de cajas de la variable `Natalidad` por tipo de región geográfica. Compara la asimetria de la variable en los distintos grupos.
+
+```{r, include=FALSE}
+boxplot(ZBS$Natalidad ~ ZBS$Region)
+tapply(ZBS$Natalidad, ZBS$Region, eda)
+```
+
+#### 2.4. Selecciona únicamente las zonas básicas de salud situadas en la región del Sur. Compara la tasa de desempleo media en función del sexo mayoritario de la zona.
+
+```{r, include=FALSE}
+pos <- which(ZBS$Region=="Sur")
+ZBS.Sur <- ZBS[pos,]
+
+tapply(ZBS.Sur$Tasa_paro, ZBS.Sur$Sexo, mean)
+```
+
+#### 2.5. Realiza una tabla de contingencia para las variables `Region` y `Pobreza`.
+
+```{r, include=FALSE}
+X <- table(ZBS$Region, ZBS$Pobreza)
+X
+```
+
+-   ¿Que porcentaje de zonas básicas de salud se encuentran en la región del norte y tienen riesgo alto de pobreza?
+
+```{r, include=FALSE}
+prop.table(X)
+```
+
+-   Entre las zonas básicas de salud del centro, ¿que porcentaje tienen riesgo bajo de pobreza?
+
+```{r, include=FALSE}
+prop.table(X,1)
+```
+
+-   Entre las zonas básicas de con riesgo alto de pobreza, ¿que porcentaje pertecen al sur?
+
+```{r, include=FALSE}
+prop.table(X,2)
+```
+
+#### 2.6. Realiza un diagrama de dispersión de las variables `Pob` y `Extranjeros`. Calcula e interpreta el coeficiente de correlación lineal entre ambas variables. ¿Crées que sería adecuado utilizar otro tipo de relación no lineal para medir la asociación entre estas variables?
+
+```{r, include=FALSE}
+plot(ZBS$Pob, ZBS$Extranjeros)
+abline(lm(Extranjeros ~ Pob, data=ZBS), col="red")
+
+cor(ZBS$Pob, ZBS$Extranjeros)
+```
+
+#### 2.7. ¿Existe una relación lineal entre la tasa de natalidad y el índice de envejecimiento de las zonas básicas de salud? Realiza el análisis estadístico adecuado e interpreta los resultados obtenidos.
+
+```{r, include=FALSE}
+plot(ZBS$Natalidad, ZBS$Indice)
+abline(lm(Indice ~ Natalidad, data=ZBS), col="red")
+
+cov(ZBS$Natalidad, ZBS$Indice)
+cor(ZBS$Natalidad, ZBS$Indice)
+```
+
+## 3. Contrastes Paramétricos y No-Paramétricos
+
+#### 3.1. Contrasta al nivel de significación de $\alpha=0.05$ si la esperanza de vida media en las zonas básicas de salud de Navarra es superior 83 años. Justifica si puedes asumir normalidad. ¿Qué contraste es más adecuado en este caso?
+
+<!-- Definimos la variable: -->
+
+<!-- X="Esperanza de vida en las ZBS de Navarra (años)" -->
+
+<!-- El contraste que debemos realizar ($\alpha=0.05$) se escribe como: -->
+
+<!-- \begin{eqnarray*} -->
+<!-- \begin{array}{rl} -->
+<!-- H_0: & \mu = 83 \\ -->
+<!-- H_1: & \mu > 83 \\ -->
+<!-- \end{array} -->
+<!-- \end{eqnarray*} -->
+
+```{r, include=FALSE}
+eda(ZBS$Esperanza)
+
+t.test(ZBS$Esperanza, mu=83, alternative="greater", conf.level=0.95)
+```
+
+#### 3.2. Contrasta al nivel de significación de $\alpha=0.01$ si la tasa de desempleo media de las zonas básicas de salud situadas en el norte de Navarra es inferior al 8%. Justifica si puedes asumir normalidad. ¿Qué contraste es más adecuado en este caso?
+
+<!-- Definimos la variable: -->
+
+<!-- X="Tasa de desempleo en las ZBS del norte de Navarra" -->
+
+<!-- El contraste que debemos realizar ($\alpha=0.01$) se escribe como: -->
+
+<!-- \begin{eqnarray*} -->
+<!-- \begin{array}{rl} -->
+<!-- H_0: & \mu = 8 \\ -->
+<!-- H_1: & \mu < 8 \\ -->
+<!-- \end{array} -->
+<!-- \end{eqnarray*} -->
+
+```{r, include=FALSE}
+pos <- which(ZBS$Region=="Norte")
+ZBS.Norte <- ZBS[pos, ]
+
+eda(ZBS.Norte$Tasa_paro)
+
+wilcox.test(ZBS.Norte$Tasa_paro, mu=8, alternative="less", conf.level=0.95)
+```
+
+#### 3.3. Contrasta al nivel de significación de $\alpha=0.05$ si existen diferencias significativas en la esperanza de vida media entre las zonas básicas de salud situadas en el norte y en el sur de Navarra. Realiza el contraste de hipótesis que consideres adecuado.
+
+<!-- Definimos las variables: -->
+
+<!-- X="Esperanza de vida en las ZBS del norte de Navarra (años)" -->
+
+<!-- Y="Esperanza de vida en las ZBS del sur de Navarra (años)" -->
+
+<!-- El contraste que debemos realizar ($\alpha=0.05$) se escribe como: -->
+
+<!-- \begin{eqnarray*} -->
+<!-- \begin{array}{rl} -->
+<!-- H_0: & \mu_X - \mu_Y = 0 \\ -->
+<!-- H_1: & \mu_X - \mu_Y \neq 0 \\ -->
+<!-- \end{array} -->
+<!-- \end{eqnarray*} -->
+
+
+```{r, include=FALSE}
+pos <- which(ZBS$Region=="Norte")
+ZBS.Norte <- ZBS[pos, ]
+
+pos <- which(ZBS$Region=="Sur")
+ZBS.Sur <- ZBS[pos, ]
+
+eda(ZBS.Norte$Esperanza)
+eda(ZBS.Sur$Esperanza)
+
+t.test(ZBS.Norte$Esperanza, ZBS.Sur$Esperanza, mu=0, alternative="two.sided", conf.level=0.95)
+```
+
+#### 3.4. Contrasta al nivel de significación de $\alpha=0.05$ si el índice de envejecimiento medio entre las zonas básicas de salud con sexo mayoritario de hombres es al menos 2 puntos superior al índice de envejecimiento de las zonas básicas de salud con sexo mayoritario de mujeres. Realiza el contraste de hipótesis que consideres adecuado.
+
+<!-- Definimos las variables: -->
+
+<!-- X="Indice de envejecimiento en las ZBS con sexo mayoritario de hombres (%)" -->
+
+<!-- X="Indice de envejecimiento en las ZBS con sexo mayoritario de mujeres (%)" -->
+
+<!-- El contraste que debemos realizar ($\alpha=0.05$) se escribe como: -->
+
+<!-- \begin{eqnarray*} -->
+<!-- \begin{array}{rl} -->
+<!-- H_0: & \mu_X - \mu_Y = 2 \\ -->
+<!-- H_1: & \mu_X - \mu_Y > 2 \\ -->
+<!-- \end{array} -->
+<!-- \end{eqnarray*} -->
+
+```{r, include=FALSE}
+pos <- which(ZBS$Sexo=="Hombres")
+ZBS.Hombres <- ZBS[pos, ]
+
+pos <- which(ZBS$Sexo=="Mujeres")
+ZBS.Mujeres <- ZBS[pos, ]
+
+eda(ZBS.Hombres$Indice)
+eda(ZBS.Mujeres$Indice)
+
+wilcox.test(ZBS.Hombres$Indice, ZBS.Mujeres$Indice, mu=2, alternative="greater", conf.level=0.95)
+```
+
+#### 3.5. Contrasta al nivel de significación de $\alpha=0.05$ si existen diferencias entre los niveles medios del índice de envejecimiento según la región geográfica de las zonas básicas de salud de Navarra. Si has detectado diferencias, averigua entre qué grupos existen diferencias estadísticamente significativas.
+
+```{r, include=FALSE}
+## Gráfico descriptivo
+boxplot(ZBS$Indice ~ ZBS$Region)
+
+## Analisis de la varianza
+Indice.aov <- aov(Indice ~ Region, data=ZBS)
+summary(Indice.aov)
+
+## Validación del modelo ANOVA
+checking.plots(Indice.aov)
+
+r <- rstandard(Indice.aov)
+shapiro.test(r)
+
+leveneTest(ZBS$Indice ~ ZBS$Region)
+
+
+## Test no-parametrico (Kruskall-Wallis)
+kruskal.test(Indice ~ Region, data=ZBS)
+
+library(agricolae)
+kruskal(ZBS$Indice, ZBS$Region, alpha=0.05, group=FALSE, console=TRUE)
+```
+
+
+## 4. Regresión Lineal
+
+#### 4.1. Ajusta un modelo de regresión lineal (simple) que permita estimar el índice de envejecimiento en función de la tasa de natalidad.
+
+```{r, include=FALSE}
+M1 <- lm(Indice~Natalidad, data=ZBS)
+summary(M1)
+```
+-   Proporciona una interpretación para los coeficientes
+
+-   Representa gráficamente la línea ajustada
+
+```{r, include=FALSE}
+plot(ZBS$Natalidad, ZBS$Indice)
+abline(M1, col="red", lwd=2)
+```
+
+-   Obtén la predicción para el índice de envejecimiento en tres ZBS con tasas de natalidad de 5, 10 y 15 nacimientos por cada mil habitantes.
+
+```{r, include=FALSE}
+newdata <- data.frame(Natalidad=c(5,10,15))
+
+predictions <- predict(M1, newdata, interval="prediction")
+predictions
+```
+
+#### 4.2. Ajusta un modelo de regresión lineal (multiple) que permita estimar el índice de envejecimiento en función de las variables `Natalidad`, `Pobreza`, `Region`, `Sexo`, `Tasa_paro` y `Esperanza`.
+
+-   Selecciona las variables *incluyendo* secuencialmente en el modelo aquellas son estadísticamente significativas utilizando la función \func{anova}.
+
+<!-- M1: $Y=\beta_0 + \beta_1*Natalidad$ -->
+
+<!-- M2: $Y=\beta_0 + \beta_1*Natalidad + \beta_2*\mbox{I(Pobreza="Baja")}$ -->
+
+```{r, include=FALSE}
+M2 <- lm(Indice~Natalidad + Pobreza, data=ZBS)
+anova(M1,M2)
+```
+
+<!-- M3: $Y=\beta_0 + \beta_1*Natalidad + \beta_2*\mbox{I(Region="Norte")} + \beta_3*\mbox{I(Region="Sur")}$ -->
+
+```{r, include=FALSE}
+M3 <- lm(Indice~Natalidad + Region, data=ZBS)
+anova(M1,M3)
+```
+
+<!-- M4: $Y=\beta_0 + \beta_1*Natalidad + \beta_2*\mbox{I(Region="Norte")} + \beta_3*\mbox{I(Region="Sur")} + \beta_4*\mbox{I(Sexo="Mujeres")}$ -->
+
+```{r, include=FALSE}
+M4 <- lm(Indice~Natalidad + Region + Sexo, data=ZBS)
+anova(M3,M4)
+```
+
+<!-- M5: $Y=\beta_0 + \beta_1*Natalidad + \beta_2*\mbox{I(Region="Norte")} + \beta_3*\mbox{I(Region="Sur")} + \beta_4*Tasa_paro$ -->
+
+```{r, include=FALSE}
+M5 <- lm(Indice~Natalidad + Region + Tasa_paro, data=ZBS)
+anova(M3,M5)
+```
+
+<!-- M6: $Y=\beta_0 + \beta_1*Natalidad + \beta_2*\mbox{I(Region="Norte")} + \beta_3*\mbox{I(Region="Sur")} + \beta_4*Tasa_paro + \beta_5*Esperanza$ -->
+
+```{r, include=FALSE}
+M6 <- lm(Indice~Natalidad + Region + Tasa_paro + Esperanza, data=ZBS)
+anova(M5,M6)
+
+summary(M6)
+```
+
+-   Utiliza también la función `stepAIC()` de la librería MASS para seleccionar las variables.
+```{r, include=FALSE}
+library(MASS)
+stepAIC(lm(Indice~Natalidad + Pobreza + Region + Sexo + Tasa_paro + Esperanza, data=ZBS))
+```
+-   Interpreta los coeficientes del modelo.
+
+-   Predice el valor del índice de envejecimiento para una ZBS con una tasa de natalidad de 8 nacimientos por cada mil habitantes, con riesgo de pobreza baja, situada en el norte, una tasa de paro del 12% y con una esperanza de vida de 83.5 años.
+
+```{r, include=FALSE}
+newdata <- data.frame(Natalidad=8, Pobreza="Baja", Region="Norte", Tasa_paro=12, Esperanza=83.5)
+
+predictions <- predict(M6, newdata, interval="prediction")
+predictions
+```
+## 5. Riesgos relativos y Odds Ratio
+
+#### 5.1. Calcula e interpreta un intervalo de confianza al 95% para la diferencia de proporciones de ZBS con riesgo de pobreza alta entre las regiones del centro y del norte de Navarra.
+
+<!-- Definimos las variables: -->
+
+<!-- X="Nº de ZBS con riesgo de pobreza alta entre las regiones del centro" $\sim Bin(n_X,\pi_X)$ -->
+
+<!-- Y="Nº de ZBS con riesgo de pobreza alta entre las regiones del norte" $\sim Bin(n_Y,\pi_Y)$ -->
+
+<!-- Calculamos la tabla de contingencia y calculamos las estimaciones de las proporciones $\pi_X$ y $\pi_Y$ como: -->
+
+```{r, include=FALSE}
+Tabla <- table(ZBS$Region, ZBS$Pobreza)
+Tabla
+```
+<!-- $$\hat{\pi}_X=p_X=\dfrac{24}{24+47}=0.3380$$ -->
+<!-- $$\hat{\pi}_Y=p_Y=\dfrac{4}{4+29}=0.1212$$ -->
+<!-- Podemos calcular el intervalo de confianza al 95% para la diferencia de proporciones como: -->
+
+```{r, include=FALSE}
+x <- 24
+y <- 4
+
+nx <- 24+47
+ny <- 4+29
+
+prop.test(c(x,y), c(nx,ny), alternative="two.sided", conf.level=0.95, correct=FALSE)
+```
+<!-- **Interpretación:** Con un nivel de confianza del 95%, la diferencia entre la proporción de ZBS con riesgo de pobreza alta en regiones del centro y norte de Navarra se encuentra entre 0.06 y 0.37. Como $0 \notin IC_{0.95}(\pi_X-\pi_Y)$, existen evidencias estadísticas para afirmar que la proporción de ZBS con riesgo de pobreza alta es distinta en ambos grupos. -->
+
+#### 5.2. Estima e interpreta el riesgo relativo de que una ZBS se encuentre en riesgo de pobreza alta entre las regiones del centro y del norte. Proporciona un intervalo de confianza al 90% para dicho riesgo.
+
+<!-- El estimador del riesgo relativo es -->
+
+<!-- $$\widehat{RR}=\frac{p_X}{p_Y}=\frac{0.3380}{0.1212}=2.7887$$ -->
+
+```{r, include=FALSE}
+px <- x/nx
+py <- y/ny
+
+RR <- px/py
+RR
+```
+<!-- **Interpretación:** La proporción muestral de ZBS con riesgo de pobreza alto en las regiones del centro es aproximadamente 2.8 veces mayor que en las regiones del Norte. -->
+
+<!-- Utilizamos la función \func{odds} para calcular el intervalo de confianza: -->
+```{r, include=FALSE}
+source("odds.R")
+
+odds(Tabla[-3,], conf.level=0.9)
+```
+<!-- **Interpretación:** Con una confianza del 95%, el riesgo relativo de que una ZBS tenga riesgo alto de pobreza es al menos 1.2 veces y como mucho 6.3 veces mayor en las regiones del centro que en las del sur. -->
+
+#### 5.3. Estima e interpreta el odds de que una ZBS tenga riesgo alto de pobreza en ambas regiones.
+
+<!-- $$\widehat{odds}_{Centro}=\frac{p_X}{1-p_X}=0.5106$$ $$\widehat{odds}_{Norte}=\frac{p_Y}{1-p_Y}=0.1379$$ -->
+
+```{r, include=FALSE}
+odds.centro <- px/(1-px)
+odds.centro
+
+odds.norte <- py/(1-py)
+odds.norte
+```
+<!-- **Interpretación:** La probabilidad de que una ZBS situada en el centro de Navarra tenga riesgo de pobreza baja es aproximadamente 2 veces ($1/0.5106=1.96$) superior a la probabilidad de que tenga riesgo de pobreza alta. -->
+
+<!-- Por otro lado, la probabilidad de que una ZBS situada en el norte de Navarra tenga riesgo de pobreza baja es aproximadamente 7 veces ($1/0.1379=7.25$) superior a la probabilidad de que tenga riesgo de pobreza alta. -->
+
+
+#### 5.4 Estima e interpreta el odds ratio y calcula su intervalo de confianza ($\alpha=0.9$).
+
+<!-- El odds ratio estimado, se calcula como el ratio de odds -->
+
+<!-- $$OR=\frac{\widehat{odds}_{Centro}}{\widehat{odds}_{Norte}}=\frac{0.5106}{0.1379}=3.703$$ -->
+<!-- o como la razón del producto cruzado -->
+
+<!-- $$OR=\frac{n_{11} \times n_{22}}{n_{21} \times n_{12}}=\frac{24 \times 29}{4 \times 47}=3.702$$ -->
+
+<!-- **Interpretación:** El odds estimado de que una ZBS situada en el centro de Navarra tenga riesgo de pobreza alta es aproximadamente 3.7 veces superior al odds estimado de que una ZBS situada en el norte de Navarra tenga riesgo de pobreza alta. -->
+
+<!-- Calculamos el intervalo de confianza al 90% para el odds ratio: -->
+```{r, include=FALSE}
+source("odds.R")
+
+odds(Tabla[-3,], conf.level=0.9)
+```
